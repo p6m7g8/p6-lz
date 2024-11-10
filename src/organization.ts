@@ -21,6 +21,7 @@ export class OrganizationStack extends cdk.Stack {
       value: organizationArn,
     })
     new cdk.CfnOutput(this, 'RootOuId', {
+      exportName: 'RootOuId',
       value: rootOuId,
     })
   }

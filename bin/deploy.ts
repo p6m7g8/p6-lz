@@ -2,7 +2,7 @@
 
 import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
-import { AccountVendingMachineStack } from '../src/account-vending-machine'
+import { AccountVendingMachineStack } from '../src/avm'
 import { OrganizationStack } from '../src/organization'
 
 const env = {
@@ -12,5 +12,5 @@ const env = {
 
 const app = new cdk.App()
 new OrganizationStack(app, 'p6-lz-organization', { env })
-new AccountVendingMachineStack(app, 'p6-lz-account-vending-machine', { env })
+new AccountVendingMachineStack(app, 'p6-lz-avm', { env })
 app.synth()
