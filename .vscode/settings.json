@@ -35,29 +35,33 @@
   "jest.runMode": "on-demand",
   "editor.tabSize": 2,
   "explorer.excludeGitIgnore": false,
-  "files.exclude": {
-    "**/.git": false,
-    "**/.gitignore": false,
-    "node_modules": true,
-    "dist": true,
-    ".cache": true
-  },
+  // "files.exclude": {
+  //   "**/.git": false,
+  //   "**/.gitignore": false,
+  //   "node_modules": true,
+  //   "dist": true,
+  //   ".cache": true
+  // },
   "files.associations": {
     "*.test.ts": "typescript"
   },
   "typescript.suggest.autoImports": true,
   "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "cSpell.words": [
     "AAAAWWW",
+    "accountid",
     "apigatewayv",
     "apigwi",
     "Brotli",
     "fieldname",
+    "idmg",
     "kqxq",
     "lambdajs",
+    "logarchive",
     "mebibytes",
+    "mgmt",
     "mybucketf",
     "ngfg",
     "presign",
