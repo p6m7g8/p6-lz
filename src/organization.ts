@@ -1,5 +1,6 @@
 import type { Construct } from 'constructs'
 import * as cdk from 'aws-cdk-lib'
+import * as ssm from 'aws-cdk-lib/aws-ssm'
 // import { CfnOrganization } from 'aws-cdk-lib/aws-organizations'
 
 export class OrganizationStack extends cdk.Stack {
@@ -14,15 +15,25 @@ export class OrganizationStack extends cdk.Stack {
     const organizationArn: string = `arn:aws:organizations::${accountId}:organization/${organizationId}`
     const rootOuId: string = 'r-erd4'
 
-    new cdk.CfnOutput(this, 'OrganizationId', {
-      value: organizationId,
+    // Store OrganizationId in SSM
+    new ssm.StringParameter(this, 'OrganizationIdParameter', {
+      parameterName: '/organization/id',
+      stringValue: organizationId,
+      description: 'The AWS Organization ID',
     })
-    new cdk.CfnOutput(this, 'OrganizationArn', {
-      value: organizationArn,
+
+    // Store OrganizationArn in SSM
+    new ssm.StringParameter(this, 'OrganizationArnParameter', {
+      parameterName: '/organization/arn',
+      stringValue: organizationArn,
+      description: 'The AWS Organization ARN',
     })
-    new cdk.CfnOutput(this, 'RootOuId', {
-      exportName: 'RootOuId',
-      value: rootOuId,
+
+    // Store RootOuId in SSM
+    new ssm.StringParameter(this, 'RootOuIdParameter', {
+      parameterName: '/organization/root-ou-id',
+      stringValue: rootOuId,
+      description: 'The root Organizational Unit (OU) ID',
     })
   }
 }
