@@ -1,9 +1,10 @@
 {
-  "app": "npx ts-node -P tsconfig.json --prefer-ts-exts bin/deploy.ts",
+  "app": "npx ts-node -P tsconfig.json --prefer-ts-exts src/deploy.ts",
   "watch": {
     "include": [
       "bin/deploy.ts",
-      "src/stack.ts"
+      "src/organization.ts",
+      "src/avm.ts"
     ],
     "exclude": [
       "README.md",

@@ -2,8 +2,9 @@
 
 import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
-import { AccountVendingMachineStack } from '../src/avm'
-import { OrganizationStack } from '../src/organization'
+import { AuditAccountStack } from './audit'
+import { AVMStack } from './avm'
+import { OrganizationStack } from './organization'
 
 const env = {
   account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
@@ -12,5 +13,11 @@ const env = {
 
 const app = new cdk.App()
 new OrganizationStack(app, 'p6-lz-organization', { env })
-new AccountVendingMachineStack(app, 'p6-lz-avm', { env })
+const avmStack = new AVMStack(app, 'p6-lz-avm', { env })
+new AuditAccountStack(app, 'p6-lz-audit', {
+  env: {
+    account: avmStack.auditAccountId,
+    region: env.region,
+  },
+})
 app.synth()
