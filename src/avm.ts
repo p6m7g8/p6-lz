@@ -25,7 +25,9 @@ function parseAccountsYamlFile(filePath: string): MyAccounts {
   return yamlData
 }
 
-export class AccountVendingMachineStack extends cdk.Stack {
+export class AVMStack extends cdk.Stack {
+  public auditAccountId: string = '0'
+
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props)
 
@@ -47,11 +49,14 @@ export class AccountVendingMachineStack extends cdk.Stack {
       if (!ou) {
         throw new Error(`Organizational Unit ${ouName} not found`)
       }
-      new CfnAccount(this, `Account-${account.Name!}`, {
+      const act = new CfnAccount(this, `Account-${account.Name!}`, {
         accountName: account.Name!,
         email: account.Email!,
         parentIds: [ou.ref],
       })
+      if (account.Name === 'p6m7g8-audit') {
+        this.auditAccountId = act.ref
+      }
     })
   }
 }
