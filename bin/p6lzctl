@@ -89,11 +89,6 @@ p6_lz_cmd_deploy() {
 
   p6_lz_run "deploy"
 
-  # XXX: Note Service Linked Roles can not be deleted
-  # XXX: Organization/Accounts can not be deleted
-  # XXX: Deleting Identity Access Center has implications
-  # XXX: Deleting logarchive is not compliant in production setups
-
   p6_return_void
 }
 
@@ -116,11 +111,18 @@ p6_lz_cmd_diff() {
 #
 # Function: p6_lz_cmd_destroy()
 #
+#  Environment:	 XXX
 #>
 ######################################################################
 p6_lz_cmd_destroy() {
 
   pnpm cdk destroy --all --force
+
+  # XXX: Note Service Linked Roles can not be deleted
+  # XXX: Organization/Accounts can not be deleted easily
+  # XXX: Deleting Identity Access Center has implications like logging in or even subsequent action in this script
+  # XXX: Deleting logarchive is not compliant in production setups
+  # XXX: Custom Resources orphan the lambda cloud watch logs
 
   p6_return_void
 }
@@ -133,7 +135,7 @@ p6_lz_cmd_destroy() {
 #  Args:
 #	action -
 #
-#  Environment:	 _3_
+#  Environment:	 _3_ _4_
 #>
 ######################################################################
 p6_lz_run() {
@@ -147,13 +149,18 @@ p6_lz_run() {
   p6_lz_run_phase_3_audit_account "$action"
   p6_lz_run_phase_3_shared_account "$action"
 
+  p6_lz_run_phase_4_prod_account "$action"
+
   p6_return_void
 }
 
 ######################################################################
 #<
 #
-# Function: p6_lz_run_bootsrap()
+# Function: p6_lz_run_bootstrap(action)
+#
+#  Args:
+#	action -
 #
 #>
 ######################################################################
@@ -256,7 +263,8 @@ p6_lz_run_phase_3_logarchive_account() {
   local action="$1"
 
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
-  pnpm cdk $action --context logarchiveAccountId=$logarchive_account_id p6-lz-logarchive --require-approval never
+  local organization_id=$(p6_lz_util_organization_id_get)
+  pnpm cdk $action --context logarchiveAccountId=$logarchive_account_id --context organizationId=$organization_id p6-lz-logarchive --require-approval never
 
   p6_return_void
 }
@@ -277,6 +285,26 @@ p6_lz_run_phase_3_shared_account() {
 
   local shared_account_id=$(p6_lz_util_shared_account_id_get)
   pnpm cdk $action --context sharedAccountId=$shared_account_id p6-lz-shared --require-approval never
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_phase_4_prod_account(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _4_
+#>
+######################################################################
+p6_lz_run_phase_4_prod_account() {
+  local action="$1"
+
+  local prod_account_id=$(p6_lz_util_prod_account_id_get)
+  pnpm cdk $action --context prodAccountId=$prod_account_id p6-lz-prod --require-approval never
 
   p6_return_void
 }
@@ -372,6 +400,41 @@ p6_lz_util_shared_account_id_get() {
   local account_id=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE' && Name=='p6m7g8-shared'].Id" --output text)
 
   p6_return_str "$account_id"
+}
+
+######################################################################
+#<
+#
+# Function: str account_id = p6_lz_util_prod_account_id_get()
+#
+#  Returns:
+#	str - account_id
+#
+#  Environment:	 ACTIVE
+#>
+######################################################################
+p6_lz_util_prod_account_id_get() {
+
+  local account_id=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE' && Name=='p6m7g8-prod'].Id" --output text)
+
+  p6_return_str "$account_id"
+}
+
+######################################################################
+#<
+#
+# Function: str organization_id = p6_lz_util_organization_id_get()
+#
+#  Returns:
+#	str - organization_id
+#
+#>
+######################################################################
+p6_lz_util_organization_id_get() {
+
+  local organization_id=$(aws organizations describe-organization --query "Organization.Id" --output text)
+
+  p6_return_str "$organization_id"
 }
 
 ######################################################################
