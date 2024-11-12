@@ -1,12 +1,12 @@
 - Name: p6m7g8-audit
   Email: pgollucci-aws-p6m7g8-audits@p6m7g8.com
-  ou: Security
+  OrganizationalUnitName: Security
 - Name: p6m7g8-logarchive
   Email: pgollucci-aws-p6m7g8-logarchive@p6m7g8.com
-  ou: Security
+  OrganizationalUnitName: Security
 - Name: p6m7g8-shared
   Email: pgollucci-aws-p6m7g8-shared@p6m7g8.com
-  ou: Infrastructure
+  OrganizationalUnitName: Infrastructure
 - Name: p6m7g8-prod
   Email: pgollucci-p6m7g8-prod@p6m7g8.com
-  ou: Production
+  OrganizationalUnitName: Production

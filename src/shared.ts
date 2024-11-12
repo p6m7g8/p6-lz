@@ -1,37 +1,17 @@
-// lib/shared-account-stack.ts
-
-import type { StackProps } from 'aws-cdk-lib'
 import type { Construct } from 'constructs'
-import {
-  Aws,
-  aws_cloudtrail as cloudtrail,
-  aws_config as config,
-  aws_iam as iam,
-  aws_kms as kms,
-  aws_s3 as s3,
-  aws_ssm as ssm,
-  Stack,
-} from 'aws-cdk-lib'
+import * as cdk from 'aws-cdk-lib'
+import * as config from 'aws-cdk-lib/aws-config'
+import * as iam from 'aws-cdk-lib/aws-iam'
+import * as kms from 'aws-cdk-lib/aws-kms'
+import * as s3 from 'aws-cdk-lib/aws-s3'
 
-export class SharedAccountStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+export class SharedAccountStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
-    // Import Bucket ARNs and KMS Key ARN from SSM Parameter Store
-    const cloudTrailBucketArn = ssm.StringParameter.valueForStringParameter(
-      this,
-      '/log-archive/cloudtrail-bucket-arn',
-    )
-
-    const configBucketArn = ssm.StringParameter.valueForStringParameter(
-      this,
-      '/log-archive/config-bucket-arn',
-    )
-
-    const logBucketKeyArn = ssm.StringParameter.valueForStringParameter(
-      this,
-      '/log-archive/kms-key-arn',
-    )
+    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`
+    const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`
+    const logBucketKeyArn = `arn:aws:kms:${cdk.Stack.of(this).region}:${cdk.Stack.of(this).account}:key/p6-lz-kms-alias/log-archive-key`
 
     // Reference the S3 buckets and KMS key
     const cloudTrailBucket = s3.Bucket.fromBucketArn(this, 'CloudTrailBucket', cloudTrailBucketArn)
@@ -63,7 +43,7 @@ export class SharedAccountStack extends Stack {
     new config.CfnDeliveryChannel(this, 'DeliveryChannel', {
       name: 'default',
       s3BucketName: configBucket.bucketName,
-      s3KeyPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/Config/`,
+      s3KeyPrefix: `AWSLogs/${cdk.Stack.of(this).account}/Config/`,
       configSnapshotDeliveryProperties: {
         deliveryFrequency: 'TwentyFour_Hours',
       },
@@ -93,7 +73,7 @@ export class SharedAccountStack extends Stack {
     new config.CfnDeliveryChannel(this, 'ConfigDeliveryChannel', {
       name: 'default',
       s3BucketName: configBucket.bucketName,
-      s3KeyPrefix: `AWSLogs/${Aws.ACCOUNT_ID}/Config/`,
+      s3KeyPrefix: `AWSLogs/${cdk.Stack.of(this).account}/Config/`,
     })
 
     new config.CfnConfigurationRecorder(this, 'ConfigRecorder', {

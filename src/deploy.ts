@@ -20,22 +20,24 @@ const sharedAccountId = app.node.tryGetContext('sharedAccountId')
 
 new OrganizationStack(app, 'p6-lz-organization', { env })
 new AVMStack(app, 'p6-lz-avm', { env })
-new AuditAccountStack(app, 'p6-lz-audit', {
-  env: {
-    account: auditAccountId,
-    region: env.region,
-  },
-})
-new LogarchiveAccountStack(app, 'p6-lz-logarchive', {
+
+const logarchiveStack = new LogarchiveAccountStack(app, 'p6-lz-logarchive', {
   env: {
     account: logarchiveAccountId,
     region: env.region,
   },
 })
+new AuditAccountStack(app, 'p6-lz-audit', {
+  env: {
+    account: auditAccountId,
+    region: env.region,
+  },
+}).addDependency(logarchiveStack)
 new SharedAccountStack(app, 'p6-lz-shared', {
   env: {
     account: sharedAccountId,
     region: env.region,
   },
-})
+}).addDependency(logarchiveStack)
+
 app.synth()
