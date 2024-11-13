@@ -4,8 +4,6 @@
   "bin": "bin/deploy.js",
   "scripts": {
     "build": "pnpm run lint && pnpm run test && pnpm run cdk synth",
-    "deploy": "pnpm run build && pnpm run cdk deploy",
-    "diff": "pnpm run build && pnpm run cdk diff",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "cdk": "cdk",
@@ -17,10 +15,10 @@
     "@types/aws-lambda": "^8.10.145",
     "@types/jest": "^29.5.14",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "22.8.6",
-    "@typescript-eslint/eslint-plugin": "^8.12.2",
-    "@typescript-eslint/parser": "^8.12.2",
-    "aws-cdk": "2.165.0",
+    "@types/node": "22.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.14.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "aws-cdk": "2.166.0",
     "esbuild": "^0.24.0",
     "eslint": "^9.14.0",
     "eslint-plugin-import": "^2.31.0",
@@ -32,15 +30,15 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.687.0",
     "@aws-sdk/client-organizations": "^3.687.0",
-    "@aws-sdk/client-s3": "^3.688.0",
-    "@aws-sdk/lib-dynamodb": "^3.687.0",
-    "aws-cdk-lib": "2.165.0",
+    "@aws-sdk/client-s3": "^3.689.0",
+    "@aws-sdk/lib-dynamodb": "^3.689.0",
+    "aws-cdk-lib": "2.166.0",
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1692.0",
     "cdk-iam-floyd": "^0.658.0",
     "constructs": "^10.4.2",
     "source-map-support": "^0.5.21",
-    "winston": "^3.16.0"
+    "winston": "^3.17.0"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

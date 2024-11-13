@@ -47,6 +47,7 @@ p6_lz_main() {
   # security 101: only allow valid comamnds
   case $cmd in
   boostrap) ;;
+  build) ;;
   deploy) ;;
   destroy) ;;
   diff) ;;
@@ -62,6 +63,13 @@ p6_lz_main() {
   [ ${flag_debug} = 1 ] && set +x
 
   return 0
+}
+
+p6_lz_cmd_build() {
+
+  pnpm run build
+
+  p6_return_void
 }
 
 ######################################################################
@@ -87,6 +95,7 @@ p6_lz_cmd_bootstrap() {
 ######################################################################
 p6_lz_cmd_deploy() {
 
+  p6_lz_run "build"
   p6_lz_run "deploy"
 
   p6_return_void
