@@ -1,6 +1,5 @@
 // lib/log-archive-account-stack.ts
 
-import type { StackProps } from 'aws-cdk-lib'
 import type { Construct } from 'constructs'
 import * as cdk from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
@@ -8,7 +7,7 @@ import * as kms from 'aws-cdk-lib/aws-kms'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 
 export class LogarchiveAccountStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
     const organizationId = this.node.tryGetContext('organizationId')
@@ -115,10 +114,26 @@ export class LogarchiveAccountStack extends cdk.Stack {
     // Bucket Policy for Config Bucket
     configBucket.addToResourcePolicy(
       new iam.PolicyStatement({
+        sid: 'Allow PutBucketPolicy',
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.AnyPrincipal()],
+        actions: ['s3:PutBucketPolicy'],
+        resources: [configBucket.bucketArn],
+        conditions: {
+          StringEquals: {
+            'aws:PrincipalOrgID': organizationId,
+          },
+        },
+      }),
+    )
+
+    // Bucket Policy for Config Bucket
+    configBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
         sid: 'Allow Organization to put objects',
         effect: iam.Effect.ALLOW,
         principals: [new iam.AnyPrincipal()],
-        actions: ['s3:PutObject', 's3:PutBucketPolicy'],
+        actions: ['s3:PutObject'],
         resources: [`${configBucket.bucketArn}/AWSLogs/*/*`],
         conditions: {
           StringEquals: {

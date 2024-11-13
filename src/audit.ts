@@ -1,21 +1,23 @@
 import type { Construct } from 'constructs'
 import * as cdk from 'aws-cdk-lib'
-// import * as cloudtrail from 'aws-cdk-lib/aws-cloudtrail'
+import * as cloudtrail from 'aws-cdk-lib/aws-cloudtrail'
 import * as config from 'aws-cdk-lib/aws-config'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
+import * as logs from 'aws-cdk-lib/aws-logs'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 
 export class AuditAccountStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
-    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`
-    const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`
-    const logBucketKeyArn = `arn:aws:kms:${cdk.Stack.of(this).region}:${cdk.Stack.of(this).account}:key/p6-lz-kms-alias/log-archive-key`
+    const logarchiveAccountId = this.node.tryGetContext('logarchiveAccountId')
+    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${logarchiveAccountId}-${cdk.Stack.of(this).region}`
+    const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${logarchiveAccountId}-${cdk.Stack.of(this).region}`
+    const logBucketKeyArn = `arn:aws:kms:${cdk.Stack.of(this).region}:${logarchiveAccountId}:key/p6-lz-kms-alias/log-archive-key`
 
     // Reference the S3 buckets and KMS key
-    s3.Bucket.fromBucketArn(this, 'CloudTrailBucket', cloudTrailBucketArn)
+    const cloudTrailBucket = s3.Bucket.fromBucketArn(this, 'CloudTrailBucket', cloudTrailBucketArn)
     const configBucket = s3.Bucket.fromBucketArn(this, 'ConfigBucket', configBucketArn)
     const logBucketKey = kms.Key.fromKeyArn(this, 'LogBucketKey', logBucketKeyArn)
 
@@ -50,22 +52,25 @@ export class AuditAccountStack extends cdk.Stack {
       },
     })
 
+    const cloudTrailEncryptionKey = new kms.Key(this, 'CloudTrailEncryptionKey', {
+      alias: 'p6/lz/kms/alias/cloudtrail-key',
+      enableKeyRotation: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    })
+
     // CloudTrail Trail
-    // new cloudtrail.CfnTrail(this, 'OrganizationTrail', {
-    //   s3BucketName: cloudTrailBucket.bucketName,
-    //   isMultiRegionTrail: true,
-    //   isOrganizationTrail: true,
-    //   includeGlobalServiceEvents: true,
-    //   enableLogFileValidation: true,
-    //   kmsKeyId: logBucketKey.keyArn,
-    //   cloudWatchLogsLogGroupArn: `arn:aws:logs:${Aws.REGION}:${Aws.ACCOUNT_ID}:log-group:/aws/cloudtrail/OrganizationTrail`,
-    //   cloudWatchLogsRoleArn: new iam.Role(this, 'CloudTrailCloudWatchRole', {
-    //     assumedBy: new iam.ServicePrincipal('cloudtrail.amazonaws.com'),
-    //     managedPolicies: [
-    //       iam.ManagedPolicy.fromAwsManagedPolicyName('AWSCloudTrailFullAccess'),
-    //     ],
-    //   }).roleArn,
-    // })
+    new cloudtrail.Trail(this, 'OrganizationTrail', {
+      isMultiRegionTrail: true,
+      isOrganizationTrail: true,
+      includeGlobalServiceEvents: true,
+      managementEvents: cloudtrail.ReadWriteType.ALL,
+      enableFileValidation: true,
+      sendToCloudWatchLogs: true,
+      cloudWatchLogsRetention: logs.RetentionDays.ONE_MONTH,
+      encryptionKey: cloudTrailEncryptionKey,
+      bucket: cloudTrailBucket,
+      orgId: 'o-b1ngfg6w8x',
+    })
 
     // Enable Security Hub
     // new securityhub.CfnHub(this, 'SecurityHub', {})

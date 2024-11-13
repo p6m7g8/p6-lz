@@ -224,33 +224,6 @@ p6_lz_run_phase_2() {
 ######################################################################
 #<
 #
-# Function: p6_lz_run_phase_3_audit_account(action)
-#
-#  Args:
-#	action -
-#
-#  Environment:	 _3_
-#>
-######################################################################
-p6_lz_run_phase_3_audit_account() {
-  local action="$1"
-
-  local audit_account_id=$(p6_lz_util_audit_account_id_get)
-
-  if [ "$action" = "deploy" ]; then
-    p6_aws_svc_organizations_sts_su $audit_account_id
-    aws iam create-service-linked-role --aws-service-name "config.amazonaws.com" >/dev/null 2>&1 || true
-    p6_aws_svc_organizations_sts_su_un
-  fi
-
-  pnpm cdk $action --context auditAccountId=$audit_account_id p6-lz-audit --require-approval never
-
-  p6_return_void
-}
-
-######################################################################
-#<
-#
 # Function: p6_lz_run_phase_3_logarchive_account(action)
 #
 #  Args:
@@ -272,6 +245,34 @@ p6_lz_run_phase_3_logarchive_account() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_phase_3_audit_account(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _3_
+#>
+######################################################################
+p6_lz_run_phase_3_audit_account() {
+  local action="$1"
+
+  local audit_account_id=$(p6_lz_util_audit_account_id_get)
+  local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
+
+  if [ "$action" = "deploy" ]; then
+    p6_aws_svc_organizations_sts_su $audit_account_id
+    aws iam create-service-linked-role --aws-service-name "config.amazonaws.com" >/dev/null 2>&1 || true
+    p6_aws_svc_organizations_sts_su_un
+  fi
+
+  pnpm cdk $action --context auditAccountId=$audit_account_id --context logarchiveAccountId=$logarchive_account_id p6-lz-audit --require-approval never
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run_phase_3_shared_account(action)
 #
 #  Args:
@@ -284,7 +285,9 @@ p6_lz_run_phase_3_shared_account() {
   local action="$1"
 
   local shared_account_id=$(p6_lz_util_shared_account_id_get)
-  pnpm cdk $action --context sharedAccountId=$shared_account_id p6-lz-shared --require-approval never
+  local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
+
+  pnpm cdk $action --context sharedAccountId=$shared_account_id --context logarchiveAccountId=$logarchive_account_id p6-lz-shared --require-approval never
 
   p6_return_void
 }
