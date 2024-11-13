@@ -52,6 +52,7 @@ p6_lz_main() {
   destroy) ;;
   diff) ;;
   install) ;;
+  list) ;;
   stacks) ;;
   esac
 
@@ -84,6 +85,20 @@ p6_lz_cmd_install() {
 ######################################################################
 #<
 #
+# Function: p6_lz_cmd_list()
+#
+#>
+######################################################################
+p6_lz_cmd_list() {
+
+  p6_lz_run_list
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_cmd_stacks()
 #
 #>
@@ -93,11 +108,14 @@ p6_lz_cmd_stacks() {
   local mgmt_account_id=$(p6_aws_svc_organization_mgmt_account_id_get)
   local account_ids=$(p6_lz_util_account_ids_get "$mgmt_account_id")
 
-  aws cloudformation describe-stacks --output text --query "Stacks[*].[CreationTime, StackStatus, StackId]" | grep p6-lz- | sort -k 1,1 -n
+  p6_h3 "$mgmt_account_id"
+  aws cloudformation describe-stacks --output text --query "Stacks[*].[CreationTime, StackStatus, StackId]" | grep -E 'CDKToolkit|p6-lz-' | sort -k 1,1 -n
+
   local account_id
   for account_id in $account_ids; do
+    p6_h3 "$account_id"
     p6_aws_svc_organizations_sts_su $account_id
-    aws cloudformation describe-stacks --output text --query "Stacks[*].[CreationTime, StackStatus, StackId]" | grep p6-lz- | sort -k 1,1 -n
+    aws cloudformation describe-stacks --output text --query "Stacks[*].[CreationTime, StackStatus, StackId]" | grep -E 'CDKToolkit|p6-lz-' | sort -k 1,1 -n
     p6_aws_svc_organizations_sts_su_un
   done
 
@@ -179,6 +197,10 @@ p6_lz_cmd_destroy() {
   # XXX: Deleting logarchive is not compliant in production setups
   # XXX: Custom Resources orphan the lambda cloud watch logs
 
+  for l in $(p6_aws_svc_logs_groups_list | grep p6-lz | awk '{print $2}'); do
+    aws logs delete-log-group --log-group-name $l
+  done
+
   p6_return_void
 }
 
@@ -213,6 +235,20 @@ p6_lz_run_build() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_list()
+#
+#>
+######################################################################
+p6_lz_run_list() {
+
+  pnpm cdk ls
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run(action)
 #
 #  Args:
@@ -230,10 +266,12 @@ p6_lz_run() {
   p6_lz_run_phase_1 "$action"
   p6_lz_run_phase_2 "$action"
   p6_lz_run_phase_3_logarchive_account "$action"
-  p6_lz_run_phase_3_audit_account "$action"
-  p6_lz_run_phase_3_shared_account "$action"
+  # p6_lz_run_phase_3_audit_account "$action"
+  # p6_lz_run_phase_3_shared_account "$action"
 
-  p6_lz_run_phase_4_prod_account "$action"
+  # p6_lz_run_phase_4_sandbox_account "$action"
+  # p6_lz_run_phase_4_dev_account "$action"
+  # p6_lz_run_phase_4_prod_account "$action"
 
   # apply Service Control Policies (SCP)
 
@@ -407,6 +445,60 @@ p6_lz_run_phase_3_shared_account() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_phase_4_sandbox_account(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _4_
+#>
+######################################################################
+p6_lz_run_phase_4_sandbox_account() {
+  local action="$1"
+
+  # local audit_account_id=$(p6_lz_util_audit_account_id_get)
+  # local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
+  # local shared_account_id=$(p6_lz_util_shared_account_id_get)
+  local sandbox_account_id=$(p6_lz_util_sandbox_account_id_get)
+
+  pnpm cdk $action \
+    --context sandboxAccountId=$sandbox_account_id \
+    --require-approval never \
+    p6-lz-sandbox
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_phase_4_dev_account(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _4_
+#>
+######################################################################
+p6_lz_run_phase_4_dev_account() {
+  local action="$1"
+
+  # local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
+  # local shared_account_id=$(p6_lz_util_shared_account_id_get)
+  # local sandbox_account_id=$(p6_lz_util_sandbox_account_id_get)
+  local dew_account_id=$(p6_lz_util_dev_account_id_get)
+
+  pnpm cdk $action \
+    --context devAccountId=$dev_account_id \
+    --require-approval never \
+    p6-lz-dev
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run_phase_4_prod_account(action)
 #
 #  Args:
@@ -418,6 +510,9 @@ p6_lz_run_phase_3_shared_account() {
 p6_lz_run_phase_4_prod_account() {
   local action="$1"
 
+  # local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
+  # local shared_account_id=$(p6_lz_util_shared_account_id_get)
+  # local sandbox_account_id=$(p6_lz_util_sandbox_account_id_get)
   local prod_account_id=$(p6_lz_util_prod_account_id_get)
 
   pnpm cdk $action \
@@ -496,6 +591,40 @@ p6_lz_util_logarchive_account_id_get() {
 p6_lz_util_shared_account_id_get() {
 
   local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-shared | awk '{print $1}')
+
+  p6_return_aws_account_id "$account_id"
+}
+
+######################################################################
+#<
+#
+# Function: aws_account_id account_id = p6_lz_util_sandbox_account_id_get()
+#
+#  Returns:
+#	aws_account_id - account_id
+#
+#>
+######################################################################
+p6_lz_util_sandbox_account_id_get() {
+
+  local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-sandbox | awk '{print $1}')
+
+  p6_return_aws_account_id "$account_id"
+}
+
+######################################################################
+#<
+#
+# Function: aws_account_id account_id = p6_lz_util_dev_account_id_get()
+#
+#  Returns:
+#	aws_account_id - account_id
+#
+#>
+######################################################################
+p6_lz_util_dev_account_id_get() {
+
+  local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-dev | awk '{print $1}')
 
   p6_return_aws_account_id "$account_id"
 }

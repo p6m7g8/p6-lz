@@ -14,11 +14,15 @@ export class AVMStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props)
 
-    this.createOUs()
-    this.createAccounts()
+    const ouFileAsset = new Asset(this, 'OUFileAsset', {
+      path: path.join(__dirname, '..', OU_FILE),
+    })
+
+    this.createOUs(ouFileAsset)
+    this.createAccounts(ouFileAsset)
   }
 
-  private createAccounts() {
+  private createAccounts(ouFileAsset: Asset) {
     const accountsFileAsset = new Asset(this, 'AccountFileAsset', {
       path: path.join(__dirname, '..', ACCOUNTS_FILE),
     })
@@ -27,9 +31,12 @@ export class AVMStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_20_X,
       timeout: cdk.Duration.minutes(6),
       tracing: lambda.Tracing.ACTIVE,
+      entry: path.join(__dirname, '..', 'src', 'resources', 'avm.AccountsMaker.ts'),
       environment: {
         ACCOUNTS_FILE_BUCKET: accountsFileAsset.s3BucketName,
         ACCOUNTS_FILE_KEY: accountsFileAsset.s3ObjectKey,
+        OU_FILE_BUCKET: ouFileAsset.s3BucketName,
+        OU_FILE_KEY: ouFileAsset.s3ObjectKey,
       },
       bundling: {
         nodeModules: ['aws-sdk', 'aws-lambda', 'js-yaml', 'winston'],
@@ -56,15 +63,12 @@ export class AVMStack extends cdk.Stack {
     })
   }
 
-  private createOUs() {
-    const ouFileAsset = new Asset(this, 'OUFileAsset', {
-      path: path.join(__dirname, '..', OU_FILE),
-    })
-
+  private createOUs(ouFileAsset: Asset) {
     const ouFunction = new lambdajs.NodejsFunction(this, 'OUMaker', {
       runtime: lambda.Runtime.NODEJS_20_X,
-      timeout: cdk.Duration.seconds(10),
+      timeout: cdk.Duration.minutes(1),
       tracing: lambda.Tracing.ACTIVE,
+      entry: path.join(__dirname, '..', 'src', 'resources', 'avm.OUMaker.ts'),
       environment: {
         OU_FILE_BUCKET: ouFileAsset.s3BucketName,
         OU_FILE_KEY: ouFileAsset.s3ObjectKey,
@@ -77,6 +81,7 @@ export class AVMStack extends cdk.Stack {
     const policy = new floyd.Statement.Organizations()
       .allow()
       .toCreateOrganizationalUnit()
+      .toListOrganizationalUnitsForParent()
       .toListRoots()
     ouFunction.addToRolePolicy(policy)
 

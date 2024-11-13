@@ -1,4 +1,15 @@
 - Name: Infrastructure
-- Name: Production
+  Parent: Root
 - Name: Security
+  Parent: Root
 - Name: Suspended
+  Parent: Root
+
+- Name: Sandbox
+  Parent: Root
+- Name: Workloads
+  Parent: Root
+- Name: SDLC
+  Parent: Workloads
+- Name: Production
+  Parent: Workloads
