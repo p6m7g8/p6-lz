@@ -100,7 +100,7 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
     logger.info(`No action required for ${event.RequestType} event`)
     return {
       Status: 'SUCCESS',
-      PhysicalResourceId: event.RequestId,
+      PhysicalResourceId: event.PhysicalResourceId,
       StackId: event.StackId,
       RequestId: event.RequestId,
       LogicalResourceId: event.LogicalResourceId,
