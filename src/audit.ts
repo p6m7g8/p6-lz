@@ -12,6 +12,8 @@ export class AuditAccountStack extends cdk.Stack {
     super(scope, id, props)
 
     const logarchiveAccountId = this.node.tryGetContext('logarchiveAccountId')
+    const organizationId = this.node.tryGetContext('organizationId')
+
     const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${logarchiveAccountId}-${cdk.Stack.of(this).region}`
     const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${logarchiveAccountId}-${cdk.Stack.of(this).region}`
     const logBucketKeyArn = `arn:aws:kms:${cdk.Stack.of(this).region}:${logarchiveAccountId}:key/p6-lz-kms-alias/log-archive-key`
@@ -22,12 +24,7 @@ export class AuditAccountStack extends cdk.Stack {
     const logBucketKey = kms.Key.fromKeyArn(this, 'LogBucketKey', logBucketKeyArn)
 
     // IAM Role for AWS Config Recorder
-    const configRecorderRole = new iam.Role(this, 'ConfigRecorderRole', {
-      assumedBy: new iam.ServicePrincipal('config.amazonaws.com'),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWS_ConfigRole'),
-      ],
-    })
+    const configRecorderRole = iam.Role.fromRoleArn(this, 'ConfigRecorderRole', `arn:aws:iam::${cdk.Stack.of(this).account}:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig`)
 
     // Grant permissions to use the KMS key
     logBucketKey.grantEncryptDecrypt(configRecorderRole)
@@ -69,7 +66,7 @@ export class AuditAccountStack extends cdk.Stack {
       cloudWatchLogsRetention: logs.RetentionDays.ONE_MONTH,
       encryptionKey: cloudTrailEncryptionKey,
       bucket: cloudTrailBucket,
-      orgId: 'o-b1ngfg6w8x',
+      orgId: organizationId,
     })
 
     // Enable Security Hub

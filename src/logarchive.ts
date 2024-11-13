@@ -67,6 +67,17 @@ export class LogarchiveAccountStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     })
 
+    // Policy allowing only the local account to modify the CloudTrail bucket policy
+    cloudTrailBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        sid: 'AllowAccountAccess',
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.AccountRootPrincipal()],
+        actions: ['s3:*'],
+        resources: [cloudTrailBucket.bucketArn, `${cloudTrailBucket.bucketArn}/*`],
+      }),
+    )
+
     // Bucket Policy for CloudTrail Bucket
     cloudTrailBucket.addToResourcePolicy(
       new iam.PolicyStatement({
@@ -111,19 +122,14 @@ export class LogarchiveAccountStack extends cdk.Stack {
       ],
     })
 
-    // Bucket Policy for Config Bucket
+    // Policy allowing only the local account to modify the Config bucket policy
     configBucket.addToResourcePolicy(
       new iam.PolicyStatement({
-        sid: 'Allow PutBucketPolicy',
+        sid: 'Allow Local Account to Modify Bucket Policy',
         effect: iam.Effect.ALLOW,
-        principals: [new iam.AnyPrincipal()],
+        principals: [new iam.AccountRootPrincipal()],
         actions: ['s3:PutBucketPolicy'],
         resources: [configBucket.bucketArn],
-        conditions: {
-          StringEquals: {
-            'aws:PrincipalOrgID': organizationId,
-          },
-        },
       }),
     )
 

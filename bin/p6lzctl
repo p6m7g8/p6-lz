@@ -51,6 +51,8 @@ p6_lz_main() {
   deploy) ;;
   destroy) ;;
   diff) ;;
+  install) ;;
+  stacks) ;;
   esac
 
   # setup -x based on flag_debug
@@ -65,9 +67,53 @@ p6_lz_main() {
   return 0
 }
 
+######################################################################
+#<
+#
+# Function: p6_lz_cmd_install()
+#
+#>
+######################################################################
+p6_lz_cmd_install() {
+
+  p6_lz_run_install
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_cmd_stacks()
+#
+#>
+######################################################################
+p6_lz_cmd_stacks() {
+
+  local mgmt_account_id=$(p6_aws_svc_organization_mgmt_account_id_get)
+  local account_ids=$(p6_lz_util_account_ids_get "$mgmt_account_id")
+
+  aws cloudformation describe-stacks --output text --query "Stacks[*].[CreationTime, StackStatus, StackId]" | grep p6-lz- | sort -k 1,1 -n
+  local account_id
+  for account_id in $account_ids; do
+    p6_aws_svc_organizations_sts_su $account_id
+    aws cloudformation describe-stacks --output text --query "Stacks[*].[CreationTime, StackStatus, StackId]" | grep p6-lz- | sort -k 1,1 -n
+    p6_aws_svc_organizations_sts_su_un
+  done
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_cmd_build()
+#
+#>
+######################################################################
 p6_lz_cmd_build() {
 
-  pnpm run build
+  p6_lz_run_build
 
   p6_return_void
 }
@@ -95,7 +141,7 @@ p6_lz_cmd_bootstrap() {
 ######################################################################
 p6_lz_cmd_deploy() {
 
-  p6_lz_run "build"
+  p6_lz_run_build
   p6_lz_run "deploy"
 
   p6_return_void
@@ -139,17 +185,46 @@ p6_lz_cmd_destroy() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_install()
+#
+#>
+######################################################################
+p6_lz_run_install() {
+
+  pnpm install
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_build()
+#
+#>
+######################################################################
+p6_lz_run_build() {
+
+  pnpm run build
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run(action)
 #
 #  Args:
 #	action -
 #
-#  Environment:	 _3_ _4_
+#  Environment:	 SCP _3_ _4_
 #>
 ######################################################################
 p6_lz_run() {
   local action="$1"
 
+  # break glass
   p6_lz_run_bootstrap "$action"
 
   p6_lz_run_phase_1 "$action"
@@ -159,6 +234,10 @@ p6_lz_run() {
   p6_lz_run_phase_3_shared_account "$action"
 
   p6_lz_run_phase_4_prod_account "$action"
+
+  # apply Service Control Policies (SCP)
+
+  # operate
 
   p6_return_void
 }
@@ -196,7 +275,10 @@ p6_lz_run_bootstrap() {
 p6_lz_run_phase_1() {
   local action="$1"
 
-  pnpm cdk "$action" p6-lz-organization p6-lz-avm --require-approval never
+  pnpm cdk $action \
+    --require-approval never \
+    p6-lz-organization \
+    p6-lz-avm
 
   p6_return_void
 }
@@ -214,16 +296,22 @@ p6_lz_run_phase_1() {
 p6_lz_run_phase_2() {
   local action="$1"
 
-  local mgmt_account_id=$(p6_lz_util_mgmt_account_id_get)
+  local mgmt_account_id=$(p6_aws_svc_organization_mgmt_account_id_get)
   local account_ids=$(p6_lz_util_account_ids_get "$mgmt_account_id")
   local account_id
-  for account_id in ${account_ids}; do
+  for account_id in $account_ids; do
     if [ "$action" = "deploy" ]; then
       p6_aws_svc_organizations_sts_su $account_id
-      pnpm cdk bootstrap aws://$account_id/us-east-1 --trust $mgmt_account_id --trust-for-lookup $mgmt_account_id --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+      pnpm cdk bootstrap aws://$account_id/us-east-1 \
+        --trust $mgmt_account_id \
+        --trust-for-lookup $mgmt_account_id \
+        --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
       p6_aws_svc_organizations_sts_su_un
     else
-      echo pnpm cdk bootstrap aws://$account_id/us-east-1 --trust $mgmt_account_id --trust-for-lookup $mgmt_account_id --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+      echo pnpm cdk bootstrap aws://$account_id/us-east-1 \
+        --trust $mgmt_account_id \
+        --trust-for-lookup $mgmt_account_id \
+        --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
     fi
   done
 
@@ -245,8 +333,13 @@ p6_lz_run_phase_3_logarchive_account() {
   local action="$1"
 
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
-  local organization_id=$(p6_lz_util_organization_id_get)
-  pnpm cdk $action --context logarchiveAccountId=$logarchive_account_id --context organizationId=$organization_id p6-lz-logarchive --require-approval never
+  local organization_id=$(p6_aws_svc_organizations_id_get)
+
+  pnpm cdk $action \
+    --context logarchiveAccountId=$logarchive_account_id \
+    --context organizationId=$organization_id \
+    --require-approval never \
+    p6-lz-logarchive
 
   p6_return_void
 }
@@ -267,6 +360,7 @@ p6_lz_run_phase_3_audit_account() {
 
   local audit_account_id=$(p6_lz_util_audit_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
+  local organization_id=$(p6_aws_svc_organizations_id_get)
 
   if [ "$action" = "deploy" ]; then
     p6_aws_svc_organizations_sts_su $audit_account_id
@@ -274,7 +368,12 @@ p6_lz_run_phase_3_audit_account() {
     p6_aws_svc_organizations_sts_su_un
   fi
 
-  pnpm cdk $action --context auditAccountId=$audit_account_id --context logarchiveAccountId=$logarchive_account_id p6-lz-audit --require-approval never
+  pnpm cdk $action \
+    --context auditAccountId=$audit_account_id \
+    --context logarchiveAccountId=$logarchive_account_id \
+    --context organizationId=$organization_id \
+    --require-approval never \
+    p6-lz-audit
 
   p6_return_void
 }
@@ -296,7 +395,11 @@ p6_lz_run_phase_3_shared_account() {
   local shared_account_id=$(p6_lz_util_shared_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
 
-  pnpm cdk $action --context sharedAccountId=$shared_account_id --context logarchiveAccountId=$logarchive_account_id p6-lz-shared --require-approval never
+  pnpm cdk $action \
+    --context logarchiveAccountId=$logarchive_account_id \
+    --context sharedAccountId=$shared_account_id \
+    --require-approval never \
+    p6-lz-shared
 
   p6_return_void
 }
@@ -316,7 +419,11 @@ p6_lz_run_phase_4_prod_account() {
   local action="$1"
 
   local prod_account_id=$(p6_lz_util_prod_account_id_get)
-  pnpm cdk $action --context prodAccountId=$prod_account_id p6-lz-prod --require-approval never
+
+  pnpm cdk $action \
+    --context prodAccountId=$prod_account_id \
+    --require-approval never \
+    p6-lz-prod
 
   p6_return_void
 }
@@ -324,129 +431,90 @@ p6_lz_run_phase_4_prod_account() {
 ######################################################################
 #<
 #
-# Function: str account_ids = p6_lz_util_account_ids_get(mgmt_account_id)
+# Function: words account_ids = p6_lz_util_account_ids_get(mgmt_account_id)
 #
 #  Args:
 #	mgmt_account_id -
 #
 #  Returns:
-#	str - account_ids
+#	words - account_ids
 #
-#  Environment:	 ACTIVE
 #>
 ######################################################################
 p6_lz_util_account_ids_get() {
   local mgmt_account_id="$1"
 
-  local account_ids=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE'].Id" | jq -r ".[]" | grep -v "${mgmt_account_id}")
+  local account_ids=$(p6_aws_svc_organizations_accounts_list_active | awk '{print $1}' | grep -v "${mgmt_account_id}")
 
-  p6_return_str "$account_ids"
+  p6_return_words "$account_ids"
 }
 
 ######################################################################
 #<
 #
-# Function: str account_id = p6_lz_util_mgmt_account_id_get()
+# Function: aws_account_id account_id = p6_lz_util_audit_account_id_get()
 #
 #  Returns:
-#	str - account_id
+#	aws_account_id - account_id
 #
-#>
-######################################################################
-p6_lz_util_mgmt_account_id_get() {
-
-  local account_id=$(aws organizations describe-organization --query "Organization.MasterAccountId" --output text)
-
-  p6_return_str "$account_id"
-}
-
-######################################################################
-#<
-#
-# Function: str account_id = p6_lz_util_audit_account_id_get()
-#
-#  Returns:
-#	str - account_id
-#
-#  Environment:	 ACTIVE
 #>
 ######################################################################
 p6_lz_util_audit_account_id_get() {
 
-  local account_id=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE' && Name=='p6m7g8-audit'].Id" --output text)
+  local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-audit | awk '{print $1}')
 
-  p6_return_str "$account_id"
+  p6_return_aws_account_id "$account_id"
 }
 
 ######################################################################
 #<
 #
-# Function: str account_id = p6_lz_util_logarchive_account_id_get()
+# Function: aws_account_id account_id = p6_lz_util_logarchive_account_id_get()
 #
 #  Returns:
-#	str - account_id
+#	aws_account_id - account_id
 #
-#  Environment:	 ACTIVE
 #>
 ######################################################################
 p6_lz_util_logarchive_account_id_get() {
 
-  local account_id=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE' && Name=='p6m7g8-logarchive'].Id" --output text)
+  local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-logarchive | awk '{print $1}')
 
-  p6_return_str "$account_id"
+  p6_return_aws_account_id "$account_id"
 }
 
 ######################################################################
 #<
 #
-# Function: str account_id = p6_lz_util_shared_account_id_get()
+# Function: aws_account_id account_id = p6_lz_util_shared_account_id_get()
 #
 #  Returns:
-#	str - account_id
+#	aws_account_id - account_id
 #
-#  Environment:	 ACTIVE
 #>
 ######################################################################
 p6_lz_util_shared_account_id_get() {
 
-  local account_id=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE' && Name=='p6m7g8-shared'].Id" --output text)
+  local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-shared | awk '{print $1}')
 
-  p6_return_str "$account_id"
+  p6_return_aws_account_id "$account_id"
 }
 
 ######################################################################
 #<
 #
-# Function: str account_id = p6_lz_util_prod_account_id_get()
+# Function: aws_account_id account_id = p6_lz_util_prod_account_id_get()
 #
 #  Returns:
-#	str - account_id
+#	aws_account_id - account_id
 #
-#  Environment:	 ACTIVE
 #>
 ######################################################################
 p6_lz_util_prod_account_id_get() {
 
-  local account_id=$(aws organizations list-accounts --query "Accounts[?Status=='ACTIVE' && Name=='p6m7g8-prod'].Id" --output text)
+  local account_id=$(p6_aws_svc_organizations_accounts_list_active | grep p6m7g8-pr | awk '{print $1}')
 
-  p6_return_str "$account_id"
-}
-
-######################################################################
-#<
-#
-# Function: str organization_id = p6_lz_util_organization_id_get()
-#
-#  Returns:
-#	str - organization_id
-#
-#>
-######################################################################
-p6_lz_util_organization_id_get() {
-
-  local organization_id=$(aws organizations describe-organization --query "Organization.Id" --output text)
-
-  p6_return_str "$organization_id"
+  p6_return_aws_account_id "$account_id"
 }
 
 ######################################################################
