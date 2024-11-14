@@ -1,9 +1,10 @@
 import type { CreateOrganizationalUnitCommandOutput, OrganizationalUnit } from '@aws-sdk/client-organizations'
 import type { CloudFormationCustomResourceEvent, CloudFormationCustomResourceResponse } from 'aws-lambda'
+import type * as winston from 'winston'
 import * as process from 'node:process'
 import { CreateOrganizationalUnitCommand, OrganizationsClient } from '@aws-sdk/client-organizations'
 import { S3Client } from '@aws-sdk/client-s3'
-import { createLogger, getOUTree, getRootId, lookupParentId } from './util'
+import { createLogger, getOuRootId, getOuTree, lookupParentOuId } from './util'
 
 const logger = createLogger()
 
@@ -32,27 +33,27 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
     }
   }
 
-  const ouData = await getOUTree(logger, s3Client, ouFileBucket, ouFileKey)
+  const ouData = await getOuTree(logger, s3Client, ouFileBucket, ouFileKey)
 
   for (const organizationalUnit of ouData) {
     await new Promise(f => setTimeout(f, 1000))
     if (organizationalUnit.Name) {
       let parentId: string
       try {
-        const rootId = await getRootId(logger, organizationsClient)
+        const rootId = await getOuRootId(logger, organizationsClient)
         if (organizationalUnit.Parent === 'Root') {
           parentId = rootId
         }
         else {
-          parentId = await lookupParentId(logger, organizationsClient, organizationalUnit.Parent, rootId)
+          parentId = await lookupParentOuId(logger, organizationsClient, organizationalUnit.Parent, rootId)
         }
       }
       catch (error) {
-        logger.error(`Cannot proceed without Root ID: ${(error as Error).message}`)
+        logger.error(`Cannot proceed without Parent ID: ${(error as Error).message}`)
         throw error
       }
 
-      await createOrganizationalUnit(organizationalUnit, parentId)
+      await createOrganizationalUnit(logger, organizationsClient, organizationalUnit, parentId)
     }
     else {
       logger.warn('Encountered an OU entry without a name')
@@ -68,14 +69,13 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
   }
 }
 
-async function createOrganizationalUnit(organizationalUnit: OrganizationalUnit, parentId: string): Promise<void> {
+async function createOrganizationalUnit(logger: winston.Logger, client: OrganizationsClient, organizationalUnit: OrganizationalUnit, parentId: string): Promise<void> {
   let response: CreateOrganizationalUnitCommandOutput
-  const command = new CreateOrganizationalUnitCommand({
-    Name: organizationalUnit.Name!,
-    ParentId: parentId,
-  })
   try {
-    response = await organizationsClient.send(command)
+    response = await client.send(new CreateOrganizationalUnitCommand({
+      Name: organizationalUnit.Name!,
+      ParentId: parentId,
+    }))
   }
   catch (error) {
     if ((error as any).name === 'DuplicateOrganizationalUnitException') {

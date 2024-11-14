@@ -1,11 +1,11 @@
-import type { CreateAccountCommandOutput, ListAccountsCommandOutput } from '@aws-sdk/client-organizations'
+import type { CreateAccountCommandOutput } from '@aws-sdk/client-organizations'
 import type { CloudFormationCustomResourceEvent, CloudFormationCustomResourceResponse } from 'aws-lambda'
 import type * as winston from 'winston'
 import type { ExtendedAccount } from './types'
 import * as process from 'node:process'
-import { CreateAccountCommand, DuplicateAccountException, ListAccountsCommand, MoveAccountCommand, OrganizationsClient } from '@aws-sdk/client-organizations'
+import { CreateAccountCommand, DuplicateAccountException, MoveAccountCommand, OrganizationsClient } from '@aws-sdk/client-organizations'
 import { S3Client } from '@aws-sdk/client-s3'
-import { createLogger, getAccounts, getOUTree, getRootId, isEmailTaken, lookupParentId, waitForAccountCreation } from './util'
+import { createLogger, getAccountCurrentOuId, getAccountIdByEmail, getAccounts, getOuRootId, getOuTree, isAccountEmailTaken, lookupOuId, lookupParentOuId, waitForAccountCreation } from './util'
 
 const logger = createLogger()
 
@@ -36,9 +36,8 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
     }
   }
 
-  const ouTree = await getOUTree(logger, s3Client, ouFileBucket, ouFileKey)
+  const ouTree = await getOuTree(logger, s3Client, ouFileBucket, ouFileKey)
   const accountData = await getAccounts(logger, s3Client, accountsFileBucket, accountsFileKey)
-  const rootId = await getRootId(logger, organizationsClient)
 
   for (const account of accountData) {
     await new Promise(f => setTimeout(f, 1000))
@@ -50,14 +49,21 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
       continue
     }
 
-    const ou = ouTree.find(ou => ou.Name === account.OrganizationalUnitName)
-    logger.info(`Found OU: ${JSON.stringify(ou)}`)
-    const parentOU = ou?.Parent ?? ''
-    const parentOUId = await lookupParentId(logger, organizationsClient, parentOU, rootId)
-    logger.info(`Found parent OU ID: ${parentOUId}`)
+    // Lookup Target OU ID
+    const tmpOu = ouTree.find(ou => ou.Name === account.OrganizationalUnitName)
+    const parentOuName = tmpOu?.Parent ?? ''
+    logger.info(`Found OU: ${tmpOu?.Name} with parent: ${parentOuName}`)
+
+    const rootId = await getOuRootId(logger, organizationsClient)
+    const parentOuId = await lookupParentOuId(logger, organizationsClient, parentOuName, rootId)
+    const ouId = await lookupOuId(logger, organizationsClient, account.OrganizationalUnitName, parentOuId)
 
     account.Id = await createAccount(logger, organizationsClient, account)
-    moveAccount(logger, organizationsClient, account, parentOUId, parentOU, rootId)
+
+    // Lookup the CURRENT OU ID
+    const currentOuId = await getAccountCurrentOuId(logger, organizationsClient, account.Id!) // source
+
+    moveAccount(logger, organizationsClient, account, currentOuId, ouId)
   }
 
   return {
@@ -69,24 +75,8 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
   }
 }
 
-async function getAccountIdByEmail(logger: winston.Logger, client: OrganizationsClient, email: string): Promise<string | undefined> {
-  const listAccountsCommand = new ListAccountsCommand({})
-  let response: ListAccountsCommandOutput
-  try {
-    response = await client.send(listAccountsCommand)
-  }
-  catch (error) {
-    logger.error(`Failed to list accounts by email ${email}: ${(error as Error).message}`)
-    throw error
-  }
-
-  const account = response.Accounts?.find(account => account.Email === email)
-
-  return account?.Id
-}
-
 async function createAccount(logger: winston.Logger, client: OrganizationsClient, account: ExtendedAccount): Promise<string | undefined> {
-  const emailExists = await isEmailTaken(logger, client, account.Email!)
+  const emailExists = await isAccountEmailTaken(logger, client, account.Email!)
 
   if (emailExists) {
     logger.info(`Account creation skipped: Email ${account.Email} is already in use.`)
@@ -95,12 +85,11 @@ async function createAccount(logger: winston.Logger, client: OrganizationsClient
   }
 
   let response: CreateAccountCommandOutput
-  const createAccountCommand = new CreateAccountCommand({
-    AccountName: account.Name!,
-    Email: account.Email!,
-  })
   try {
-    response = await client.send(createAccountCommand)
+    response = await client.send(new CreateAccountCommand({
+      AccountName: account.Name!,
+      Email: account.Email!,
+    }))
   }
   catch (error) {
     logger.error(`Failed to create account ${account.Name} with email ${account.Email}: ${(error as Error).message}`)
@@ -118,16 +107,20 @@ async function createAccount(logger: winston.Logger, client: OrganizationsClient
   return accountId
 }
 
-async function moveAccount(logger: winston.Logger, client: OrganizationsClient, account: ExtendedAccount, parentOUId: string, parentOUName: string, rootOuId: string): Promise<void> {
-  const moveAccountCommand = new MoveAccountCommand({
-    AccountId: account.Id,
-    SourceParentId: rootOuId,
-    DestinationParentId: parentOUId,
-  })
+async function moveAccount(logger: winston.Logger, client: OrganizationsClient, account: ExtendedAccount, currentAccountOuId: string, ouId: string): Promise<void> {
+  if (currentAccountOuId === ouId) {
+    logger.info(`Account ${account.Name} is already in ${ouId}. Skipping move.`)
+    return
+  }
+
   try {
-    await client.send(moveAccountCommand)
+    await client.send(new MoveAccountCommand({
+      AccountId: account.Id,
+      SourceParentId: currentAccountOuId,
+      DestinationParentId: ouId,
+    }))
     logger.info(
-      `Created account: ${account.Name} (ID: ${account.Id}) under OU ID: ${parentOUId}`,
+      `Moved account: ${account.Name} (ID: ${account.Id}) under OU ID: ${ouId}`,
     )
   }
   catch (error) {
@@ -136,7 +129,7 @@ async function moveAccount(logger: winston.Logger, client: OrganizationsClient, 
     }
     else {
       logger.error(
-        `Failed to move account ${account.Name} to OU ${parentOUName}: ${(error as Error).message}`,
+        `Failed to move account ${account.Name} to OU ${ouId}: ${(error as Error).message}`,
       )
       throw error
     }
