@@ -50,6 +50,7 @@ export class AVMStack extends cdk.Stack {
       .toListAccounts()
       .toListOrganizationalUnitsForParent()
       .toListRoots()
+      .toListParents()
       .toMoveAccount()
     accountsFunction.addToRolePolicy(policy)
 
