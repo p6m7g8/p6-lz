@@ -1,53 +1,50 @@
 import type { Construct } from 'constructs'
 import * as cdk from 'aws-cdk-lib'
 import * as cloudtrail from 'aws-cdk-lib/aws-cloudtrail'
-import * as config from 'aws-cdk-lib/aws-config'
-import * as iam from 'aws-cdk-lib/aws-iam'
+// import * as config from 'aws-cdk-lib/aws-config'
+// import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as logs from 'aws-cdk-lib/aws-logs'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 
+interface AuditAccountStackProps extends cdk.StackProps {
+  organizationId: string
+  logarchiveAccountId: string
+}
+
 export class AuditAccountStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: AuditAccountStackProps) {
     super(scope, id, props)
 
-    const logarchiveAccountId = this.node.tryGetContext('logarchiveAccountId')
-    const organizationId = this.node.tryGetContext('organizationId')
+    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${props.logarchiveAccountId}-${cdk.Stack.of(this).region}`
+    // const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${props.logarchiveAccountId}-${cdk.Stack.of(this).region}`
 
-    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${logarchiveAccountId}-${cdk.Stack.of(this).region}`
-    const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${logarchiveAccountId}-${cdk.Stack.of(this).region}`
-    const logBucketKeyArn = `arn:aws:kms:${cdk.Stack.of(this).region}:${logarchiveAccountId}:key/p6-lz-kms-alias/log-archive-key`
-
-    // Reference the S3 buckets and KMS key
     const cloudTrailBucket = s3.Bucket.fromBucketArn(this, 'CloudTrailBucket', cloudTrailBucketArn)
-    const configBucket = s3.Bucket.fromBucketArn(this, 'ConfigBucket', configBucketArn)
-    const logBucketKey = kms.Key.fromKeyArn(this, 'LogBucketKey', logBucketKeyArn)
+    // const configBucket = s3.Bucket.fromBucketArn(this, 'ConfigBucket', configBucketArn)
 
-    // IAM Role for AWS Config Recorder
-    const configRecorderRole = iam.Role.fromRoleArn(this, 'ConfigRecorderRole', `arn:aws:iam::${cdk.Stack.of(this).account}:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig`)
+    // const configRecorderRole = new iam.Role(this, 'ConfigRecorderRole', {
+    //   assumedBy: new iam.ServicePrincipal('config.amazonaws.com'),
+    // })
 
-    // Grant permissions to use the KMS key
-    logBucketKey.grantEncryptDecrypt(configRecorderRole)
+    // // AWS Config Recorder
+    // new config.CfnConfigurationRecorder(this, 'ConfigurationRecorder', {
+    //   name: 'default',
+    //   roleArn: configRecorderRole.roleArn,
+    //   recordingGroup: {
+    //     allSupported: true,
+    //     includeGlobalResourceTypes: true,
+    //   },
+    // })
 
-    // AWS Config Recorder
-    new config.CfnConfigurationRecorder(this, 'ConfigurationRecorder', {
-      name: 'default',
-      roleArn: configRecorderRole.roleArn,
-      recordingGroup: {
-        allSupported: true,
-        includeGlobalResourceTypes: true,
-      },
-    })
-
-    // AWS Config Delivery Channel
-    new config.CfnDeliveryChannel(this, 'DeliveryChannel', {
-      name: 'default',
-      s3BucketName: configBucket.bucketName,
-      s3KeyPrefix: `AWSLogs/${cdk.Stack.of(this).account}/Config/`,
-      configSnapshotDeliveryProperties: {
-        deliveryFrequency: 'TwentyFour_Hours',
-      },
-    })
+    // // AWS Config Delivery Channel
+    // new config.CfnDeliveryChannel(this, 'DeliveryChannel', {
+    //   name: 'default',
+    //   s3BucketName: configBucket.bucketName,
+    //   s3KeyPrefix: `${cdk.Stack.of(this).account}/Config`,
+    //   configSnapshotDeliveryProperties: {
+    //     deliveryFrequency: 'TwentyFour_Hours',
+    //   },
+    // })
 
     const cloudTrailEncryptionKey = new kms.Key(this, 'CloudTrailEncryptionKey', {
       alias: 'p6/lz/kms/alias/cloudtrail-key',
@@ -66,7 +63,7 @@ export class AuditAccountStack extends cdk.Stack {
       cloudWatchLogsRetention: logs.RetentionDays.ONE_MONTH,
       encryptionKey: cloudTrailEncryptionKey,
       bucket: cloudTrailBucket,
-      orgId: organizationId,
+      orgId: props.organizationId,
     })
 
     // Enable Security Hub
