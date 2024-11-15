@@ -101,6 +101,7 @@ p6_lz_cmd_list() {
 #
 # Function: p6_lz_cmd_stacks()
 #
+#  Environment:	 CDKT
 #>
 ######################################################################
 p6_lz_cmd_stacks() {
@@ -159,7 +160,7 @@ p6_lz_cmd_bootstrap() {
 ######################################################################
 p6_lz_cmd_deploy() {
 
-  p6_lz_run_build
+  # p6_lz_run_build
   p6_lz_run "deploy"
 
   p6_return_void
@@ -191,7 +192,6 @@ p6_lz_cmd_destroy() {
 
   pnpm cdk destroy --all --force
 
-  # XXX: Note Service Linked Roles can not be deleted
   # XXX: Organization/Accounts can not be deleted easily
   # XXX: Deleting Identity Access Center has implications like logging in or even subsequent action in this script
   # XXX: Deleting logarchive is not compliant in production setups
@@ -213,6 +213,7 @@ p6_lz_cmd_destroy() {
 ######################################################################
 p6_lz_run_install() {
 
+  p6_h1 "Installing"
   pnpm install
 
   p6_return_void
@@ -227,7 +228,17 @@ p6_lz_run_install() {
 ######################################################################
 p6_lz_run_build() {
 
-  pnpm run build
+  p6_h1 "Building"
+
+  p6_h2 "Linting"
+  pnpm eslint .
+
+  p6_h2 "Testing"
+  node --trace-deprecation ./node_modules/jest/bin/jest.js --config jest.config.js --coverage
+
+  p6_h2 "Synthing"
+  local audit_account_id=$(p6_lz_util_audit_account_id_get)
+  pnpm cdk synth --context auditAccountId=$audit_account_id
 
   p6_return_void
 }
@@ -241,6 +252,7 @@ p6_lz_run_build() {
 ######################################################################
 p6_lz_run_list() {
 
+  p6_h1 "Listing"
   pnpm cdk ls
 
   p6_return_void
@@ -254,24 +266,21 @@ p6_lz_run_list() {
 #  Args:
 #	action -
 #
-#  Environment:	 SCP _3_ _4_
+#  Environment:	 SCP
 #>
 ######################################################################
 p6_lz_run() {
   local action="$1"
 
+  p6_h1 "Running"
+
   # break glass
-  p6_lz_run_bootstrap "$action"
+  # p6_lz_run_bootstrap "$action"
 
-  p6_lz_run_phase_1 "$action"
-  p6_lz_run_phase_2 "$action"
-  p6_lz_run_phase_3_logarchive_account "$action"
-  # p6_lz_run_phase_3_audit_account "$action"
-  # p6_lz_run_phase_3_shared_account "$action"
-
-  # p6_lz_run_phase_4_sandbox_account "$action"
-  # p6_lz_run_phase_4_dev_account "$action"
-  # p6_lz_run_phase_4_prod_account "$action"
+  # p6_lz_run_phase_1 "$action"
+  # p6_lz_run_phase_2 "$action"
+  p6_lz_run_phase_3 "$action"
+  p6_lz_run_phase_4 "$action"
 
   # apply Service Control Policies (SCP)
 
@@ -293,6 +302,7 @@ p6_lz_run() {
 p6_lz_run_bootstrap() {
   local action="$1"
 
+  p6_h2 "Bootstraping"
   if [ "$action" = "deploy" ]; then
     pnpm cdk bootstrap
   else
@@ -313,6 +323,7 @@ p6_lz_run_bootstrap() {
 p6_lz_run_phase_1() {
   local action="$1"
 
+  p6_h2 "Phase 1"
   pnpm cdk $action \
     --require-approval never \
     p6-lz-organization \
@@ -334,6 +345,7 @@ p6_lz_run_phase_1() {
 p6_lz_run_phase_2() {
   local action="$1"
 
+  p6_h2 "Phase 2"
   local mgmt_account_id=$(p6_aws_svc_organization_mgmt_account_id_get)
   local account_ids=$(p6_lz_util_account_ids_get "$mgmt_account_id")
   local account_id
@@ -359,6 +371,52 @@ p6_lz_run_phase_2() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_phase_3(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _3_
+#>
+######################################################################
+p6_lz_run_phase_3() {
+  local action="$1"
+
+  p6_lz_run_phase_3_mgmt_account "$action"
+  # p6_lz_run_phase_3_logarchive_account "$action"
+  p6_lz_run_phase_3_audit_account "$action"
+  # p6_lz_run_phase_3_shared_account "$action"
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_phase_3_mgmt_account(acction)
+#
+#  Args:
+#	acction -
+#
+#  Environment:	 _3_
+#>
+######################################################################
+p6_lz_run_phase_3_mgmt_account() {
+  local acction="$1"
+
+  p6_h2 "Phase 3: Mgmt"
+  local audit_account_id=$(p6_lz_util_audit_account_id_get)
+  pnpm cdk $action \
+    --require-approval never \
+    --context auditAccountId=$audit_account_id \
+    p6-lz-mgmt
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run_phase_3_logarchive_account(action)
 #
 #  Args:
@@ -370,6 +428,7 @@ p6_lz_run_phase_2() {
 p6_lz_run_phase_3_logarchive_account() {
   local action="$1"
 
+  p6_h2 "Phase 3: Logarchive"
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   local organization_id=$(p6_aws_svc_organizations_id_get)
 
@@ -396,22 +455,39 @@ p6_lz_run_phase_3_logarchive_account() {
 p6_lz_run_phase_3_audit_account() {
   local action="$1"
 
+  p6_h2 "Phase 3: Audit"
+  local mgmt_account_id=$(p6_aws_svc_organization_mgmt_account_id_get)
   local audit_account_id=$(p6_lz_util_audit_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   local organization_id=$(p6_aws_svc_organizations_id_get)
+  local cloudtrail_admin_role=$(p6_aws_svc_iam_roles_list | grep p6-lz-mgmt-CloudTrailAdminRole | awk '{print $3}')
 
-  if [ "$action" = "deploy" ]; then
-    p6_aws_svc_organizations_sts_su $audit_account_id
-    aws iam create-service-linked-role --aws-service-name "config.amazonaws.com" >/dev/null 2>&1 || true
-    p6_aws_svc_organizations_sts_su_un
-  fi
+  p6_h3 "Phase 3: Audit: Delegated CloudTrail"
+  p6_aws_svc_organizations_sts_su $audit_account_id
+
+  #  local policy=$(p6_template_process conf/assume-cloudtrail-admin-role-policy.json MANAGEMENT_ACCOUNT_ID=$mgmt_account_id)
+
+  # aws iam put-role-policy \
+  #   --role-name OrganizationAccountAccessRole \
+  #   --policy-name p6-lz-audit-deletgated-AssumeCloudTrailAdminRolePolicy \
+  #   --policy-document file://conf/assume-cloudtrail-admin-role-policy.json
 
   pnpm cdk $action \
     --context auditAccountId=$audit_account_id \
     --context logarchiveAccountId=$logarchive_account_id \
     --context organizationId=$organization_id \
     --require-approval never \
-    p6-lz-audit
+    --role-arn $cloudtrail_admin_role \
+    p6-lz-audit-delegated-cloudtrail
+  p6_aws_svc_organizations_sts_su_un
+
+  # p6_h3 "Phase 3: Audit: main"
+  # pnpm cdk $action \
+  #   --context auditAccountId=$audit_account_id \
+  #   --context logarchiveAccountId=$logarchive_account_id \
+  #   --context organizationId=$organization_id \
+  #   --require-approval never \
+  #   p6-lz-audit
 
   p6_return_void
 }
@@ -430,6 +506,7 @@ p6_lz_run_phase_3_audit_account() {
 p6_lz_run_phase_3_shared_account() {
   local action="$1"
 
+  p6_h2 "Phase 3: Shared"
   local shared_account_id=$(p6_lz_util_shared_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
 
@@ -438,6 +515,27 @@ p6_lz_run_phase_3_shared_account() {
     --context sharedAccountId=$shared_account_id \
     --require-approval never \
     p6-lz-shared
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_phase_4(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _4_
+#>
+######################################################################
+p6_lz_run_phase_4() {
+  local action="$1"
+
+  # p6_lz_run_phase_4_sandbox_account "$action"
+  # p6_lz_run_phase_4_dev_account "$action"
+  # p6_lz_run_phase_4_prod_account "$action"
 
   p6_return_void
 }
@@ -456,6 +554,7 @@ p6_lz_run_phase_3_shared_account() {
 p6_lz_run_phase_4_sandbox_account() {
   local action="$1"
 
+  p6_h2 "Phase 4: Sandbox"
   # local audit_account_id=$(p6_lz_util_audit_account_id_get)
   # local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   # local shared_account_id=$(p6_lz_util_shared_account_id_get)
@@ -483,6 +582,7 @@ p6_lz_run_phase_4_sandbox_account() {
 p6_lz_run_phase_4_dev_account() {
   local action="$1"
 
+  p6_h2 "Phase 4: Dev"
   # local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   # local shared_account_id=$(p6_lz_util_shared_account_id_get)
   # local sandbox_account_id=$(p6_lz_util_sandbox_account_id_get)
@@ -510,6 +610,7 @@ p6_lz_run_phase_4_dev_account() {
 p6_lz_run_phase_4_prod_account() {
   local action="$1"
 
+  p6_h2 "Phase 4: Prod"
   # local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   # local shared_account_id=$(p6_lz_util_shared_account_id_get)
   # local sandbox_account_id=$(p6_lz_util_sandbox_account_id_get)

@@ -5,15 +5,18 @@ import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 
+interface SharedAccountStackProps extends cdk.StackProps {
+  logarchiveAccountId: string
+}
+
 export class SharedAccountStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: SharedAccountStackProps) {
     super(scope, id, props)
 
-    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`
-    const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${cdk.Stack.of(this).account}-${cdk.Stack.of(this).region}`
+    const cloudTrailBucketArn = `arn:aws:s3:::p6-lz-logarchive-cloudtrail-logs-${props.logarchiveAccountId}-${cdk.Stack.of(this).region}`
+    const configBucketArn = `arn:aws:s3:::p6-lz-logarchive-config-logs-${props.logarchiveAccountId}-${cdk.Stack.of(this).region}`
     const logBucketKeyArn = `arn:aws:kms:${cdk.Stack.of(this).region}:${cdk.Stack.of(this).account}:key/p6-lz-kms-alias/log-archive-key`
 
-    // Reference the S3 buckets and KMS key
     const cloudTrailBucket = s3.Bucket.fromBucketArn(this, 'CloudTrailBucket', cloudTrailBucketArn)
     const configBucket = s3.Bucket.fromBucketArn(this, 'ConfigBucket', configBucketArn)
     const logBucketKey = kms.Key.fromKeyArn(this, 'LogBucketKey', logBucketKeyArn)

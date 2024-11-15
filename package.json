@@ -3,15 +3,9 @@
   "version": "0.1.0",
   "bin": "bin/deploy.js",
   "scripts": {
-    "build": "pnpm run lint && pnpm run test && pnpm run cdk synth",
-    "cdk": "cdk",
     "clean": "rm -rf cdk.out/ coverage/",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "nuke": "rm -f pnpm-lock.yaml && pnpm run reset",
-    "reset": "rm -rf node_modules/ && pnpm run clean",
-    "test": "node --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.js --coverage",
-    "test:watch": "node --trace-deprecation ./node_modules/jest/bin/jest.js  --config jest.config.js --watch --coverage"
+    "reset": "rm -rf node_modules/ && pnpm run clean"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",

@@ -6,11 +6,13 @@ import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 
-export class LogarchiveAccountStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props)
+interface LogarchiveAccountStackProps extends cdk.StackProps {
+  organizationId: string
+}
 
-    const organizationId = this.node.tryGetContext('organizationId')
+export class LogarchiveAccountStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props: LogarchiveAccountStackProps) {
+    super(scope, id, props)
 
     // KMS Key for S3 Bucket Encryption
     const logBucketKey = new kms.Key(this, 'LogBucketKey', {
@@ -34,7 +36,7 @@ export class LogarchiveAccountStack extends cdk.Stack {
         ],
         conditions: {
           StringEquals: {
-            'aws:PrincipalOrgID': organizationId,
+            'aws:PrincipalOrgID': props.organizationId,
           },
         },
       }),
@@ -88,7 +90,7 @@ export class LogarchiveAccountStack extends cdk.Stack {
         resources: [`${cloudTrailBucket.bucketArn}/AWSLogs/*/*`],
         conditions: {
           StringEquals: {
-            'aws:PrincipalOrgID': organizationId,
+            'aws:PrincipalOrgID': props.organizationId,
             's3:x-amz-acl': 'bucket-owner-full-control',
           },
         },
@@ -140,10 +142,10 @@ export class LogarchiveAccountStack extends cdk.Stack {
         effect: iam.Effect.ALLOW,
         principals: [new iam.AnyPrincipal()],
         actions: ['s3:PutObject'],
-        resources: [`${configBucket.bucketArn}/AWSLogs/*/*`],
+        resources: [`${configBucket.bucketArn}/${cdk.Stack.of(this).account}/Config`],
         conditions: {
           StringEquals: {
-            'aws:PrincipalOrgID': organizationId,
+            'aws:PrincipalOrgID': props.organizationId,
             's3:x-amz-acl': 'bucket-owner-full-control',
           },
         },
