@@ -3,11 +3,9 @@
 import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
 import { AuditAccountStack } from './audit'
-import { AuditDelegatedCloudTrailAccountStack } from './audit-delegated-cloudtrail'
 import { AVMStack } from './avm'
 import { DevAccountStack } from './dev'
 import { LogarchiveAccountStack } from './logarchive'
-import { MgmtAccountStack } from './mgmt'
 import { OrganizationStack } from './organization'
 import { ProdAccountStack } from './prod'
 import { SandboxAccountStack } from './sandbox'
@@ -29,10 +27,6 @@ const organizationId = app.node.tryGetContext('organizationId')
 
 new OrganizationStack(app, 'p6-lz-organization', { env })
 new AVMStack(app, 'p6-lz-avm', { env })
-new MgmtAccountStack(app, 'p6-lz-mgmt', {
-  env,
-  auditAccountId,
-})
 
 const logarchiveAccountStack = new LogarchiveAccountStack(app, 'p6-lz-logarchive', {
   env: {
@@ -42,14 +36,6 @@ const logarchiveAccountStack = new LogarchiveAccountStack(app, 'p6-lz-logarchive
   organizationId,
 })
 
-const auditDelegatedCloudTrailAccountStack = new AuditDelegatedCloudTrailAccountStack(app, 'p6-lz-audit-delegated-cloudtrail', {
-  env: {
-    account: auditAccountId,
-    region: env.region,
-  },
-  logarchiveAccountId,
-  organizationId,
-})
 const auditAccountStack = new AuditAccountStack(app, 'p6-lz-audit', {
   env: {
     account: auditAccountId,
@@ -58,7 +44,6 @@ const auditAccountStack = new AuditAccountStack(app, 'p6-lz-audit', {
   logarchiveAccountId,
   organizationId,
 })
-auditAccountStack.addDependency(auditDelegatedCloudTrailAccountStack)
 auditAccountStack.addDependency(logarchiveAccountStack)
 
 const sharedAccountStack = new SharedAccountStack(app, 'p6-lz-shared', {

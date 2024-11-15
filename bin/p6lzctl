@@ -275,10 +275,10 @@ p6_lz_run() {
   p6_h1 "Running"
 
   # break glass
-  # p6_lz_run_bootstrap "$action"
+  p6_lz_run_bootstrap "$action"
 
-  # p6_lz_run_phase_1 "$action"
-  # p6_lz_run_phase_2 "$action"
+  p6_lz_run_phase_1 "$action"
+  p6_lz_run_phase_2 "$action"
   p6_lz_run_phase_3 "$action"
   p6_lz_run_phase_4 "$action"
 
@@ -383,9 +383,9 @@ p6_lz_run_phase_3() {
   local action="$1"
 
   p6_lz_run_phase_3_mgmt_account "$action"
-  # p6_lz_run_phase_3_logarchive_account "$action"
+  p6_lz_run_phase_3_logarchive_account "$action"
   p6_lz_run_phase_3_audit_account "$action"
-  # p6_lz_run_phase_3_shared_account "$action"
+  p6_lz_run_phase_3_shared_account "$action"
 
   p6_return_void
 }
@@ -406,10 +406,10 @@ p6_lz_run_phase_3_mgmt_account() {
 
   p6_h2 "Phase 3: Mgmt"
   local audit_account_id=$(p6_lz_util_audit_account_id_get)
-  pnpm cdk $action \
-    --require-approval never \
-    --context auditAccountId=$audit_account_id \
-    p6-lz-mgmt
+
+  p6_h3 "Phase 3: Mgmt: Delegating CloudTrail"
+  p6_aws_svc_organization_services_enable "cloudtrail.amazonaws.com"
+  p6_aws_svc_cloudtrail_admin_delegate_register "$audit_account_id"
 
   p6_return_void
 }
@@ -460,34 +460,14 @@ p6_lz_run_phase_3_audit_account() {
   local audit_account_id=$(p6_lz_util_audit_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   local organization_id=$(p6_aws_svc_organizations_id_get)
-  local cloudtrail_admin_role=$(p6_aws_svc_iam_roles_list | grep p6-lz-mgmt-CloudTrailAdminRole | awk '{print $3}')
 
-  p6_h3 "Phase 3: Audit: Delegated CloudTrail"
-  p6_aws_svc_organizations_sts_su $audit_account_id
-
-  #  local policy=$(p6_template_process conf/assume-cloudtrail-admin-role-policy.json MANAGEMENT_ACCOUNT_ID=$mgmt_account_id)
-
-  # aws iam put-role-policy \
-  #   --role-name OrganizationAccountAccessRole \
-  #   --policy-name p6-lz-audit-deletgated-AssumeCloudTrailAdminRolePolicy \
-  #   --policy-document file://conf/assume-cloudtrail-admin-role-policy.json
-
+  p6_h3 "Phase 3: Audit"
   pnpm cdk $action \
     --context auditAccountId=$audit_account_id \
     --context logarchiveAccountId=$logarchive_account_id \
     --context organizationId=$organization_id \
     --require-approval never \
-    --role-arn $cloudtrail_admin_role \
-    p6-lz-audit-delegated-cloudtrail
-  p6_aws_svc_organizations_sts_su_un
-
-  # p6_h3 "Phase 3: Audit: main"
-  # pnpm cdk $action \
-  #   --context auditAccountId=$audit_account_id \
-  #   --context logarchiveAccountId=$logarchive_account_id \
-  #   --context organizationId=$organization_id \
-  #   --require-approval never \
-  #   p6-lz-audit
+    p6-lz-audit
 
   p6_return_void
 }
