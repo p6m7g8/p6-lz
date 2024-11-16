@@ -275,12 +275,12 @@ p6_lz_run() {
   p6_h1 "Running"
 
   # break glass
-  p6_lz_run_bootstrap "$action"
+  # p6_lz_run_bootstrap "$action"
 
-  p6_lz_run_phase_1 "$action"
-  p6_lz_run_phase_2 "$action"
+  # p6_lz_run_phase_1 "$action"
+  # p6_lz_run_phase_2 "$action"
   p6_lz_run_phase_3 "$action"
-  p6_lz_run_phase_4 "$action"
+  # p6_lz_run_phase_4 "$action"
 
   # apply Service Control Policies (SCP)
 
@@ -382,10 +382,10 @@ p6_lz_run_phase_2() {
 p6_lz_run_phase_3() {
   local action="$1"
 
-  p6_lz_run_phase_3_mgmt_account "$action"
-  p6_lz_run_phase_3_logarchive_account "$action"
+  # p6_lz_run_phase_3_mgmt_account "$action"
+  # p6_lz_run_phase_3_logarchive_account "$action"
   p6_lz_run_phase_3_audit_account "$action"
-  p6_lz_run_phase_3_shared_account "$action"
+  # p6_lz_run_phase_3_shared_account "$action"
 
   p6_return_void
 }
@@ -462,7 +462,7 @@ p6_lz_run_phase_3_audit_account() {
   local organization_id=$(p6_aws_svc_organizations_id_get)
 
   p6_h3 "Phase 3: Audit"
-  pnpm cdk $action \
+  echo pnpm cdk $action \
     --context auditAccountId=$audit_account_id \
     --context logarchiveAccountId=$logarchive_account_id \
     --context organizationId=$organization_id \
