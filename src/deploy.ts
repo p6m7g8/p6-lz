@@ -2,14 +2,14 @@
 
 import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
-import { AuditAccountStack } from './audit'
-import { AVMStack } from './avm'
-import { DevAccountStack } from './dev'
-import { LogarchiveAccountStack } from './logarchive'
-import { OrganizationStack } from './organization'
-import { ProdAccountStack } from './prod'
-import { SandboxAccountStack } from './sandbox'
-import { SharedAccountStack } from './shared'
+import { AuditAccountStack } from './stacks/audit'
+import { DevAccountStack } from './stacks/dev'
+import { LogarchiveAccountStack } from './stacks/logarchive'
+import { AVMStack } from './stacks/mgmt-avm'
+import { OrganizationStack } from './stacks/mgmt-organization'
+import { ProdAccountStack } from './stacks/prod'
+import { SandboxAccountStack } from './stacks/sandbox'
+import { SharedAccountStack } from './stacks/shared'
 
 const env = {
   account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
@@ -25,15 +25,14 @@ const devAccountId = app.node.tryGetContext('devAccountId')
 const prodAccountId = app.node.tryGetContext('prodAccountId')
 const organizationId = app.node.tryGetContext('organizationId')
 
-new OrganizationStack(app, 'p6-lz-organization', { env })
-new AVMStack(app, 'p6-lz-avm', { env })
+new OrganizationStack(app, 'p6-lz-mgmt-organization', { env })
+new AVMStack(app, 'p6-lz-mgmt-avm', { env })
 
 const logarchiveAccountStack = new LogarchiveAccountStack(app, 'p6-lz-logarchive', {
   env: {
     account: logarchiveAccountId,
     region: env.region,
   },
-  organizationId,
 })
 
 const auditAccountStack = new AuditAccountStack(app, 'p6-lz-audit', {
