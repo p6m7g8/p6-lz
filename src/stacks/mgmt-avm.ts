@@ -15,7 +15,7 @@ export class AVMStack extends cdk.Stack {
     super(scope, id, props)
 
     const ouFileAsset = new Asset(this, 'OUFileAsset', {
-      path: path.join(__dirname, '..', OU_FILE),
+      path: path.join(__dirname, '..', '..', OU_FILE),
     })
 
     this.createOUs(ouFileAsset)
@@ -24,14 +24,14 @@ export class AVMStack extends cdk.Stack {
 
   private createAccounts(ouFileAsset: Asset) {
     const accountsFileAsset = new Asset(this, 'AccountFileAsset', {
-      path: path.join(__dirname, '..', ACCOUNTS_FILE),
+      path: path.join(__dirname, '..', '..', ACCOUNTS_FILE),
     })
 
     const accountsFunction = new lambdajs.NodejsFunction(this, 'AccountsMaker', {
       runtime: lambda.Runtime.NODEJS_20_X,
       timeout: cdk.Duration.minutes(6),
       tracing: lambda.Tracing.ACTIVE,
-      entry: path.join(__dirname, '..', 'src', 'resources', 'avm.AccountsMaker.ts'),
+      entry: path.join(__dirname, '..', 'resources', 'avm.AccountsMaker.ts'),
       environment: {
         ACCOUNTS_FILE_BUCKET: accountsFileAsset.s3BucketName,
         ACCOUNTS_FILE_KEY: accountsFileAsset.s3ObjectKey,
@@ -69,7 +69,7 @@ export class AVMStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_20_X,
       timeout: cdk.Duration.minutes(1),
       tracing: lambda.Tracing.ACTIVE,
-      entry: path.join(__dirname, '..', 'src', 'resources', 'avm.OUMaker.ts'),
+      entry: path.join(__dirname, '..', 'resources', 'avm.OUMaker.ts'),
       environment: {
         OU_FILE_BUCKET: ouFileAsset.s3BucketName,
         OU_FILE_KEY: ouFileAsset.s3ObjectKey,

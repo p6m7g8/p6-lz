@@ -325,9 +325,10 @@ p6_lz_run_phase_1() {
 
   p6_h2 "Phase 1"
   pnpm cdk $action \
+    --exclusively \
     --require-approval never \
-    p6-lz-organization \
-    p6-lz-avm
+    p6-lz-mgmt-organization \
+    p6-lz-mgmt-avm
 
   p6_return_void
 }
@@ -382,9 +383,9 @@ p6_lz_run_phase_2() {
 p6_lz_run_phase_3() {
   local action="$1"
 
-  # p6_lz_run_phase_3_mgmt_account "$action"
-  # p6_lz_run_phase_3_logarchive_account "$action"
-  p6_lz_run_phase_3_audit_account "$action"
+  p6_lz_run_phase_3_mgmt_account "$action"
+  p6_lz_run_phase_3_logarchive_account "$action"
+  # p6_lz_run_phase_3_audit_account "$action"
   # p6_lz_run_phase_3_shared_account "$action"
 
   p6_return_void
@@ -405,11 +406,11 @@ p6_lz_run_phase_3_mgmt_account() {
   local acction="$1"
 
   p6_h2 "Phase 3: Mgmt"
-  local audit_account_id=$(p6_lz_util_audit_account_id_get)
+  local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
 
   p6_h3 "Phase 3: Mgmt: Delegating CloudTrail"
   p6_aws_svc_organization_services_enable "cloudtrail.amazonaws.com"
-  p6_aws_svc_cloudtrail_admin_delegate_register "$audit_account_id"
+  p6_aws_svc_cloudtrail_admin_delegate_register "$logarchive_account_id"
 
   p6_return_void
 }
@@ -428,15 +429,22 @@ p6_lz_run_phase_3_mgmt_account() {
 p6_lz_run_phase_3_logarchive_account() {
   local action="$1"
 
-  p6_h2 "Phase 3: Logarchive"
+  p6_h2 "Phase 3: Logarchive Stack"
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   local organization_id=$(p6_aws_svc_organizations_id_get)
 
   pnpm cdk $action \
     --context logarchiveAccountId=$logarchive_account_id \
     --context organizationId=$organization_id \
+    --exclusively \
     --require-approval never \
     p6-lz-logarchive
+
+  p6_h3 "Phase 3: Logarchive CloudTrail"
+  p6_aws_svc_organizations_sts_su $logarchive_account_id
+  local trail_arn=$(p6_aws_svc_cloudtrail_trail_arns) # There is only 1 trail in this account
+  p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
+  p6_aws_svc_organizations_sts_su_un
 
   p6_return_void
 }
@@ -456,16 +464,15 @@ p6_lz_run_phase_3_audit_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Audit"
-  local mgmt_account_id=$(p6_aws_svc_organization_mgmt_account_id_get)
   local audit_account_id=$(p6_lz_util_audit_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
   local organization_id=$(p6_aws_svc_organizations_id_get)
 
-  p6_h3 "Phase 3: Audit"
-  echo pnpm cdk $action \
+  pnpm cdk $action \
     --context auditAccountId=$audit_account_id \
     --context logarchiveAccountId=$logarchive_account_id \
     --context organizationId=$organization_id \
+    --exclusively \
     --require-approval never \
     p6-lz-audit
 
@@ -493,6 +500,7 @@ p6_lz_run_phase_3_shared_account() {
   pnpm cdk $action \
     --context logarchiveAccountId=$logarchive_account_id \
     --context sharedAccountId=$shared_account_id \
+    --exclusively \
     --require-approval never \
     p6-lz-shared
 
@@ -541,6 +549,7 @@ p6_lz_run_phase_4_sandbox_account() {
   local sandbox_account_id=$(p6_lz_util_sandbox_account_id_get)
 
   pnpm cdk $action \
+    --exclusively \
     --context sandboxAccountId=$sandbox_account_id \
     --require-approval never \
     p6-lz-sandbox
@@ -569,6 +578,7 @@ p6_lz_run_phase_4_dev_account() {
   local dew_account_id=$(p6_lz_util_dev_account_id_get)
 
   pnpm cdk $action \
+    --exclusively \
     --context devAccountId=$dev_account_id \
     --require-approval never \
     p6-lz-dev
@@ -597,6 +607,7 @@ p6_lz_run_phase_4_prod_account() {
   local prod_account_id=$(p6_lz_util_prod_account_id_get)
 
   pnpm cdk $action \
+    --exclusively \
     --context prodAccountId=$prod_account_id \
     --require-approval never \
     p6-lz-prod
