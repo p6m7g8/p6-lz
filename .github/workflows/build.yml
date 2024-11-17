@@ -11,22 +11,6 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2
-        with:
-          repository: "p6m7g8-dotfiles/p6common"
-          path: ".deps/p6common"
-      - name: Checkout code
-        uses: actions/checkout@v4.2.2
-        with:
-          repository: "p6m7g8-dotfiles/p6aws"
-          path: ".deps/paws"
-      - name: Debug
-        shell: bash
-        run: |
-          pwd
-          ls -alF
-          exit 1
       - name: CDK Build
         uses: p6m7g8-actions/cdk-build@main
         with:
