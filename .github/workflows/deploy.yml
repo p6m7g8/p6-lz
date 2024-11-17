@@ -21,4 +21,4 @@ jobs:
           aws_session_name: ${{ secrets.AWS_SESSION_NAME }}
           cdk_deploy_account: ${{ secrets.CDK_DEPLOY_ACCOUNT }}
           cdk_deploy_region: ${{ secrets.CDK_DEPLOY_REGION }}
-          p6_custom_build_cmd: "bin/p6lzctl deploy"
+          p6_custom_build_cmd: "bin/p6lzctl -d deploy"
