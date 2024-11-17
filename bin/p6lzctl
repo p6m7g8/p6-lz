@@ -190,12 +190,12 @@ p6_lz_cmd_diff() {
 ######################################################################
 p6_lz_cmd_destroy() {
 
-  pnpm cdk destroy --all --force
+  pnpm cdk destroy --verbose --debug --trace --all --force
 
   # XXX: Organization/Accounts can not be deleted easily
   # XXX: Deleting Identity Access Center has implications like logging in or even subsequent action in this script
   # XXX: Deleting logarchive is not compliant in production setups
-  # XXX: Custom Resources orphan the lambda cloud watch logs
+  # XXX: Custom Resources orphan the lambda cloud watch logs include S3 autodelete: true buckets
 
   for l in $(p6_aws_svc_logs_groups_list | grep p6-lz | awk '{print $2}'); do
     aws logs delete-log-group --log-group-name $l
@@ -385,7 +385,7 @@ p6_lz_run_phase_3() {
 
   p6_lz_run_phase_3_mgmt_account "$action"
   p6_lz_run_phase_3_logarchive_account "$action"
-  # p6_lz_run_phase_3_audit_account "$action"
+  p6_lz_run_phase_3_audit_account "$action"
   # p6_lz_run_phase_3_shared_account "$action"
 
   p6_return_void
@@ -406,11 +406,15 @@ p6_lz_run_phase_3_mgmt_account() {
   local acction="$1"
 
   p6_h2 "Phase 3: Mgmt"
+  local audit_account_id=$(p6_lz_util_audit_account_id_get)
   local logarchive_account_id=$(p6_lz_util_logarchive_account_id_get)
 
   p6_h3 "Phase 3: Mgmt: Delegating CloudTrail"
-  p6_aws_svc_organization_services_enable "cloudtrail.amazonaws.com"
-  p6_aws_svc_cloudtrail_admin_delegate_register "$logarchive_account_id"
+  p6_aws_svc_organization_services_enable cloudtrail.amazonaws.com
+  p6_aws_svc_cloudtrail_admin_delegate_register $logarchive_account_id
+
+  p6_h3 "Phase 3: Mgmt: Delegating SecurityHub"
+  aws securityhub enable-organization-admin-account --admin-account-id $audit_account_id || true
 
   p6_return_void
 }

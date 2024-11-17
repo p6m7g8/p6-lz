@@ -6,6 +6,7 @@ import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as logs from 'aws-cdk-lib/aws-logs'
 import * as s3 from 'aws-cdk-lib/aws-s3'
+import { P6CDKNamer } from 'p6-cdk-namer'
 
 /**
  * XXX: Danger! CloudFormation CloudTrail support is a literal piece of shit.
@@ -49,6 +50,10 @@ export class LogarchiveAccountStack extends cdk.Stack {
    */
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props)
+
+    new P6CDKNamer(this, 'P6CDKNamer', {
+      accountAlias: 'p6m7g8-logarchive',
+    })
 
     const cloudTrailPrincipal = new iam.ServicePrincipal('cloudtrail.amazonaws.com')
     const logsPrinciple = new iam.ServicePrincipal('logs.amazonaws.com')
