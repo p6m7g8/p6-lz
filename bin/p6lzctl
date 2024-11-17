@@ -204,16 +204,21 @@ p6_lz_cmd_diff() {
 ######################################################################
 p6_lz_cmd_destroy() {
 
-  pnpm cdk destroy --verbose --debug --trace --all --force
+  p6_h2 "Destroying"
+  pnpm cdk destroy --all --force
 
-  # XXX: Organization/Accounts can not be deleted easily
-  # XXX: Deleting Identity Access Center has implications like logging in or even subsequent action in this script
-  # XXX: Deleting logarchive is not compliant in production setups
-  # XXX: Custom Resources orphan the lambda cloud watch logs include S3 autodelete: true buckets
-
-  for l in $(p6_aws_svc_logs_groups_list | grep p6-lz | awk '{print $2}'); do
-    aws logs delete-log-group --log-group-name $l
+  p6_h3 "Cleaning"
+  local account_ids=$(jq -r 'to_entries[] | select(.key != "managementAccountId") | .value' cdk.context.json)
+  local account_id
+  for account_id in $account_ids; do
+    local account_name=$(p6_aws_svc_organizations_account_name_from_account_id $account_id)
+    p6_h4 "$account_name"
+    p6_aws_svc_organizations_sts_su $account_name
+    p6_aws_svc_organizations_sts_su_un
   done
+
+  p6_h3 "Reset Context"
+  rm -f cdk.context.json
 
   p6_return_void
 }
