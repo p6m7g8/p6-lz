@@ -13,6 +13,10 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - name: Env
+        shell: bash
+        run: |
+          env |sort
       - name: CDK Build and Deploy
         uses: p6m7g8-actions/cdk-deploy@main
         with:
