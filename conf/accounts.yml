@@ -1,9 +1,9 @@
-- Name: p6m7g8-audit
-  Email: pgollucci-aws-p6m7g8-audits@p6m7g8.com
-  OrganizationalUnitName: Security
-
 - Name: p6m7g8-logarchive
   Email: pgollucci-aws-p6m7g8-logarchive@p6m7g8.com
+  OrganizationalUnitName: Security
+
+- Name: p6m7g8-audit
+  Email: pgollucci-aws-p6m7g8-audits@p6m7g8.com
   OrganizationalUnitName: Security
 
 - Name: p6m7g8-shared

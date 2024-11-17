@@ -503,8 +503,12 @@ p6_lz_run_phase_3_logarchive_account() {
   p6_h3 "Phase 3: Logarchive CloudTrail Start Logging"
   p6_aws_svc_organizations_sts_su "p6m7g8-logarchive"
   local trail_arn=$(p6_aws_svc_cloudtrail_trail_arns) # There is only 1 trail in this account
+  local logarchive_bucket_name=$(aws s3 ls | awk '/p6-lz-logarchive-configbucket/ { print $3 }')
   p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
   p6_aws_svc_organizations_sts_su_un
+
+  p6_h3 "Phase 3: Logarchive Add Logarchive Bucket Name to Context"
+  jq --arg k "logarchive-bucket-name" --arg v "$logarchive_bucket_name" '. + {($k): $v}' cdk.context.json >temp.json && mv temp.json cdk.context.json
 
   p6_return_void
 }

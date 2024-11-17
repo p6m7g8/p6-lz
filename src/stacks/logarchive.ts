@@ -5,9 +5,7 @@ import * as config from 'aws-cdk-lib/aws-config'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as logs from 'aws-cdk-lib/aws-logs'
-import * as ram from 'aws-cdk-lib/aws-ram'
 import * as s3 from 'aws-cdk-lib/aws-s3'
-import * as ssm from 'aws-cdk-lib/aws-ssm'
 import { P6CDKNamer } from 'p6-cdk-namer'
 
 /**
@@ -35,6 +33,11 @@ import { P6CDKNamer } from 'p6-cdk-namer'
 
 interface LogarchiveAccountStackProps extends cdk.StackProps {
   auditAccountId: string
+  sharedAccountId: string
+  sandboxAccountId: string
+  devAccountId: string
+  prodAccountId: string
+
 }
 
 /**

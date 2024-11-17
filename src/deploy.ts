@@ -23,6 +23,7 @@ const sharedAccountId = app.node.tryGetContext('sharedAccountId')
 const sandboxAccountId = app.node.tryGetContext('sandboxAccountId')
 const devAccountId = app.node.tryGetContext('devAccountId')
 const prodAccountId = app.node.tryGetContext('prodAccountId')
+const configBucket = app.node.tryGetContext('logarchive-bucket-name')
 
 new OrganizationStack(app, 'p6-lz-mgmt-organization', { env })
 new AVMStack(app, 'p6-lz-mgmt-avm', { env })
@@ -41,6 +42,7 @@ const auditAccountStack = new AuditAccountStack(app, 'p6-lz-audit', {
     region: env.region,
   },
   logarchiveAccountId,
+  configBucket,
 })
 auditAccountStack.addDependency(logarchiveAccountStack)
 
