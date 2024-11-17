@@ -654,7 +654,7 @@ p6_lz_util_cdk_execute() {
   local action="$1"
   local stack="$2"
 
-  local args="--debug --verbose --verbose --verbose --trace --exclusively --require-approval never"
+  local args="--exclusively --require-approval never"
   echo pnpm cdk $action $args $stack
   pnpm cdk $action $args $stack
 
