@@ -1,9 +1,6 @@
 import type { Construct } from 'constructs'
 import * as cdk from 'aws-cdk-lib'
-import * as config from 'aws-cdk-lib/aws-config'
-import * as iam from 'aws-cdk-lib/aws-iam'
-import * as kms from 'aws-cdk-lib/aws-kms'
-import * as s3 from 'aws-cdk-lib/aws-s3'
+import { P6CDKNamer } from 'p6-cdk-namer'
 
 interface SharedAccountStackProps extends cdk.StackProps {
   logarchiveAccountId: string
@@ -12,5 +9,9 @@ interface SharedAccountStackProps extends cdk.StackProps {
 export class SharedAccountStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: SharedAccountStackProps) {
     super(scope, id, props)
+
+    new P6CDKNamer(this, 'P6CDKNamer', {
+      accountAlias: 'p6m7g8-shared',
+    })
   }
 }
