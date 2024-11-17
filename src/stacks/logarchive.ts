@@ -5,7 +5,9 @@ import * as config from 'aws-cdk-lib/aws-config'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as logs from 'aws-cdk-lib/aws-logs'
+import * as ram from 'aws-cdk-lib/aws-ram'
 import * as s3 from 'aws-cdk-lib/aws-s3'
+import * as ssm from 'aws-cdk-lib/aws-ssm'
 import { P6CDKNamer } from 'p6-cdk-namer'
 
 /**
@@ -31,6 +33,10 @@ import { P6CDKNamer } from 'p6-cdk-namer'
  *
  */
 
+interface LogarchiveAccountStackProps extends cdk.StackProps {
+  auditAccountId: string
+}
+
 /**
  * LogarchiveAccountStack
  * @class
@@ -48,17 +54,25 @@ export class LogarchiveAccountStack extends cdk.Stack {
    * @param id - 'LogarchiveAccountStack'
    * @param props - cdk.StackProps
    */
-  constructor(scope: Construct, id: string, props: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: LogarchiveAccountStackProps) {
     super(scope, id, props)
 
+    this.setupIamAccountAlias()
+    const { logGroup, logRole } = this.setupCloudWatch()
+    this.setupCloudTrail(logGroup, logRole)
+    this.setupConfig(props.auditAccountId)
+  }
+
+  private setupIamAccountAlias() {
     new P6CDKNamer(this, 'P6CDKNamer', {
       accountAlias: 'p6m7g8-logarchive',
     })
+  }
 
+  private setupCloudWatch() {
     const cloudTrailPrincipal = new iam.ServicePrincipal('cloudtrail.amazonaws.com')
     const logsPrinciple = new iam.ServicePrincipal('logs.amazonaws.com')
 
-    // ---------------------------------------- CW Logs
     const cwLogKey = new kms.Key(this, 'CWLogKey', {
       alias: 'p6/lz/CWLogKey',
       enableKeyRotation: true,
@@ -74,13 +88,21 @@ export class LogarchiveAccountStack extends cdk.Stack {
       encryptionKey: cwLogKey,
     })
 
-    const logsRole = new iam.Role(this, 'LogsRole', { assumedBy: cloudTrailPrincipal })
-    logsRole.addToPrincipalPolicy(new iam.PolicyStatement({
-      actions: ['logs:PutLogEvents', 'logs:CreateLogStream'],
+    const logRole = new iam.Role(this, 'LogsRole', { assumedBy: cloudTrailPrincipal })
+    logRole.addToPrincipalPolicy(new iam.PolicyStatement({
+      actions: [
+        'logs:PutLogEvents',
+        'logs:CreateLogStream',
+      ],
       resources: [logGroup.logGroupArn],
     }))
 
-    // ---------------------------------------- Trail
+    return { logGroup, logRole }
+  }
+
+  private setupCloudTrail(logGroup: logs.LogGroup, logRole: iam.Role) {
+    const cloudTrailPrincipal = new iam.ServicePrincipal('cloudtrail.amazonaws.com')
+
     const trailKey = new kms.Key(this, 'CloudTrailKey', {
       alias: 'p6/lz/CloudTrailKey',
       enableKeyRotation: true,
@@ -126,7 +148,7 @@ export class LogarchiveAccountStack extends cdk.Stack {
 
     const trail = new cloudtrail.CfnTrail(this, 'Trail', {
       cloudWatchLogsLogGroupArn: logGroup.logGroupArn,
-      cloudWatchLogsRoleArn: logsRole.roleArn,
+      cloudWatchLogsRoleArn: logRole.roleArn,
       enableLogFileValidation: true,
       includeGlobalServiceEvents: true,
       isLogging: false,
@@ -137,13 +159,30 @@ export class LogarchiveAccountStack extends cdk.Stack {
     })
     trail.node.addDependency(bucket)
     trail.node.addDependency(logGroup)
+  }
 
-    // ---------------------------------------- Config
+  private setupConfig(auditAccountId: string) {
+    const auditAccountPrincipal = new iam.AccountPrincipal(auditAccountId)
+    const configPrincipal = new iam.ServicePrincipal('config.amazonaws.com')
+
     const configKey = new kms.Key(this, 'ConfigKey', {
       alias: 'p6/lz/ConfigKey',
       enableKeyRotation: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     })
+    configKey.addToResourcePolicy(
+      new iam.PolicyStatement({
+        principals: [auditAccountPrincipal],
+        actions: [
+          'kms:Encrypt',
+          'kms:Decrypt',
+          'kms:ReEncrypt*',
+          'kms:GenerateDataKey*',
+          'kms:DescribeKey',
+        ],
+        resources: ['*'],
+      }),
+    )
 
     const configBucket = new s3.Bucket(this, 'ConfigBucket', {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -164,8 +203,7 @@ export class LogarchiveAccountStack extends cdk.Stack {
 
     configBucket.addToResourcePolicy(
       new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal('config.amazonaws.com')],
+        principals: [configPrincipal, auditAccountPrincipal],
         resources: [configBucket.bucketArn],
         actions: ['s3:GetBucketAcl'],
       }),
@@ -173,8 +211,7 @@ export class LogarchiveAccountStack extends cdk.Stack {
 
     configBucket.addToResourcePolicy(
       new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal('config.amazonaws.com')],
+        principals: [configPrincipal, auditAccountPrincipal],
         resources: [`${configBucket.bucketArn}/*`],
         actions: ['s3:PutObject'],
         conditions: {
@@ -186,7 +223,7 @@ export class LogarchiveAccountStack extends cdk.Stack {
     )
 
     const configRole = new iam.Role(this, 'RoleAwsConfig', {
-      assumedBy: new iam.ServicePrincipal('config.amazonaws.com'),
+      assumedBy: configPrincipal,
       managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWS_ConfigRole')],
     })
 

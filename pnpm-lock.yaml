@@ -33,8 +33,8 @@ importers:
         specifier: ^10.4.2
         version: 10.4.2
       p6-cdk-namer:
-        specifier: ^1.2.0
-        version: 1.2.0(aws-cdk-lib@2.167.1(constructs@10.4.2))(constructs@10.4.2)
+        specifier: ^1.3.0
+        version: 1.3.0(aws-cdk-lib@2.167.1(constructs@10.4.2))(constructs@10.4.2)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -1806,8 +1806,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-compat-utils@0.6.0:
-    resolution: {integrity: sha512-1vVBdI/HLS6HTHVQCJGlN+LOF0w1Rs/WB9se23mQr84cRM0iMM8PulMFFhQdQ1BvS0cGwjpis4xziI91Rk0l6g==}
+  eslint-compat-utils@0.6.3:
+    resolution: {integrity: sha512-9IDdksh5pUYP2ZLi7mOdROxVjLY8gY2qKxprmrJ/5Dyqud7M/IFKxF3o0VLlRhITm1pK6Fk7NiBxE39M/VlUcw==}
     engines: {node: '>=12'}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -2918,8 +2918,8 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
-  p6-cdk-namer@1.2.0:
-    resolution: {integrity: sha512-BxPodc7pMzBT8EJFC8WiJ2pGiEDZRXE4cXeyKEB6AEFn8faffdSVNmcq6BVOPOiT+rRx3SfploAE4oi/4qo7ug==}
+  p6-cdk-namer@1.3.0:
+    resolution: {integrity: sha512-GKPdIPl7GMpdhlmE3bGeZYNeMFZ9B0I1Df6uHEieD14DwCPdX6Xx4JYf0wFxv6ZH5t78Szd2GGINW3AfvEoZLw==}
     engines: {node: '>= 22.10.0'}
     peerDependencies:
       aws-cdk-lib: ^2.167.1
@@ -6006,7 +6006,7 @@ snapshots:
       eslint: 9.15.0
       semver: 7.6.3
 
-  eslint-compat-utils@0.6.0(eslint@9.15.0):
+  eslint-compat-utils@0.6.3(eslint@9.15.0):
     dependencies:
       eslint: 9.15.0
       semver: 7.6.3
@@ -6133,7 +6133,7 @@ snapshots:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.1(eslint@9.15.0)
       eslint: 9.15.0
-      eslint-compat-utils: 0.6.0(eslint@9.15.0)
+      eslint-compat-utils: 0.6.3(eslint@9.15.0)
       eslint-json-compat-utils: 0.2.1(eslint@9.15.0)(jsonc-eslint-parser@2.4.0)
       espree: 9.6.1
       graphemer: 1.4.0
@@ -7552,7 +7552,7 @@ snapshots:
 
   p-try@2.2.0: {}
 
-  p6-cdk-namer@1.2.0(aws-cdk-lib@2.167.1(constructs@10.4.2))(constructs@10.4.2):
+  p6-cdk-namer@1.3.0(aws-cdk-lib@2.167.1(constructs@10.4.2))(constructs@10.4.2):
     dependencies:
       aws-cdk-lib: 2.167.1(constructs@10.4.2)
       constructs: 10.4.2
