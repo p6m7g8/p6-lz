@@ -14,15 +14,16 @@ const env = {
 
 const app = new cdk.App()
 
-const auditAccountId: string = app.node.tryGetContext('auditAccountId') ?? '12345678912'
-const devAccountId: string = app.node.tryGetContext('devAccountId') ?? '12345678912'
-const logarchiveAccountId: string = app.node.tryGetContext('logarchiveAccountId') ?? '12345678912'
-const managementAccountId: string = app.node.tryGetContext('managementAccountId') ?? '12345678912'
-const networkAccountId: string = app.node.tryGetContext('networkAccountId') ?? '12345678912'
-const prodAccountId: string = app.node.tryGetContext('prodAccountId') ?? '12345678912'
-const qaAccountId: string = app.node.tryGetContext('qaAccountId') ?? '12345678912'
-const sandboxAccountId: string = app.node.tryGetContext('sandboxAccountId') ?? '12345678912'
-const sharedAccountId: string = app.node.tryGetContext('sharedAccountId') ?? '12345678912'
+const accounts = app.node.tryGetContext('Accounts') as Array<{ Name: string, AccountId: string }> ?? []
+const auditAccountId = accounts.find(account => account.Name === 'auditAccount')?.AccountId ?? '12345678912'
+const devAccountId = accounts.find(account => account.Name === 'devAccount')?.AccountId ?? '12345678912'
+const logarchiveAccountId = accounts.find(account => account.Name === 'logarchiveAccount')?.AccountId ?? '12345678912'
+const managementAccountId = accounts.find(account => account.Name === 'managementAccount')?.AccountId ?? '12345678912'
+const networkAccountId = accounts.find(account => account.Name === 'networkAccount')?.AccountId ?? '12345678912'
+const prodAccountId = accounts.find(account => account.Name === 'prodAccount')?.AccountId ?? '12345678912'
+const qaAccountId = accounts.find(account => account.Name === 'qaAccount')?.AccountId ?? '12345678912'
+const sharedAccountId = accounts.find(account => account.Name === 'sharedAccount')?.AccountId ?? '12345678912'
+const sandboxAccountId = accounts.find(account => account.Name === 'sandboxAccount')?.AccountId ?? '12345678912'
 
 const principals: string[] = [
   auditAccountId,

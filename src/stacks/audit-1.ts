@@ -22,11 +22,12 @@ export class AuditAccountStack1 extends cdk.Stack {
     })
 
     const bucket = s3.Bucket.fromBucketArn(this, 'CentralBucket', props.centralBucketArn.toString())
-    new P6LzSraOrgTrail(this, 'P6LzSraOrgTrail', {
+    const trail = new P6LzSraOrgTrail(this, 'P6LzSraOrgTrail', {
       logGroup: cw.logGroup,
       logRole: cw.logRole,
       centralBucket: bucket,
     })
+    trail.node.addDependency(cw)
 
     new P6LzSraConfig(this, 'P6LzSraConfig', {
       principals: props.principals,

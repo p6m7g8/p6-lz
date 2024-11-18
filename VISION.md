@@ -81,7 +81,8 @@ Root
 
   - Network Account
     - Stack 1:
-      - Route53
+      - [ ] Set IAM Account Alias
+      - [ ] - Route53
       - CloudFront
       - Verified Access
       - Shield
@@ -100,6 +101,7 @@ Root
 
   - Shared Account
     - Stack 1:
+      - [ ] Set IAM Account Alias
       - Identity Center
       - Systems Manager
     - Stack 2: Local
@@ -111,6 +113,7 @@ Root
 
   - Forensics Account
     - Stack 1:
+      - [ ] Set IAM Account Alias
       - Step Functions -> Lambda -> Instance -> S3
     - Stack 2: Local
       - Security Hub
