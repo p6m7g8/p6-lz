@@ -297,8 +297,8 @@ p6_lz_run() {
 
   p6_lz_run_phase_1 "$action"
   p6_lz_run_phase_2 "$action"
-  p6_lz_run_phase_3 "$action"
-  p6_lz_run_phase_4 "$action"
+  # p6_lz_run_phase_3 "$action"
+  # p6_lz_run_phase_4 "$action"
 
   # apply Service Control Policies (SCP)
 
@@ -419,6 +419,7 @@ p6_lz_run_phase_2_account_context() {
   p6_h3 "Phase 2: Account Context"
   local pair
   for pair in $(
+    local l
     for l in "$(p6_aws_svc_organizations_accounts_list_active)"; do
       echo "$l" | awk '{print $5 " " $1}' |
         sed -e 's,p6m7g8-,,' -e 's,p6m7g8,management,' -e 's, ,AccountId=,'
