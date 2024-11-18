@@ -36,11 +36,11 @@ const principals: string[] = [
   sharedAccountId,
 ]
 
-const organizationStack = new OrganizationStack(app, 'p6-lz-mgmt-organization', {
+const organizationStack = new OrganizationStack(app, 'p6-lz-management-organization', {
   env,
   accountAlias: 'p6m7g8',
 })
-new AvmStack(app, 'p6-lz-mgmt-avm', { env })
+new AvmStack(app, 'p6-lz-management-avm', { env })
 
 new LogarchiveAccountStack1(app, 'p6-lz-logarchive-1', {
   env: {
