@@ -14,7 +14,7 @@ const env = {
 
 const app = new cdk.App()
 
-const accounts = app.node.tryGetContext('Accounts') as Array<{ Name: string, AccountId: string }>
+const accounts = app.node.tryGetContext('Accounts') as Array<{ Name: string, AccountId: string }> ?? []
 const auditAccountId = accounts.find(account => account.Name === 'auditAccount')?.AccountId ?? '12345678912'
 const devAccountId = accounts.find(account => account.Name === 'devAccount')?.AccountId ?? '12345678912'
 const logarchiveAccountId = accounts.find(account => account.Name === 'logarchiveAccount')?.AccountId ?? '12345678912'
