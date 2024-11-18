@@ -118,7 +118,7 @@ p6_lz_cmd_list() {
 ######################################################################
 p6_lz_cmd_stacks() {
 
-  local account_ids=$(jq -r 'to_entries[] | select(.key != "managementAccountId") | .value' cdk.context.json)
+  local account_ids=$(jq -r '.Accounts[] | select(.Name != "managementAccount") | .AccountId' cdk.context.json)
   local account_id
   for account_id in $account_ids; do
     local account_name=$(p6_aws_svc_organizations_account_name_from_account_id $account_id)
@@ -129,7 +129,7 @@ p6_lz_cmd_stacks() {
     p6_msg
   done
 
-  local management_account_id=$(jq -r ".managementAccountId" cdk.context.json)
+  local management_account_id=$(jq -r '.Accounts[] | select(.Name == "managementAccount") | .AccountId' cdk.context.json)
   local account_name=$(p6_aws_svc_organizations_account_name_from_account_id $management_account_id)
   p6_h3 "$account_name"
   p6_aws_svc_cloudformation_stacks_list | grep -E 'p6-lz-' | sort -k 1,1 -n
@@ -199,7 +199,6 @@ p6_lz_cmd_diff() {
 #
 # Function: p6_lz_cmd_destroy()
 #
-#  Environment:	 XXX
 #>
 ######################################################################
 p6_lz_cmd_destroy() {
@@ -208,7 +207,7 @@ p6_lz_cmd_destroy() {
   pnpm cdk destroy --all --force
 
   p6_h3 "Cleaning"
-  local account_ids=$(jq -r 'to_entries[] | select(.key != "managementAccountId") | .value' cdk.context.json)
+  local account_ids=$(jq -r '.Accounts[] | select(.Name != "managementAccount") | .AccountId' cdk.context.json)
   local account_id
   for account_id in $account_ids; do
     local account_name=$(p6_aws_svc_organizations_account_name_from_account_id $account_id)
@@ -297,7 +296,7 @@ p6_lz_run() {
 
   p6_lz_run_phase_1 "$action"
   p6_lz_run_phase_2 "$action"
-  # p6_lz_run_phase_3 "$action"
+  p6_lz_run_phase_3 "$action"
   # p6_lz_run_phase_4 "$action"
 
   # apply Service Control Policies (SCP)
@@ -315,16 +314,20 @@ p6_lz_run() {
 #  Args:
 #	action -
 #
+#  Environment:	 AWS_REGION
 #>
 ######################################################################
 p6_lz_run_bootstrap() {
   local action="$1"
 
+  local account_id=$(p6_aws_svc_sts_whoami | jq -r ".Account")
+  local region=$AWS_REGION
+
   p6_h2 "Bootstraping"
   if [ "$action" = "deploy" ]; then
-    pnpm cdk bootstrap
+    pnpm cdk bootstrap aws://$account_id/$region
   else
-    echo pnpm cdk bootstrap
+    echo pnpm cdk bootstrap aws://$account_id/$region
   fi
 }
 
@@ -372,7 +375,7 @@ p6_lz_run_phase_2() {
 ######################################################################
 #<
 #
-# Function: p6_lz_run_phasae_2_bootstrap_trust(action)
+# Function: p6_lz_run_phase_2_bootstrap_trust(action)
 #
 #  Args:
 #	action -
@@ -384,8 +387,8 @@ p6_lz_run_phase_2_bootstrap_trust() {
   local action="$1"
 
   p6_h3 "Phase 2: Bootstrap Trust"
-  local management_account_id=$(jq -r ".managementAccountId" cdk.context.json)
-  local account_ids=$(jq -r 'to_entries[] | select(.key != "managementAccountId") | .value' cdk.context.json)
+  local management_account_id=$(jq -r '.Accounts[] | select(.Name == "managementAccount") | .AccountId' cdk.context.json)
+  local account_ids=$(jq -r '.Accounts[] | select(.Name != "managementAccount") | .AccountId' cdk.context.json | sort)
   local account_id
   for account_id in $account_ids; do
     if [ "$action" = "deploy" ]; then
@@ -422,15 +425,25 @@ p6_lz_run_phase_2_account_context() {
     local l
     for l in "$(p6_aws_svc_organizations_accounts_list_active)"; do
       echo "$l" | awk '{print $5 " " $1}' |
-        sed -e 's,p6m7g8-,,' -e 's,p6m7g8,management,' -e 's, ,AccountId=,'
+        sed -e 's,p6m7g8-,,' -e 's,p6m7g8,management,' -e 's, ,=,'
     done
   ); do
-    local key=$(echo "$pair" | cut -d= -f1)
-    local value=$(echo "$pair" | cut -d= -f2)
+    local name=$(echo "$pair" | cut -d= -f1)
+    local account_id=$(echo "$pair" | cut -d= -f2)
+
     if [ -f cdk.context.json ]; then
-      jq --arg k "$key" --arg v "$value" '. + {($k): $v}' cdk.context.json >temp.json && mv temp.json cdk.context.json
+      if jq -e '.Accounts' cdk.context.json >/dev/null; then
+        if ! jq -e --arg account_id "$account_id" '.Accounts[] | select(.AccountId == $account_id)' cdk.context.json >/dev/null; then
+          jq --arg name "$name" --arg account_id "$account_id" \
+            '.Accounts += [{"Name": $name, "AccountId": $account_id}]' cdk.context.json >temp.json && mv temp.json cdk.context.json
+        fi
+      else
+        jq --arg name "$name" --arg account_id "$account_id" \
+          '. + {Accounts: [{"Name": $name, "AccountId": $account_id}]}' cdk.context.json >temp.json && mv temp.json cdk.context.json
+      fi
     else
-      echo '{}' | jq --arg k "$key" --arg v "$value" '. + {($k): $v}' >cdk.context.json
+      echo '{}' | jq --arg name "$name" --arg account_id "$account_id" \
+        '. + {Accounts: [{"Name": $name, "AccountId": $account_id}]}' >cdk.context.json
     fi
   done
 
@@ -456,7 +469,8 @@ p6_lz_run_phase_3() {
   p6_lz_run_phase_3_management_account "$action"
   p6_lz_run_phase_3_logarchive_account "$action"
   p6_lz_run_phase_3_audit_account "$action"
-  p6_lz_run_phase_3_shared_account "$action"
+  # p6_lz_run_phase_3_network_account "$action"
+  # p6_lz_run_phase_3_shared_account "$action"
 
   p6_return_void
 }
@@ -478,12 +492,11 @@ p6_lz_run_phase_3_management_account() {
   p6_h2 "Phase 3: Management"
 
   p6_h3 "Phase 3: Management: Delegating CloudTrail"
-  local logarchive_account_id=$(jq -r '.logarchiveAccountId' cdk.context.json)
+  local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "auditAccount") | .AccountId' cdk.context.json)
   p6_aws_svc_organization_services_enable cloudtrail.amazonaws.com
-  p6_aws_svc_cloudtrail_admin_delegate_register $logarchive_account_id
+  p6_aws_svc_cloudtrail_admin_delegate_register $audit_account_id
 
   p6_h3 "Phase 3: Management: Delegating SecurityHub"
-  local audit_account_id=$(jq -r '.auditAccountId' cdk.context.json)
   p6_aws_svc_securityhub_admin_enable $audit_account_id
 
   p6_return_void
@@ -504,17 +517,13 @@ p6_lz_run_phase_3_logarchive_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Logarchive Stack"
-  p6_lz_util_cdk_execute $action p6-lz-logarchive
-
-  p6_h3 "Phase 3: Logarchive CloudTrail Start Logging"
-  p6_aws_svc_organizations_sts_su "p6m7g8-logarchive"
-  local trail_arn=$(p6_aws_svc_cloudtrail_trail_arns) # There is only 1 trail in this account
-  local logarchive_bucket_name=$(aws s3 ls | awk '/p6-lz-logarchive-configbucket/ { print $3 }')
-  p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
-  p6_aws_svc_organizations_sts_su_un
+  p6_lz_util_cdk_execute $action p6-lz-logarchive-1
 
   p6_h3 "Phase 3: Logarchive Add Logarchive Bucket Name to Context"
+  p6_aws_svc_organizations_sts_su p6m7g8-logarchive
+  local logarchive_bucket_name=$(aws s3 ls | awk '/p6-lz-logarchive-1-p6lzsracentralbucket/ { print $3 }')
   jq --arg k "logarchive-bucket-name" --arg v "$logarchive_bucket_name" '. + {($k): $v}' cdk.context.json >temp.json && mv temp.json cdk.context.json
+  p6_aws_svc_organizations_sts_su_un
 
   p6_return_void
 }
@@ -534,7 +543,33 @@ p6_lz_run_phase_3_audit_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Audit"
-  p6_lz_util_cdk_execute $action p6-lz-audit
+  p6_lz_util_cdk_execute $action p6-lz-audit-1
+
+  p6_h3 "Phase 3: Audit: CloudTrail Start Logging"
+  p6_aws_svc_organizations_sts_su "p6m7g8-audit"
+  local trail_arn=$(p6_aws_svc_cloudtrail_trail_arns) # There is only 1 trail in this account
+  p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
+  p6_aws_svc_organizations_sts_su_un
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_phase_3_network_account(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _3_
+#>
+######################################################################
+p6_lz_run_phase_3_network_account() {
+  local action="$1"
+
+  p6_h2 "Phase 3: Network"
+  p6_lz_util_cdk_execute $action p6-lz-network
 
   p6_return_void
 }
@@ -575,6 +610,7 @@ p6_lz_run_phase_4() {
 
   p6_lz_run_phase_4_sandbox_account "$action"
   p6_lz_run_phase_4_dev_account "$action"
+  p6_lz_run_phase_4_qa_account "$action"
   p6_lz_run_phase_4_prod_account "$action"
 
   p6_return_void
@@ -616,6 +652,26 @@ p6_lz_run_phase_4_dev_account() {
 
   p6_h2 "Phase 4: Dev"
   p6_lz_util_cdk_execute $action p6-lz-dev
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_run_phase_4_qa_account(action)
+#
+#  Args:
+#	action -
+#
+#  Environment:	 _4_
+#>
+######################################################################
+p6_lz_run_phase_4_qa_account() {
+  local action="$1"
+
+  p6_h2 "Phase 4: QA"
+  p6_lz_util_cdk_execute $action p6-lz-qa
 
   p6_return_void
 }

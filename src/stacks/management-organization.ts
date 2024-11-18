@@ -19,7 +19,8 @@ export class OrganizationStack extends cdk.Stack {
       accountAlias: props.accountAlias,
     })
 
-    const centralBucketArn = this.node.tryGetContext('centralBucketArn') ?? 'arn:aws:s3:::p6-lz-dne/'
+    const logarchiveBucketName = this.node.tryGetContext('logarchive-bucket-name') ?? 'p6-lz-dne'
+    const centralBucketArn = `arn:aws:s3:::${logarchiveBucketName}`
 
     this.centralBucketArn = centralBucketArn
   }

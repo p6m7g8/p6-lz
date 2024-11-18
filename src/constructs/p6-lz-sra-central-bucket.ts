@@ -1,3 +1,4 @@
+import type { IPrincipal } from 'aws-cdk-lib/aws-iam'
 import type { Construct } from 'constructs'
 import type { ShareWithOrg } from '../types'
 import * as cdk from 'aws-cdk-lib'
@@ -58,7 +59,14 @@ export class P6LzSraCentralBucket extends cdk.Resource {
       versioned: true,
     })
 
-    const principals = props.principals.map(principal => new iam.AccountPrincipal(principal))
+    const cloudTrailPrinciple = new iam.ServicePrincipal('cloudtrail.amazonaws.com')
+    const configPrinciple = new iam.ServicePrincipal('config.amazonaws.com')
+    bucket.addToResourcePolicy(new iam.PolicyStatement({
+      resources: [bucket.bucketArn],
+      actions: ['s3:GetBucketAcl'],
+      principals: [cloudTrailPrinciple, configPrinciple],
+    }))
+    const principals: IPrincipal[] = props.principals.map(principal => new iam.AccountPrincipal(principal))
     bucket.addToResourcePolicy(new iam.PolicyStatement({
       resources: [bucket.bucketArn],
       actions: ['s3:GetBucketAcl'],
@@ -68,6 +76,17 @@ export class P6LzSraCentralBucket extends cdk.Resource {
     bucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:PutObject'],
       principals,
+      resources: [bucket.arnForObjects('*')],
+      conditions: {
+        StringEquals:
+                {
+                  's3:x-amz-acl': 'bucket-owner-full-control',
+                },
+      },
+    }))
+    bucket.addToResourcePolicy(new iam.PolicyStatement({
+      actions: ['s3:PutObject'],
+      principals: [cloudTrailPrinciple, configPrinciple],
       resources: [bucket.arnForObjects('*')],
       conditions: {
         StringEquals:

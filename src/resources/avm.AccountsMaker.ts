@@ -40,7 +40,7 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
   const accountData = await getAccounts(logger, s3Client, accountsFileBucket, accountsFileKey)
 
   for (const account of accountData) {
-    await new Promise(f => setTimeout(f, 1000))
+    await new Promise(f => setTimeout(f, 2000))
 
     if (!account.Name || !account.Email || !account.OrganizationalUnitName) {
       logger.warn(
