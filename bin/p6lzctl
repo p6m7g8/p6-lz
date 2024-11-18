@@ -342,8 +342,8 @@ p6_lz_run_phase_1() {
   local action="$1"
 
   p6_h2 "Phase 1"
-  p6_lz_util_cdk_execute $action p6-lz-mgmt-organization
-  p6_lz_util_cdk_execute $action p6-lz-mgmt-avm
+  p6_lz_util_cdk_execute $action p6-lz-management-organization
+  p6_lz_util_cdk_execute $action p6-lz-management-avm
 
   p6_return_void
 }
