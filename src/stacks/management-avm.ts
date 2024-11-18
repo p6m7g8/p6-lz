@@ -7,7 +7,7 @@ import { P6LzSraAvmOus } from '../constructs/p6-lz-sra-avm-ous'
 
 const OU_FILE = '../../conf/ou.yml'
 
-export class AVMStack extends cdk.Stack {
+export class AvmStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props)
 

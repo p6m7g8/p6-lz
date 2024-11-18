@@ -3,6 +3,8 @@ https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-arch
 https://github.com/aws-samples/aws-security-reference-architecture-examples
 
 # LandingZone Structure
+
+```text
 Root
 ├── Infrastructure
 │   └── p6m7g8-shared
@@ -20,40 +22,45 @@ Root
     │   └── p6m7g8-qa
     └── Production
         └── p6m7g8-prod
+```
 
 # Order
+
 ## Break Glass
-- Management Account:
-  - Stack 1:
-    - Set IAM Account Alias
-    - Make Org
-  - Stack 2:
-    - Make OU
-    - Make accounts
-  - CLI:
-    - Set CDK Context for accountIds
-    - Enable Services
-    - Delegate Administrators
 
-- Logarchive Account:
-  - Stack 1:
-    - Central Bucket
-    - Security Lake
-  - Stack 2: Local
-    - Security Hub
-    - GuardDuty
-    - Macie
-    - Config
-    - Access Analyzer
-    - Access Logs
-    - DNS Logs
-    - Flow Logs
+- [x] Management Account:
+  - [x] Stack 1: p6-lz-organization
+    - [x] Set IAM Account Alias
+    - [x] Make Org
+  - [x] Stack 2: p6-lz-avm
+    - [x] Make OU
+    - [x] Make accounts
+  - [x] CLI:
+    - [x] Set CDK Context for accountIds
+    - [x] Enable Services
+    - [x] Delegate Administrators
 
-  - Audit Account
-    - Stack 1
-      - Org CloudTrail
-    - CLI:
-      - Start Logging
+- [ ] Logarchive Account:
+  - [x] Stack 1: p6-lz-logarchive-1
+    - [x] Set IAM Account Alias
+    - [x] Central Bucket
+    - [ ] Security Lake
+  - [ ] Stack 2: p6-lz-logarchive-2
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [ ] Config
+    - [ ] Access Analyzer
+    - [ ] Access Logs
+    - [ ] DNS Logs
+    - [ ] Flow Logs
+
+  - [ ] Audit Account
+    - [x] Stack 1
+      - [x] Set IAM Account Alias
+      - [x] Org CloudTrail
+    - [x] CLI:
+      - [x] Start Logging
     - Stack 2:
       - Security Hub
       - Inspector
@@ -85,7 +92,6 @@ Root
       - Resolver DNS
       - Network Access Analyzer
     - Stack 2: Local
-  - Stack 3: Local
       - Security Hub
       - GuardDuty
       - Macie
@@ -122,7 +128,9 @@ Root
       - Access Analyzer
 
 ### Setup PIPELINE
+
 ### Setup SCP
+
 ### Connect Github Actions for LZ
 
 ## Operate
