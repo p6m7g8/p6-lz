@@ -15,15 +15,15 @@ const env = {
 const app = new cdk.App()
 
 const accounts = app.node.tryGetContext('Accounts') as Array<{ Name: string, AccountId: string }> ?? []
-const auditAccountId = accounts.find(account => account.Name === 'auditAccount')?.AccountId ?? '12345678912'
-const devAccountId = accounts.find(account => account.Name === 'devAccount')?.AccountId ?? '12345678912'
-const logarchiveAccountId = accounts.find(account => account.Name === 'logarchiveAccount')?.AccountId ?? '12345678912'
-const managementAccountId = accounts.find(account => account.Name === 'managementAccount')?.AccountId ?? '12345678912'
-const networkAccountId = accounts.find(account => account.Name === 'networkAccount')?.AccountId ?? '12345678912'
-const prodAccountId = accounts.find(account => account.Name === 'prodAccount')?.AccountId ?? '12345678912'
-const qaAccountId = accounts.find(account => account.Name === 'qaAccount')?.AccountId ?? '12345678912'
-const sharedAccountId = accounts.find(account => account.Name === 'sharedAccount')?.AccountId ?? '12345678912'
-const sandboxAccountId = accounts.find(account => account.Name === 'sandboxAccount')?.AccountId ?? '12345678912'
+const auditAccountId = accounts.find(account => account.Name === 'audit')?.AccountId ?? '12345678912'
+const devAccountId = accounts.find(account => account.Name === 'dev')?.AccountId ?? '12345678912'
+const logarchiveAccountId = accounts.find(account => account.Name === 'logarchive')?.AccountId ?? '12345678912'
+const managementAccountId = accounts.find(account => account.Name === 'management')?.AccountId ?? '12345678912'
+const networkAccountId = accounts.find(account => account.Name === 'network')?.AccountId ?? '12345678912'
+const prodAccountId = accounts.find(account => account.Name === 'prod')?.AccountId ?? '12345678912'
+const qaAccountId = accounts.find(account => account.Name === 'qa')?.AccountId ?? '12345678912'
+const sharedAccountId = accounts.find(account => account.Name === 'shared')?.AccountId ?? '12345678912'
+const sandboxAccountId = accounts.find(account => account.Name === 'sandbox')?.AccountId ?? '12345678912'
 
 const principals: string[] = [
   auditAccountId,

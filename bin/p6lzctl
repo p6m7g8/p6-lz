@@ -711,7 +711,10 @@ p6_lz_util_cdk_execute() {
   local action="$1"
   local stack="$2"
 
-  local args="--exclusively --require-approval never"
+  local args="--exclusively --require-approval never --no-rollback"
+  if [ "$action" = "destroy" ]; then
+    args="$args --force"
+  fi
   echo pnpm cdk $action $args $stack
   pnpm cdk $action $args $stack
 

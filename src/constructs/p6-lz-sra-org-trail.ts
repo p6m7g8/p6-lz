@@ -15,12 +15,12 @@ export class P6LzSraOrgTrail extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6LzSraOrgTrailProps) {
     super(scope, id)
 
+    const cloudTrailPrinciple = new iam.ServicePrincipal('cloudtrail.amazonaws.com')
     const key = new kms.Key(this, 'Key', {
       alias: 'p6/lz/sra/org-trail',
       enableKeyRotation: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     })
-    const cloudTrailPrinciple = new iam.ServicePrincipal('cloudtrail.amazonaws.com')
     key.grantEncryptDecrypt(cloudTrailPrinciple)
 
     const _cfnTrail = new cloudtrail.CfnTrail(this, 'Trail', {
