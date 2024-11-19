@@ -49,7 +49,7 @@ Root
     - [ ] Security Hub
     - [ ] GuardDuty
     - [ ] Macie
-    - [ ] Config
+    - [x] Config
     - [ ] Access Analyzer
     - [ ] Access Logs
     - [ ] DNS Logs
@@ -61,23 +61,23 @@ Root
       - [x] Org CloudTrail
     - [x] CLI:
       - [x] Start Logging
-    - Stack 2: Source of Truth
-      - Security Hub
-      - Inspector
-      - Artifact
-      - Audit Manager
-      - Config Aggregator
-      - Event Bridge
-      - Firewall Manager
-      - Lambda (response)
-      - Detective
-      - Private CA
+    - [ ]Stack 2: Source of Truth
+      - [ ] Security Hub
+      - [ ] Inspector
+      - [ ] Artifact
+      - [ ] Audit Manager
+      - [ ] Config Aggregator
+      - [ ] Event Bridge
+      - [ ] Firewall Manager
+      - [ ] Lambda (response)
+      - [ ] Detective
+      - [ ] Private CA
     - Stack 3: Local
-      - Security Hub
-      - GuardDuty
-      - Macie
-      - Config
-      - Access Analyzer
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
 
   - Network Account
     - Stack 1:
@@ -93,11 +93,11 @@ Root
       - Resolver DNS
       - Network Access Analyzer
     - Stack 2: Local
-      - Security Hub
-      - GuardDuty
-      - Macie
-      - Config
-      - Access Analyzer
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
 
   - Shared Account
     - Stack 1:
@@ -105,11 +105,11 @@ Root
       - Identity Center
       - Systems Manager
     - Stack 2: Local
-      - Security Hub
-      - GuardDuty
-      - Macie
-      - Config
-      - Access Analyzer
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
 
   - Forensics Account
     - Stack 1:
@@ -124,11 +124,11 @@ Root
 
   - Management Account:
     - Stack 3: Local
-      - Security Hub
-      - GuardDuty
-      - Macie
-      - Config
-      - Access Analyzer
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
 
 ### Setup PIPELINE
 

@@ -20,7 +20,7 @@ export class AuditAccountStack1 extends cdk.Stack {
     })
 
     const cw = new P6LzSraCloudWatch(this, 'P6LzSraCloudWatch', {
-      accountAlias: 'p6m7g8-audit',
+      accountAlias: props.accountAlias,
     })
 
     const bucket = s3.Bucket.fromBucketArn(this, 'CentralBucket', props.centralBucketArn.toString())
