@@ -66,7 +66,7 @@ Root
       - [ ] Inspector
       - [ ] Artifact
       - [ ] Audit Manager
-      - [ ] Config Aggregator
+      - [x] Config Aggregator
       - [ ] Event Bridge
       - [ ] Firewall Manager
       - [ ] Lambda (response)

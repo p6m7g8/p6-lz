@@ -497,6 +497,12 @@ p6_lz_run_phase_3_management_account() {
   p6_aws_svc_organization_services_enable cloudtrail.amazonaws.com
   p6_aws_svc_cloudtrail_admin_delegate_register $audit_account_id
 
+  p6_h3 "Phase 3: Management: Delegating Config"
+  local region=$AWS_REGION
+  p6_aws_svc_organization_services_enable config.amazonaws.com
+  aws organizations register-delegated-administrator --account-id $audit_account_id --service-principal config.amazonaws.com
+  aws configservice put-aggregation-authorization --authorized-account-id $audit_account_id --authorized-aws-region $region
+
   p6_h3 "Phase 3: Management: Delegating SecurityHub"
   p6_aws_svc_securityhub_admin_enable $audit_account_id
 
@@ -545,7 +551,7 @@ p6_lz_run_phase_3_logarchive_account() {
 p6_lz_run_phase_3_audit_account() {
   local action="$1"
 
-  p6_h2 "Phase 3: Audit"
+  p6_h2 "Phase 3: Audit-1"
   p6_lz_util_cdk_execute $action p6-lz-audit-1
 
   p6_h3 "Phase 3: Audit: CloudTrail Start Logging"
@@ -554,6 +560,7 @@ p6_lz_run_phase_3_audit_account() {
   p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
   p6_aws_svc_organizations_sts_su_un
 
+  p6_h2 "Phase 3: Audit-2"
   p6_lz_util_cdk_execute $action p6-lz-audit-2
 
   p6_return_void

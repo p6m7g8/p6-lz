@@ -93,6 +93,7 @@ new AuditAccountStack2(app, 'p6-lz-audit-2', {
     account: auditAccountId,
     region: env.region,
   },
+  principals,
 })
 
 new AuditAccountStack3(app, 'p6-lz-audit-3', {
