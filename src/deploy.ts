@@ -5,6 +5,7 @@ import * as cdk from 'aws-cdk-lib'
 import { AuditAccountStack1 } from './stacks/audit-1'
 import { AuditAccountStack2 } from './stacks/audit-2'
 import { AuditAccountStack3 } from './stacks/audit-3'
+import { DevAccountStack } from './stacks/dev'
 import { LogarchiveAccountStack1 } from './stacks/logarchive-1'
 import { LogarchiveAccountStack2 } from './stacks/logarchive-2'
 import { ManagementAccountStack3 } from './stacks/management-3'
@@ -12,6 +13,9 @@ import { AvmStack } from './stacks/management-avm'
 import { OrganizationStack } from './stacks/management-organization'
 import { NetworkAccountStack1 } from './stacks/network-1'
 import { NetworkAccountStack2 } from './stacks/network-2'
+import { ProdAccountStack } from './stacks/prod'
+import { QaAccountStack } from './stacks/qa'
+import { SandboxAccountStack } from './stacks/sandbox'
 import { SharedAccountStack1 } from './stacks/shared-1'
 import { SharedAccountStack2 } from './stacks/shared-2'
 
@@ -142,6 +146,43 @@ new ManagementAccountStack3(app, 'p6-lz-management-3', {
     account: managementAccountId,
     region: env.region,
   },
+})
+
+// ----------------------------------- Phase 4 -----------------------------------
+// Sandbox
+new SandboxAccountStack(app, 'p6-lz-sandbox', {
+  env: {
+    account: sandboxAccountId,
+    region: env.region,
+  },
+  accountAlias: 'p6m7g8-sandbox',
+})
+
+// Dev Account
+new DevAccountStack(app, 'p6-lz-dev', {
+  env: {
+    account: devAccountId,
+    region: env.region,
+  },
+  accountAlias: 'p6m7g8-dev',
+})
+
+// QA
+new QaAccountStack(app, 'p6-lz-qa', {
+  env: {
+    account: qaAccountId,
+    region: env.region,
+  },
+  accountAlias: 'p6m7g8-qa',
+})
+
+// Prod
+new ProdAccountStack(app, 'p6-lz-prod', {
+  env: {
+    account: prodAccountId,
+    region: env.region,
+  },
+  accountAlias: 'p6m7g8-prod',
 })
 
 app.synth()
