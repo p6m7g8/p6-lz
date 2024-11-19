@@ -1,13 +1,16 @@
 import type { Construct } from 'constructs'
+import type { AccountAlias } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import { P6CDKNamer } from 'p6-cdk-namer'
 
+interface ProdAccountStack2Props extends cdk.StackProps, AccountAlias {}
+
 export class ProdAccountStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: ProdAccountStack2Props) {
     super(scope, id, props)
 
     new P6CDKNamer(this, 'P6CDKNamer', {
-      accountAlias: 'p6m7g8-prod',
+      accountAlias: props.accountAlias,
     })
   }
 }
