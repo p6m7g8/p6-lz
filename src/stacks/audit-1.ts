@@ -16,7 +16,7 @@ export class AuditAccountStack1 extends cdk.Stack {
     super(scope, id, props)
 
     new P6CDKNamer(this, 'P6CDKNamer', {
-      accountAlias: 'p6m7g8-audit',
+      accountAlias: props.accountAlias,
     })
 
     const cw = new P6LzSraCloudWatch(this, 'P6LzSraCloudWatch', {

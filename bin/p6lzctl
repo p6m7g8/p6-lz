@@ -469,8 +469,8 @@ p6_lz_run_phase_3() {
   p6_lz_run_phase_3_management_account "$action"
   p6_lz_run_phase_3_logarchive_account "$action"
   p6_lz_run_phase_3_audit_account "$action"
-  # p6_lz_run_phase_3_network_account "$action"
-  # p6_lz_run_phase_3_shared_account "$action"
+  p6_lz_run_phase_3_network_account "$action"
+  p6_lz_run_phase_3_shared_account "$action"
 
   p6_return_void
 }
@@ -478,21 +478,21 @@ p6_lz_run_phase_3() {
 ######################################################################
 #<
 #
-# Function: p6_lz_run_phase_3_management_account(acction)
+# Function: p6_lz_run_phase_3_management_account(action)
 #
 #  Args:
-#	acction -
+#	action -
 #
 #  Environment:	 _3_
 #>
 ######################################################################
 p6_lz_run_phase_3_management_account() {
-  local acction="$1"
+  local action="$1"
 
   p6_h2 "Phase 3: Management"
 
   p6_h3 "Phase 3: Management: Delegating CloudTrail"
-  local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "auditAccount") | .AccountId' cdk.context.json)
+  local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "audit") | .AccountId' cdk.context.json)
   p6_aws_svc_organization_services_enable cloudtrail.amazonaws.com
   p6_aws_svc_cloudtrail_admin_delegate_register $audit_account_id
 

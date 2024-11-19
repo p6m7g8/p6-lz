@@ -45,7 +45,7 @@ Root
     - [x] Set IAM Account Alias
     - [x] Central Bucket
     - [ ] Security Lake
-  - [ ] Stack 2: p6-lz-logarchive-2
+  - [ ] Stack 2: Local
     - [ ] Security Hub
     - [ ] GuardDuty
     - [ ] Macie
@@ -61,7 +61,7 @@ Root
       - [x] Org CloudTrail
     - [x] CLI:
       - [x] Start Logging
-    - Stack 2:
+    - Stack 2: Source of Truth
       - Security Hub
       - Inspector
       - Artifact
@@ -81,7 +81,7 @@ Root
 
   - Network Account
     - Stack 1:
-      - [ ] Set IAM Account Alias
+      - [x] Set IAM Account Alias
       - [ ] - Route53
       - CloudFront
       - Verified Access
@@ -101,7 +101,7 @@ Root
 
   - Shared Account
     - Stack 1:
-      - [ ] Set IAM Account Alias
+      - [x] Set IAM Account Alias
       - Identity Center
       - Systems Manager
     - Stack 2: Local
@@ -113,7 +113,7 @@ Root
 
   - Forensics Account
     - Stack 1:
-      - [ ] Set IAM Account Alias
+      - [x] Set IAM Account Alias
       - Step Functions -> Lambda -> Instance -> S3
     - Stack 2: Local
       - Security Hub
