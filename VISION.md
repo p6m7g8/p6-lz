@@ -61,7 +61,7 @@ Root
       - [x] Org CloudTrail
     - [x] CLI:
       - [x] Start Logging
-    - [ ]Stack 2: Source of Truth
+    - [ ] Stack 2: Source of Truth
       - [ ] Security Hub
       - [ ] Inspector
       - [ ] Artifact
@@ -72,65 +72,103 @@ Root
       - [ ] Lambda (response)
       - [ ] Detective
       - [ ] Private CA
-    - Stack 3: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
+    - [ ] Stack 3: Local
+      - [ ] Security Hub
+      - [ ] GuardDuty
+      - [ ] Macie
+      - [x] Config
+      - [ ] Access Analyzer
 
-  - Network Account
-    - Stack 1:
+  - [ ] Network Account
+    - [ ] Stack 1:
       - [x] Set IAM Account Alias
-      - [ ] - Route53
-      - CloudFront
-      - Verified Access
-      - Shield
-      - WAF
-      - VPC Lattice [not transit gw]
-      - Cert Manager
-      - RAM
-      - Resolver DNS
-      - Network Access Analyzer
-    - Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
+      - [ ] Route53
+      - [ ] CloudFront
+      - [ ] Verified Access
+      - [ ] Shield
+      - [ ] WAF
+      - [ ] VPC Lattice [not transit gw]
+      - [ ] Cert Manager
+      - [ ] RAM
+      - [ ] Resolver DNS
+      - [ ] Network Access Analyzer
+    - [ ] Stack 2: Local
+      - [ ] Security Hub
+      - [ ] GuardDuty
+      - [ ] Macie
+      - [x] Config
+      - [ ] Access Analyzer
 
-  - Shared Account
-    - Stack 1:
+  - [ ] Shared Account
+    - [ ] Stack 1:
       - [x] Set IAM Account Alias
-      - Identity Center
-      - Systems Manager
-    - Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
+      - [ ] Identity Center
+      - [ ] Systems Manager
+    - [ ] Stack 2: Local
+      - [ ] Security Hub
+      - [ ] GuardDuty
+      - [ ] Macie
+      - [x] Config
+      - [ ] Access Analyzer
 
-  - Forensics Account
-    - Stack 1:
+  - [ ] Forensics Account
+    - [ ] Stack 1:
       - [x] Set IAM Account Alias
-      - Step Functions -> Lambda -> Instance -> S3
-    - Stack 2: Local
-      - Security Hub
-      - GuardDuty
-      - Macie
-      - Config
-      - Access Analyzer
+      - [ ] Step Functions -> Lambda -> Instance -> S3
+    - [ ] Stack 2: Local
+      - [ ] Security Hub
+      - [ ] GuardDuty
+      - [ ] Macie
+      - [ ] Config
+      - [ ] Access Analyzer
 
-  - Management Account:
-    - Stack 3: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
+  - [ ] Management Account:
+    - [ ] Stack 3: Local
+      - [ ] Security Hub
+      - [ ] GuardDuty
+      - [ ] Macie
+      - [x] Config
+      - [ ] Access Analyzer
 
 ### Setup PIPELINE
+
+- [ ] Sandbox
+  - [ ] Stack 1:
+    - [x] Set IAM Account Alias
+  - [ ] Stack 2: Local
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
+
+- [ ] Dev
+  - [ ] Stack 1:
+    - [x] Set IAM Account Alias
+  - [ ] Stack 2: Local
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
+ [ ] QA
+  - [ ] Stack 1:
+    - [x] Set IAM Account Alias
+  - [ ] Stack 2: Local
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
+- [ ] Prod
+  - [ ] Stack 1:
+    - [x] Set IAM Account Alias
+  - [ ] Stack 2: Local
+    - [ ] Security Hub
+    - [ ] GuardDuty
+    - [ ] Macie
+    - [x] Config
+    - [ ] Access Analyzer
 
 ### Setup SCP
 
