@@ -69,6 +69,8 @@ new LogarchiveAccountStack2(app, 'p6-lz-logarchive-2', {
     account: logarchiveAccountId,
     region: env.region,
   },
+  principals,
+  centralBucketArn: organizationStack.centralBucketArn,
 })
 
 // Audit Account
@@ -111,6 +113,8 @@ new NetworkAccountStack2(app, 'p6-lz-network-2', {
     account: networkAccountId,
     region: env.region,
   },
+  principals,
+  centralBucketArn: organizationStack.centralBucketArn,
 })
 
 // Shared Account
@@ -128,6 +132,8 @@ new SharedAccountStack2(app, 'p6-lz-shared-2', {
     account: sharedAccountId,
     region: env.region,
   },
+  principals,
+  centralBucketArn: organizationStack.centralBucketArn,
 })
 
 // Management Account
