@@ -525,6 +525,8 @@ p6_lz_run_phase_3_logarchive_account() {
   jq --arg k "logarchive-bucket-name" --arg v "$logarchive_bucket_name" '. + {($k): $v}' cdk.context.json >temp.json && mv temp.json cdk.context.json
   p6_aws_svc_organizations_sts_su_un
 
+  p6_lz_util_cdk_execute $action p6-lz-logarchive-2
+
   p6_return_void
 }
 
@@ -551,6 +553,8 @@ p6_lz_run_phase_3_audit_account() {
   p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
   p6_aws_svc_organizations_sts_su_un
 
+  p6_lz_util_cdk_execute $action p6-lz-audit-2
+
   p6_return_void
 }
 
@@ -569,7 +573,9 @@ p6_lz_run_phase_3_network_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Network"
-  p6_lz_util_cdk_execute $action p6-lz-network
+  p6_lz_util_cdk_execute $action p6-lz-network-1
+
+  p6_lz_util_cdk_execute $action p6-lz-network-2
 
   p6_return_void
 }
@@ -589,7 +595,9 @@ p6_lz_run_phase_3_shared_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Shared"
-  p6_lz_util_cdk_execute $action p6-lz-shared
+  p6_lz_util_cdk_execute $action p6-lz-shared-1
+
+  p6_lz_util_cdk_execute $action p6-lz-shared-2
 
   p6_return_void
 }
