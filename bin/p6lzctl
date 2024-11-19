@@ -297,7 +297,7 @@ p6_lz_run() {
   p6_lz_run_phase_1 "$action"
   p6_lz_run_phase_2 "$action"
   p6_lz_run_phase_3 "$action"
-  # p6_lz_run_phase_4 "$action"
+  p6_lz_run_phase_4 "$action"
 
   # apply Service Control Policies (SCP)
 
