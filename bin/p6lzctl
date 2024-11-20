@@ -494,17 +494,21 @@ p6_lz_run_phase_3_management_account() {
 
   p6_h3 "Phase 3: Management: Delegating CloudTrail"
   local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "audit") | .AccountId' cdk.context.json)
-  p6_aws_svc_organization_services_enable cloudtrail.amazonaws.com
+  p6_aws_svc_cloudtrail_organization_service_enable
   p6_aws_svc_cloudtrail_admin_delegate_register $audit_account_id
 
   p6_h3 "Phase 3: Management: Delegating Config"
   local region=$AWS_REGION
   p6_aws_svc_organization_services_enable config.amazonaws.com
-  aws organizations register-delegated-administrator --account-id $audit_account_id --service-principal config.amazonaws.com || true
-  aws configservice put-aggregation-authorization --authorized-account-id $audit_account_id --authorized-aws-region $region
+  p6_aws_svc_configservice_admin_delegate_register $audit_account_id
+  p6_aws_svc_configservice_aggregation_authorization_put $audit_account_id $region
 
   p6_h3 "Phase 3: Management: Delegating SecurityHub"
   p6_aws_svc_securityhub_admin_enable $audit_account_id
+
+  p6_h3 "Phase 3: Management: Delegate Inspector"
+  p6_aws_svc_inspector_organization_service_enable
+  p6_aws_svc_inspector_admin_delegate_register $audit_account_id
 
   p6_return_void
 }
@@ -570,6 +574,12 @@ p6_lz_run_phase_3_audit_account() {
   # local region=$AWS_REGION
   # aws securityhub batch-disable-standards --standards-subscription-arns arn:aws:securityhub:$region::subscription/cis-aws-foundations-benchmark/v/1.2.0
   # p6_aws_svc_organizations_sts_su_un
+
+  # Inspector
+  p6_aws_svc_organizations_sts_su "p6m7g8-audit"
+  p6_aws_svc_inspector_role_service_linked_create
+  p6_aws_svc_inspector_organization_members_enable
+  p6_aws_svc_organizations_sts_su_un
 
   p6_return_void
 }

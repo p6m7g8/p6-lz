@@ -11,6 +11,7 @@ export class AuditAccountStack2 extends cdk.Stack {
   constructor(scope: Construct, id: string, props: AuditAccountStack2Props) {
     super(scope, id, props)
 
+    // ------------------------------ Config Aggregator ------------------------------
     const configPrinciple = new iam.ServicePrincipal('config.amazonaws.com')
     const role = new iam.Role(this, 'ConfigAggregatorRole', {
       assumedBy: configPrinciple,
@@ -39,7 +40,6 @@ export class AuditAccountStack2 extends cdk.Stack {
       }),
     )
 
-    // Note: SecurityHub Depends on this
     new config.CfnConfigurationAggregator(this, 'P6LzSraConfigAggregator', {
       configurationAggregatorName: 'P6LzSraConfigAggregator',
       organizationAggregationSource: {
@@ -51,6 +51,8 @@ export class AuditAccountStack2 extends cdk.Stack {
     const findingAggregator = new securityhub.CfnFindingAggregator(this, 'FindingAggregator', {
       regionLinkingMode: 'ALL_REGIONS',
     })
+
+    // ------------------------------ Security Hub ------------------------------
     const organizationConfiguration = new securityhub.CfnOrganizationConfiguration(this, 'OrganizationConfiguration', {
       autoEnable: false,
       autoEnableStandards: 'NONE',
@@ -58,8 +60,7 @@ export class AuditAccountStack2 extends cdk.Stack {
     })
     organizationConfiguration.node.addDependency(findingAggregator)
 
-    // Enable CIS AWS Foundations Benchmark v3.0.0
-    const cisArn = `arn:${cdk.Aws.PARTITION}:securityhub:${cdk.Aws.REGION}::standards/cis-aws-foundations-benchmark/v/3.0.0`
+    const cisArn = `arn:${cdk.Aws.PARTITION}:securityhub:${cdk.Stack.of(this).region}::standards/cis-aws-foundations-benchmark/v/3.0.0`
     const enableCisStandard = new securityhub.CfnStandard(this, 'EnableCISStandard', {
       standardsArn: cisArn,
     })
