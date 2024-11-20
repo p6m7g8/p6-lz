@@ -3,6 +3,7 @@ import type { ShareWithOrg } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as config from 'aws-cdk-lib/aws-config'
 import * as iam from 'aws-cdk-lib/aws-iam'
+import * as securityhub from 'aws-cdk-lib/aws-securityhub'
 
 interface AuditAccountStack2Props extends cdk.StackProps, ShareWithOrg {}
 
@@ -38,6 +39,7 @@ export class AuditAccountStack2 extends cdk.Stack {
       }),
     )
 
+    // Note: SecurityHub Depends on this
     new config.CfnConfigurationAggregator(this, 'P6LzSraConfigAggregator', {
       configurationAggregatorName: 'P6LzSraConfigAggregator',
       organizationAggregationSource: {
@@ -45,5 +47,22 @@ export class AuditAccountStack2 extends cdk.Stack {
         allAwsRegions: true,
       },
     })
+
+    const findingAggregator = new securityhub.CfnFindingAggregator(this, 'FindingAggregator', {
+      regionLinkingMode: 'ALL_REGIONS',
+    })
+    const organizationConfiguration = new securityhub.CfnOrganizationConfiguration(this, 'OrganizationConfiguration', {
+      autoEnable: false,
+      autoEnableStandards: 'NONE',
+      configurationType: 'CENTRAL',
+    })
+    organizationConfiguration.node.addDependency(findingAggregator)
+
+    // Enable CIS AWS Foundations Benchmark v3.0.0
+    const cisArn = `arn:${cdk.Aws.PARTITION}:securityhub:${cdk.Aws.REGION}::standards/cis-aws-foundations-benchmark/v/3.0.0`
+    const enableCisStandard = new securityhub.CfnStandard(this, 'EnableCISStandard', {
+      standardsArn: cisArn,
+    })
+    enableCisStandard.node.addDependency(organizationConfiguration)
   }
 }

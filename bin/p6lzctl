@@ -560,8 +560,16 @@ p6_lz_run_phase_3_audit_account() {
   p6_aws_svc_cloudtrail_trail_logging_start "$trail_arn"
   p6_aws_svc_organizations_sts_su_un
 
-  p6_h2 "Phase 3: Audit-2"
+  p6_h3 "Phase 3: Audit-2"
   p6_lz_util_cdk_execute $action p6-lz-audit-2
+
+  # An error occurred (AccessDeniedException) when calling the BatchDisableStandards operation: Account id XXXXXXXXXXXX is not authorized to perform action
+  # on resource: arn:aws:securityhub:us-east-1::subscription/cis-aws-foundations-benchmark/v/1.2.0
+  # p6_h3 "Phase 3: Audit-2: Disable CIS v1.2.0"
+  # p6_aws_svc_organizations_sts_su p6m7g8-audit
+  # local region=$AWS_REGION
+  # aws securityhub batch-disable-standards --standards-subscription-arns arn:aws:securityhub:$region::subscription/cis-aws-foundations-benchmark/v/1.2.0
+  # p6_aws_svc_organizations_sts_su_un
 
   p6_return_void
 }
