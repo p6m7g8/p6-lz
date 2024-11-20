@@ -62,7 +62,7 @@ Root
     - [x] CLI:
       - [x] Start Logging
     - [ ] Stack 2: Source of Truth
-      - [ ] Security Hub
+      - [x] Security Hub
       - [ ] Inspector
       - [ ] Artifact
       - [ ] Audit Manager
