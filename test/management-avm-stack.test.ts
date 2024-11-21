@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib'
 import { Template } from 'aws-cdk-lib/assertions'
-import { AvmStack } from '../src/stacks/management-avm'
+import { AvmStack } from '../src/stacks/management-1-avm'
 
 it('avm Stack includes P6LzSraAvmOus and P6LzSraAvmAccounts constructs', () => {
   const app = new cdk.App()
