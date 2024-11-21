@@ -9,8 +9,8 @@ import { DevAccountStack } from './stacks/dev'
 import { LogarchiveAccountStack1 } from './stacks/logarchive-1'
 import { LogarchiveAccountStack2 } from './stacks/logarchive-2'
 import { AvmStack } from './stacks/management-1-avm'
+import { OrganizationStack } from './stacks/management-1-organization'
 import { ManagementAccountStack3 } from './stacks/management-3'
-import { OrganizationStack } from './stacks/management-organization'
 import { NetworkAccountStack1 } from './stacks/network-1'
 import { NetworkAccountStack2 } from './stacks/network-2'
 import { ProdAccountStack } from './stacks/prod'
@@ -51,11 +51,11 @@ const principals: string[] = [
 
 // ----------------------------------- Phase 1 -----------------------------------
 // Mgmt Account
-const organizationStack = new OrganizationStack(app, 'p6-lz-management-organization', {
+const organizationStack = new OrganizationStack(app, 'p6-lz-management-1-organization', {
   env,
   accountAlias: 'p6m7g8',
 })
-new AvmStack(app, 'p6-lz-management-avm', { env })
+new AvmStack(app, 'p6-lz-management-1-avm', { env })
 
 // ----------------------------------- Phase 3 -----------------------------------
 // Logarchive Account
