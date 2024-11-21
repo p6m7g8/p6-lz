@@ -1,69 +1,30 @@
 import type { Construct } from 'constructs'
 import type { ShareWithOrg } from '../types'
+import type { LogarchiveBucketArn } from './../types'
 import * as cdk from 'aws-cdk-lib'
-import * as config from 'aws-cdk-lib/aws-config'
-import * as iam from 'aws-cdk-lib/aws-iam'
-import * as securityhub from 'aws-cdk-lib/aws-securityhub'
+import * as s3 from 'aws-cdk-lib/aws-s3'
+import { P6LzSraChatbot } from '../constructs/p6-lz-sra-chatbot'
+import { P6LzSraConfig } from '../constructs/p6-lz-sra-config'
+import { P6LzSraSecurityhub } from '../constructs/p6-lz-sra-security-hub'
 
-interface AuditAccountStack2Props extends cdk.StackProps, ShareWithOrg {}
+interface AuditAccountStack2Props extends cdk.StackProps, ShareWithOrg, LogarchiveBucketArn {}
 
 export class AuditAccountStack2 extends cdk.Stack {
   constructor(scope: Construct, id: string, props: AuditAccountStack2Props) {
     super(scope, id, props)
 
-    // ------------------------------ Config Aggregator ------------------------------
-    const configPrinciple = new iam.ServicePrincipal('config.amazonaws.com')
-    const role = new iam.Role(this, 'ConfigAggregatorRole', {
-      assumedBy: configPrinciple,
-    })
-    role.attachInlinePolicy(
-      new iam.Policy(this, 'ConfigAggregatorPolicy', {
-        statements: [
-          new iam.PolicyStatement({
-            actions: [
-              'config:DescribeConfigurationAggregators',
-              'config:DescribeConfigurationAggregatorSourcesStatus',
-              'config:DescribePendingAggregationRequests',
-              'config:GetAggregateComplianceDetailsByConfigRule',
-              'config:GetAggregateDiscoveredResourceCounts',
-              'config:BatchGetAggregateResourceConfig',
-              'config:SelectAggregateResourceConfig',
-              'config:ListAggregateDiscoveredResources',
-            ],
-            resources: ['*'],
-          }),
-          new iam.PolicyStatement({
-            actions: ['organizations:DescribeOrganization'],
-            resources: ['*'],
-          }),
-        ],
-      }),
-    )
+    const bucket = s3.Bucket.fromBucketArn(this, 'CentralBucket', props.centralBucketArn.toString())
 
-    new config.CfnConfigurationAggregator(this, 'P6LzSraConfigAggregator', {
-      configurationAggregatorName: 'P6LzSraConfigAggregator',
-      organizationAggregationSource: {
-        roleArn: role.roleArn,
-        allAwsRegions: true,
-      },
+    new P6LzSraConfig(this, 'P6LzSraConfig', {
+      principals: props.principals,
+      centralBucket: bucket,
+      isCentral: true,
     })
 
-    const findingAggregator = new securityhub.CfnFindingAggregator(this, 'FindingAggregator', {
-      regionLinkingMode: 'ALL_REGIONS',
-    })
+    new P6LzSraChatbot(this, 'P6LzSraChatBot')
 
-    // ------------------------------ Security Hub ------------------------------
-    const organizationConfiguration = new securityhub.CfnOrganizationConfiguration(this, 'OrganizationConfiguration', {
-      autoEnable: false,
-      autoEnableStandards: 'NONE',
-      configurationType: 'CENTRAL',
+    new P6LzSraSecurityhub(this, 'P6LzSraSecurityHub', {
+      isCentral: true,
     })
-    organizationConfiguration.node.addDependency(findingAggregator)
-
-    const cisArn = `arn:${cdk.Aws.PARTITION}:securityhub:${cdk.Stack.of(this).region}::standards/cis-aws-foundations-benchmark/v/3.0.0`
-    const enableCisStandard = new securityhub.CfnStandard(this, 'EnableCISStandard', {
-      standardsArn: cisArn,
-    })
-    enableCisStandard.node.addDependency(organizationConfiguration)
   }
 }

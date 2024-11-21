@@ -44,9 +44,9 @@ p6_lz_main() {
   local cmd="$1"
   shift 1
 
-  # security 101: only allow valid comamnds
+  # security 101: only allow valid commands
   case $cmd in
-  boostrap) ;;
+  bootstrap) ;;
   build) ;;
   debug) ;;
   deploy) ;;
@@ -199,25 +199,79 @@ p6_lz_cmd_diff() {
 #
 # Function: p6_lz_cmd_destroy()
 #
+#  Environment:	 CDK CLI
 #>
 ######################################################################
 p6_lz_cmd_destroy() {
 
   p6_h2 "Destroying"
-  pnpm cdk destroy --all --force
 
-  p6_h3 "Cleaning"
-  local account_ids=$(jq -r '.Accounts[] | select(.Name != "managementAccount") | .AccountId' cdk.context.json)
-  local account_id
-  for account_id in $account_ids; do
-    local account_name=$(p6_aws_svc_organizations_account_name_from_account_id $account_id)
-    p6_h4 "$account_name"
-    p6_aws_svc_organizations_sts_su $account_name
-    p6_aws_svc_organizations_sts_su_un
-  done
+  p6_h3 "Cleaning CLI"
+  p6_lz_destroy_audit
+  p6_lz_destroy_management
+
+  p6_h3 "Cleaning CDK"
+  p6_lz_util_cdk_execute destroy
 
   p6_h3 "Reset Context"
-  rm -f cdk.context.json
+  p6_file_rmf cdk.context.json
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_destroy_management()
+#
+#  Environment:	 AWS_REGION
+#>
+######################################################################
+p6_lz_destroy_management() {
+
+  p6_h4 "Management"
+  local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "audit") | .AccountId' cdk.context.json)
+
+  p6_h5 "Management: Inspector"
+  p6_aws_svc_inspector_from_management_off $audit_account_id
+
+  p6_h5 "Management: Security Hub"
+  p6_aws_svc_securityhub_from_management_off $audit_account_id
+
+  p6_h5 "Management: Config"
+  p6_aws_svc_configservice_from_management_off $audit_account_id $AWS_REGION
+
+  p6_h5 "Management: CloudTrail"
+  p6_aws_svc_cloudtrail_from_management_off $audit_account_id
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_lz_destroy_audit()
+#
+#  Environment:	 CDK
+#>
+######################################################################
+p6_lz_destroy_audit() {
+
+  p6_aws_svc_organizations_sts_su p6m7g8-audit
+
+  p6_h4 "Audit: Inspector"
+  p6_aws_svc_inspector_from_delegated_off
+
+  p6_h4 "Audit: Security Hub"
+  p6_aws_svc_securityhub_from_delegated_off
+
+  p6_h4 "Audit: Config"
+  true # CDK actually works
+
+  p6_h4 "Audit: CloudTrail"
+  true # CDK actually works
+
+  p6_aws_svc_organizations_sts_su_un
 
   p6_return_void
 }
@@ -292,12 +346,12 @@ p6_lz_run() {
   p6_h1 "Running"
 
   # break glass
-  p6_lz_run_bootstrap "$action"
+  # p6_lz_run_bootstrap "$action"
 
-  p6_lz_run_phase_1 "$action"
-  p6_lz_run_phase_2 "$action"
+  # p6_lz_run_phase_1 "$action"
+  # p6_lz_run_phase_2 "$action"
   p6_lz_run_phase_3 "$action"
-  p6_lz_run_phase_4 "$action"
+  # p6_lz_run_phase_4 "$action"
 
   # apply Service Control Policies (SCP)
 
@@ -323,7 +377,7 @@ p6_lz_run_bootstrap() {
   local account_id=$(p6_aws_svc_sts_whoami | jq -r ".Account")
   local region=$AWS_REGION
 
-  p6_h2 "Bootstraping"
+  p6_h2 "Bootstrapping"
   if [ "$action" = "deploy" ]; then
     pnpm cdk bootstrap aws://$account_id/$region
   else
@@ -388,7 +442,7 @@ p6_lz_run_phase_2_bootstrap_trust() {
 
   p6_h3 "Phase 2: Bootstrap Trust"
   local management_account_id=$(p6_aws_svc_organizations_management_account_id_get)
-  local account_ids=$(p6_aws_svc_organizations_accounts_list_active | awk '{print $1}' | grep -v "$management_account_id")
+  local account_ids=$(p6_aws_svc_organizations_account_list_active_ids_without_management)
   local account_id
   for account_id in $account_ids; do
     if [ "$action" = "deploy" ]; then
@@ -421,17 +475,11 @@ p6_lz_run_phase_2_account_context() {
 
   p6_h3 "Phase 2: Account Context"
   local pair
-  for pair in $(
-    local l
-    for l in "$(p6_aws_svc_organizations_accounts_list_active)"; do
-      echo "$l" | awk '{print $5 " " $1}' |
-        sed -e 's,p6m7g8-,,' -e 's,p6m7g8,management,' -e 's, ,=,'
-    done
-  ); do
-    local name=$(echo "$pair" | cut -d= -f1)
+  for pair in $(p6_aws_svc_organizations_accounts_list_active_ids_and_names); do
+    local name=$(echo "$pair" | cut -d= -f1 | sed -e 's,p6m7g8-,,')
     local account_id=$(echo "$pair" | cut -d= -f2)
 
-    if [ -f cdk.context.json ]; then
+    if p6_file_exists cdk.context.json; then
       if jq -e '.Accounts' cdk.context.json >/dev/null; then
         if ! jq -e --arg account_id "$account_id" '.Accounts[] | select(.AccountId == $account_id)' cdk.context.json >/dev/null; then
           jq --arg name "$name" --arg account_id "$account_id" \
@@ -484,31 +532,26 @@ p6_lz_run_phase_3() {
 #  Args:
 #	action -
 #
-#  Environment:	 _3_
+#  Environment:	 AWS_REGION _3_
 #>
 ######################################################################
 p6_lz_run_phase_3_management_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Management"
+  local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "audit") | .AccountId' cdk.context.json)
 
   p6_h3 "Phase 3: Management: Delegating CloudTrail"
-  local audit_account_id=$(jq -r '.Accounts[] | select(.Name == "audit") | .AccountId' cdk.context.json)
-  p6_aws_svc_cloudtrail_organization_service_enable
-  p6_aws_svc_cloudtrail_admin_delegate_register $audit_account_id
+  p6_aws_svc_cloudtrail_from_management_on $audit_account_id
 
   p6_h3 "Phase 3: Management: Delegating Config"
-  local region=$AWS_REGION
-  p6_aws_svc_organization_services_enable config.amazonaws.com
-  p6_aws_svc_configservice_admin_delegate_register $audit_account_id
-  p6_aws_svc_configservice_aggregation_authorization_put $audit_account_id $region
+  p6_aws_svc_configservice_from_management_on $audit_account_id $AWS_REGION
 
   p6_h3 "Phase 3: Management: Delegating SecurityHub"
-  p6_aws_svc_securityhub_admin_enable $audit_account_id
+  p6_aws_svc_securityhub_from_management_on $audit_account_id
 
   p6_h3 "Phase 3: Management: Delegate Inspector"
-  p6_aws_svc_inspector_organization_service_enable
-  p6_aws_svc_inspector_admin_delegate_register $audit_account_id
+  p6_aws_svc_inspector_from_management_on $audit_account_id
 
   p6_return_void
 }
@@ -566,14 +609,6 @@ p6_lz_run_phase_3_audit_account() {
 
   p6_h3 "Phase 3: Audit-2"
   p6_lz_util_cdk_execute $action p6-lz-audit-2
-
-  # An error occurred (AccessDeniedException) when calling the BatchDisableStandards operation: Account id XXXXXXXXXXXX is not authorized to perform action
-  # on resource: arn:aws:securityhub:us-east-1::subscription/cis-aws-foundations-benchmark/v/1.2.0
-  # p6_h3 "Phase 3: Audit-2: Disable CIS v1.2.0"
-  # p6_aws_svc_organizations_sts_su p6m7g8-audit
-  # local region=$AWS_REGION
-  # aws securityhub batch-disable-standards --standards-subscription-arns arn:aws:securityhub:$region::subscription/cis-aws-foundations-benchmark/v/1.2.0
-  # p6_aws_svc_organizations_sts_su_un
 
   # Inspector
   p6_aws_svc_organizations_sts_su "p6m7g8-audit"
@@ -765,8 +800,13 @@ p6_lz_util_cdk_execute() {
   local action="$1"
   local stack="$2"
 
-  local args="--exclusively --require-approval never --no-rollback"
-  if [ "$action" = "destroy" ]; then
+  local args="--require-approval never --no-rollback"
+  if ! p6_string_blank "$stack"; then
+    args="$args --exclusively"
+  else
+    args="$args --all"
+  fi
+  if p6_string_eq "$action" "destroy"; then
     args="$args --force"
   fi
   echo pnpm cdk $action $args $stack

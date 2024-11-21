@@ -94,6 +94,7 @@ new AuditAccountStack2(app, 'p6-lz-audit-2', {
     region: env.region,
   },
   principals,
+  centralBucketArn: organizationStack.centralBucketArn,
 })
 
 new AuditAccountStack3(app, 'p6-lz-audit-3', {

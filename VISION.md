@@ -58,15 +58,17 @@ Root
   - [ ] Audit Account
     - [x] Stack 1
       - [x] Set IAM Account Alias
+      - [x] CloudWatch Logs for CloudTrail
       - [x] Org CloudTrail
     - [x] CLI:
       - [x] Start Logging
     - [ ] Stack 2: Source of Truth
-      - [x] Security Hub
-      - [ ] Inspector
-      - [ ] Artifact
-      - [ ] Audit Manager
+      - [x] Config for Aggregator
       - [x] Config Aggregator
+      - [x] Security Hub
+      - [x] Inspector
+      - [n] Artifact
+      - [ ] Audit Manager
       - [ ] Event Bridge
       - [ ] Firewall Manager
       - [ ] Lambda (response)
