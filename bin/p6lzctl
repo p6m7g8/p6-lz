@@ -208,6 +208,7 @@ p6_lz_cmd_destroy() {
 
   p6_h3 "Cleaning CLI"
   p6_lz_destroy_audit
+  p6_lz_destroy_logarchive
   p6_lz_destroy_management
 
   p6_h3 "Cleaning CDK"
@@ -219,6 +220,22 @@ p6_lz_cmd_destroy() {
   p6_return_void
 }
 
+######################################################################
+#<
+#
+# Function: p6_lz_destroy_logarchive()
+#
+#>
+######################################################################
+p6_lz_destroy_logarchive() {
+
+  p6_h4 "Logarchive: CW Logs"
+  p6_aws_svc_organizations_sts_su p6m7g8-logarchive
+  p6_aws_svc_logs_groups_prefix_delete "p6-lz-"
+  p6_aws_svc_organizations_sts_su_un
+
+  p6_return_void
+}
 ######################################################################
 #<
 #
@@ -243,6 +260,9 @@ p6_lz_destroy_management() {
 
   p6_h5 "Management: CloudTrail"
   p6_aws_svc_cloudtrail_from_management_off $audit_account_id
+
+  p6_h5 "Management: CW Logs"
+  p6_aws_svc_logs_groups_prefix_delete "p6-lz-"
 
   p6_return_void
 }
@@ -270,6 +290,9 @@ p6_lz_destroy_audit() {
 
   p6_h4 "Audit: CloudTrail"
   true # CDK actually works
+
+  p6_h4 "Audit: CW Logs"
+  p6_aws_svc_logs_groups_prefix_delete "p6-lz-"
 
   p6_aws_svc_organizations_sts_su_un
 
@@ -399,8 +422,8 @@ p6_lz_run_phase_1() {
   local action="$1"
 
   p6_h2 "Phase 1"
-  p6_lz_util_cdk_execute $action p6-lz-management-organization
-  p6_lz_util_cdk_execute $action p6-lz-management-avm
+  p6_lz_util_cdk_execute $action p6-lz-management-1-organization
+  p6_lz_util_cdk_execute $action p6-lz-management-1-avm
 
   p6_return_void
 }
