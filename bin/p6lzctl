@@ -128,7 +128,7 @@ p6_lz_cmd_stacks() {
   done
 
   local management_account_name=$(p6_aws_svc_organization_management_account_name_get)
-  p6_h3 "$account_name"
+  p6_h3 "$management_account_name"
   p6_lz_util_stacks_list
 
   p6_return_void
