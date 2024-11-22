@@ -393,7 +393,7 @@ p6_lz_run_bootstrap() {
   local region=$AWS_REGION
 
   p6_h2 "Bootstrapping"
-  p6_lz_util_cdk_execute "$action" "" "$action_id" "$region"
+  p6_lz_util_cdk_execute "$action" "" "$account_id" "$region"
 
   p6_return_void
 }
@@ -442,6 +442,39 @@ p6_lz_run_phase_2() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_phase_2_account_context()
+#
+#  Environment:	 _2_
+#>
+######################################################################
+p6_lz_run_phase_2_account_context() {
+
+  p6_h3 "Phase 2: Account Context"
+  local pair
+  for pair in $(p6_aws_svc_organizations_accounts_list_active_ids_and_names); do
+    local name=$(p6_echo "$pair" | cut -d= -f1 | sed -e 's,p6m7g8-,,' -e 's,p6m7g8,management,')
+    local account_id=$(p6_echo "$pair" | cut -d= -f2)
+
+    if p6_file_exists cdk.context.json; then
+      if jq -e '.Accounts' cdk.context.json >/dev/null; then
+        if ! jq -e --arg account_id "$account_id" '.Accounts[] | select(.AccountId == $account_id)' cdk.context.json >/dev/null; then
+          jq --arg name "$name" --arg account_id "$account_id" '.Accounts += [{"Name": $name, "AccountId": $account_id}]' cdk.context.json >temp.json && p6_file_move temp.json cdk.context.json
+        fi
+      else
+        jq --arg name "$name" --arg account_id "$account_id" '. + {Accounts: [{"Name": $name, "AccountId": $account_id}]}' cdk.context.json >temp.json && p6_file_move temp.json cdk.context.json
+      fi
+    else
+      p6_echo '{}' | jq --arg name "$name" --arg account_id "$account_id" '. + {Accounts: [{"Name": $name, "AccountId": $account_id}]}' >cdk.context.json
+    fi
+    p6_file_rmf temp.json
+  done
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run_phase_2_bootstrap_trust(action)
 #
 #  Args:
@@ -458,40 +491,7 @@ p6_lz_run_phase_2_bootstrap_trust() {
   local account_ids=$(p6_aws_svc_organizations_account_list_active_ids_without_management)
   local account_id
   for account_id in $account_ids; do
-    p6_aws_svc_organizations_sts_run_as p6_lz_util_bootstrap_trust "$action" "$account_id" "$region" "$management_account_id"
-  done
-
-  p6_return_void
-}
-
-######################################################################
-#<
-#
-# Function: p6_lz_run_phase_2_account_context()
-#
-#  Environment:	 _2_
-#>
-######################################################################
-p6_lz_run_phase_2_account_context() {
-
-  p6_h3 "Phase 2: Account Context"
-  local pair
-  for pair in $(p6_aws_svc_organizations_accounts_list_active_ids_and_names); do
-    local name=$(p6_echo "$pair" | cut -d= -f1 | sed -e 's,p6m7g8-,,')
-    local account_id=$(p6_echo "$pair" | cut -d= -f2)
-
-    if p6_file_exists cdk.context.json; then
-      if jq -e '.Accounts' cdk.context.json >/dev/null; then
-        if ! jq -e --arg account_id "$account_id" '.Accounts[] | select(.AccountId == $account_id)' cdk.context.json >/dev/null; then
-          jq --arg name "$name" --arg account_id "$account_id" '.Accounts += [{"Name": $name, "AccountId": $account_id}]' cdk.context.json >temp.json && p6_file_move temp.json cdk.context.json
-        fi
-      else
-        jq --arg name "$name" --arg account_id "$account_id" '. + {Accounts: [{"Name": $name, "AccountId": $account_id}]}' cdk.context.json >temp.json && p6_file_move temp.json cdk.context.json
-      fi
-    else
-      p6_echo '{}' | jq --arg name "$name" --arg account_id "$account_id" '. + {Accounts: [{"Name": $name, "AccountId": $account_id}]}' >cdk.context.json
-    fi
-    p6_file_rmf temp.json
+    p6_aws_svc_organizations_sts_run_as "$account_id" p6_lz_util_bootstrap_trust "$action" "" "$account_id" "$AWS_REGION" "$management_account_id"
   done
 
   p6_return_void
@@ -881,7 +881,7 @@ p6_lz_util_bootstrap_trust() {
   local region="$3"
   local management_account_id="$4"
 
-  p6_lz_util_execute "$action" "" "$account_id" "$region" --trust $management_account_id --trust-for-lookup $management_account_id --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+  p6_lz_util_cdk_execute "$action" "" "$account_id" "$region" --trust $management_account_id --trust-for-lookup $management_account_id --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
 
   p6_return_void
 }
