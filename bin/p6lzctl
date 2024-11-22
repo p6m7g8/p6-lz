@@ -602,7 +602,7 @@ p6_lz_run_phase_3_audit_account() {
   p6_lz_util_cdk_execute $action p6-lz-audit-2
 
   # Inspector
-  p6_aws_svc_organizations_sts_run_as p6m7g8-audit p6_lz_util_inspector_setup
+  # p6_aws_svc_organizations_sts_run_as p6m7g8-audit p6_lz_util_inspector_setup
 
   p6_return_void
 }
