@@ -15,7 +15,7 @@ export class P6LzSraAvmOus extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6LzSraAvmOuProps) {
     super(scope, id)
     const ouFunction = new lambdajs.NodejsFunction(this, 'OUMaker', {
-      runtime: lambda.Runtime.NODEJS_20_X,
+      runtime: lambda.Runtime.NODEJS_22_X,
       timeout: cdk.Duration.minutes(1),
       tracing: lambda.Tracing.ACTIVE,
       entry: path.join(__dirname, '..', 'resources', 'avm.OUMaker.ts'),
