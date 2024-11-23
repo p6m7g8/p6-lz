@@ -24,6 +24,7 @@ export class P6LzSraAvmOus extends cdk.Resource {
         OU_FILE_KEY: props.asset.s3ObjectKey,
       },
       bundling: {
+        minify: true,
         nodeModules: ['aws-sdk', 'aws-lambda', 'js-yaml', 'winston'],
       },
     })
