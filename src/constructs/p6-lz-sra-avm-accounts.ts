@@ -22,7 +22,7 @@ export class P6LzSraAvmAccounts extends cdk.Resource {
     })
 
     const accountsFunction = new lambdajs.NodejsFunction(this, 'AccountsMaker', {
-      runtime: lambda.Runtime.NODEJS_20_X,
+      runtime: lambda.Runtime.NODEJS_22_X,
       timeout: cdk.Duration.minutes(6),
       tracing: lambda.Tracing.ACTIVE,
       entry: path.join(__dirname, '..', 'resources', 'avm.AccountsMaker.ts'),
