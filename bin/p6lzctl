@@ -482,7 +482,7 @@ p6_lz_run_phase_2_account_context() {
 #  Args:
 #	action -
 #
-#  Environment:	 _2_
+#  Environment:	 AWS_REGION _2_
 #>
 ######################################################################
 p6_lz_run_phase_2_bootstrap_trust() {
@@ -776,7 +776,10 @@ p6_lz_run_phase_4_prod_account() {
 ######################################################################
 #<
 #
-# Function: p6_lz_util_cdk_context_add_logarchive_bucket()
+# Function: p6_lz_util_cdk_context_add_logarchive_bucket(action)
+#
+#  Args:
+#	action -
 #
 #>
 ######################################################################
