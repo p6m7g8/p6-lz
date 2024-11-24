@@ -1,9 +1,9 @@
 import type { Construct } from 'constructs'
-import type { AccountAlias, ShareWithOrg } from '../types'
+import type { IAccountAlias, IShareWithOrg } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import { P6CDKNamer } from 'p6-cdk-namer'
 
-interface SharedAccountStack1Props extends cdk.StackProps, AccountAlias, ShareWithOrg {}
+interface SharedAccountStack1Props extends cdk.StackProps, IAccountAlias, IShareWithOrg {}
 
 export class SharedAccountStack1 extends cdk.Stack {
   constructor(scope: Construct, id: string, props: SharedAccountStack1Props) {

@@ -1,10 +1,10 @@
 import type { Construct } from 'constructs'
-import type { LogarchiveBucketArn, ShareWithOrg } from './../types'
+import type { ILogarchiveBucketArn, IShareWithOrg } from './../types'
 import * as cdk from 'aws-cdk-lib'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import { P6LzSraConfig } from '../constructs/p6-lz-sra-config'
 
-interface NetworkAccountStack2Props extends cdk.StackProps, LogarchiveBucketArn, ShareWithOrg {}
+interface NetworkAccountStack2Props extends cdk.StackProps, ILogarchiveBucketArn, IShareWithOrg {}
 
 export class NetworkAccountStack2 extends cdk.Stack {
   constructor(scope: Construct, id: string, props: NetworkAccountStack2Props) {

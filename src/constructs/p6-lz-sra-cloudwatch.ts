@@ -1,11 +1,11 @@
 import type { Construct } from 'constructs'
-import type { AccountAlias } from '../types'
+import type { IAccountAlias } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as logs from 'aws-cdk-lib/aws-logs'
 
-export interface IP6LzSraCloudWatchProps extends AccountAlias {}
+export interface IP6LzSraCloudWatchProps extends IAccountAlias {}
 
 export class P6LzSraCloudWatch extends cdk.Resource {
   public readonly logGroup: logs.ILogGroup

@@ -1,11 +1,11 @@
 import type { Construct } from 'constructs'
-import type { LogarchiveBucket, ShareWithOrg } from '../types'
+import type { ILogarchiveBucket, IShareWithOrg } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as config from 'aws-cdk-lib/aws-config'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 
-export interface IP6LzSraConfigProps extends ShareWithOrg, LogarchiveBucket {
+export interface IP6LzSraConfigProps extends IShareWithOrg, ILogarchiveBucket {
   // @default false
   isCentral?: boolean
 }
