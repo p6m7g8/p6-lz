@@ -60,5 +60,15 @@ export class P6LzVpc extends cdk.Resource {
     })
     cdk.Tags.of(sg).add('Name', 'p6-lz-sg-default')
     sg.addIngressRule(eiceSg, ec2.Port.SSH, 'Allow SSH traffic from EICE SG')
+
+    new ec2.GatewayVpcEndpoint(this, `Gateway-S3`, {
+      service: new ec2.GatewayVpcEndpointAwsService('s3'),
+      vpc,
+    })
+
+    new ec2.InterfaceVpcEndpoint(this, `Interface-SSM`, {
+      service: new ec2.InterfaceVpcEndpointAwsService('ssm'),
+      vpc,
+    })
   }
 }
