@@ -206,12 +206,14 @@ p6_lz_cmd_destroy() {
   p6_h2 "Destroying"
 
   p6_h3 "Cleaning CLI"
-  p6_aws_svc_organizations_sts_run_as p6m7g8-audit p6_lz_destroy_audit
-  p6_aws_svc_organizations_sts_run_as p6m7g8-logarchive p6_lz_destroy_logarchive
+  local audit_account_name=$(p6_lz_util_audit_account_name)
+  p6_aws_svc_organizations_sts_run_as $audit_account_name p6_lz_destroy_audit
+  local logarchive_account_name=$(p6_lz_util_logarchive_account_name)
+  p6_aws_svc_organizations_sts_run_as $logarchive_account_name p6_lz_destroy_logarchive
   p6_lz_destroy_management
 
   p6_h3 "Cleaning CDK"
-  p6_lz_util_cdk_execute destroy
+  p6_awscdk_cli_execute destroy
 
   p6_h3 "Reset Context"
   p6_file_rmf cdk.context.json
@@ -247,8 +249,9 @@ p6_lz_destroy_management() {
   p6_h4 "Management"
   local audit_account_id=$(p6_lz_util_audit_account_id_get)
 
-  p6_h5 "Management: Inspector"
-  p6_aws_svc_inspector_from_management_off $audit_account_id
+  # Piece of Shit -- do not use
+  # p6_h5 "Management: Inspector"
+  # p6_aws_svc_inspector_from_management_off $audit_account_id
 
   p6_h5 "Management: Security Hub"
   p6_aws_svc_securityhub_from_management_off $audit_account_id
@@ -275,8 +278,9 @@ p6_lz_destroy_management() {
 ######################################################################
 p6_lz_destroy_audit() {
 
-  p6_h4 "Audit: Inspector"
-  p6_aws_svc_inspector_from_delegated_off
+  # Piece of Shit -- do not use
+  # p6_h4 "Audit: Inspector"
+  # p6_aws_svc_inspector_from_delegated_off
 
   p6_h4 "Audit: Security Hub"
   p6_aws_svc_securityhub_from_delegated_off
@@ -285,6 +289,7 @@ p6_lz_destroy_audit() {
   true # CDK actually works
 
   p6_h4 "Audit: CloudTrail"
+  p6_aws_svc_cloudtrail_delete
   true # CDK actually works
 
   p6_h4 "Audit: CW Logs"
@@ -452,9 +457,10 @@ p6_lz_run_phase_2() {
 p6_lz_run_phase_2_account_context() {
 
   p6_h3 "Phase 2: Account Context"
+  local management_account_name=$(p6_aws_svc_organizations_management_account_name_get)
   local pair
   for pair in $(p6_aws_svc_organizations_accounts_list_active_ids_and_names); do
-    local name=$(p6_echo "$pair" | cut -d= -f1 | sed -e 's,p6m7g8-,,' -e 's,p6m7g8,management,')
+    local name=$(p6_echo "$pair" | cut -d= -f1 | sed -e "s,$management_account_name-,," -e "s,$management_account_name,management,")
     local account_id=$(p6_echo "$pair" | cut -d= -f2)
 
     if p6_file_exists cdk.context.json; then
@@ -549,8 +555,9 @@ p6_lz_run_phase_3_management_account() {
   p6_h3 "Phase 3: Management: Delegating SecurityHub"
   p6_aws_svc_securityhub_from_management_on $audit_account_id
 
-  p6_h3 "Phase 3: Management: Delegate Inspector"
-  p6_aws_svc_inspector_from_management_on $audit_account_id
+  # Piece of Shit -- do not use
+  # p6_h3 "Phase 3: Management: Delegate Inspector"
+  # p6_aws_svc_inspector_from_management_on $audit_account_id
 
   p6_return_void
 }
@@ -573,7 +580,8 @@ p6_lz_run_phase_3_logarchive_account() {
   p6_awscdk_cli_execute $action p6-lz-logarchive-1
 
   p6_h3 "Phase 3: Logarchive Add Logarchive Bucket Name to Context"
-  p6_aws_svc_organizations_sts_run_as p6m7g8-logarchive p6_lz_util_cdk_context_add_logarchive_bucket "$action"
+  local logarchive_account_name=$(p6_lz_util_logarchive_account_name)
+  p6_aws_svc_organizations_sts_run_as $logarchive_account_name p6_lz_util_cdk_context_add_logarchive_bucket $action
 
   p6_awscdk_cli_execute $action p6-lz-logarchive-2
 
@@ -595,16 +603,18 @@ p6_lz_run_phase_3_audit_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Audit-1"
-  p6_awscdk_cli_execute $action p6-lz-audit-1
+  #  p6_awscdk_cli_execute $action p6-lz-audit-1
 
   p6_h3 "Phase 3: Audit: CloudTrail Start Logging"
-  p6_aws_svc_organizations_sts_run_as p6m7g8-audit p6_cirrus_cloudtrail_logging_start
+  local audit_account_name=$(p6_lz_util_audit_account_name)
+  p6_aws_svc_organizations_sts_run_as $audit_account_name p6_cirrus_cloudtrail_logging_start
 
   p6_h3 "Phase 3: Audit-2"
-  p6_awscdk_cli_execute $action p6-lz-audit-2
+  #  p6_awscdk_cli_execute $action p6-lz-audit-2
 
-  # Inspector
-  # p6_aws_svc_organizations_sts_run_as p6m7g8-audit p6_lz_util_inspector_setup
+  # Piece of Shit -- do not use
+  # # Inspector
+  # p6_aws_svc_organizations_sts_run_as $audit_account_name p6_lz_util_inspector_setup
 
   p6_return_void
 }
@@ -795,20 +805,20 @@ p6_lz_util_cdk_context_add_logarchive_bucket() {
   p6_return_void
 }
 
-######################################################################
-#<
-#
-# Function: p6_lz_util_inspector_setup()
-#
-#>
-######################################################################
-p6_lz_util_inspector_setup() {
+# ######################################################################
+# #<
+# #
+# # Function: p6_lz_util_inspector_setup()
+# #
+# #>
+# ######################################################################
+# p6_lz_util_inspector_setup() {
 
-  p6_aws_svc_inspector_role_service_linked_create
-  p6_aws_svc_inspector_organization_members_enable
+#   p6_aws_svc_inspector_role_service_linked_create
+#   p6_aws_svc_inspector_organization_members_enable
 
-  p6_return_void
-}
+#   p6_return_void
+# }
 
 ######################################################################
 #<
@@ -850,6 +860,40 @@ p6_lz_util_audit_account_id_get() {
   jq -r '.Accounts[] | select(.Name == "audit") | .AccountId' cdk.context.json
 
   p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: str audit_account_name = p6_lz_util_audit_account_name()
+#
+#  Returns:
+#	str - audit_account_name
+#
+#>
+######################################################################
+p6_lz_util_audit_account_name() {
+
+  local audit_account_name=$(yq '.[] | select(.SraType == "audit") | .Name' conf/accounts.yml)
+
+  p6_return_str "$audit_account_name"
+}
+
+######################################################################
+#<
+#
+# Function: str logarchive_account_name = p6_lz_util_logarchive_account_name()
+#
+#  Returns:
+#	str - logarchive_account_name
+#
+#>
+######################################################################
+p6_lz_util_logarchive_account_name() {
+
+  local logarchive_account_name=$(yq '.[] | select(.SraType == "logarchive") | .Name' conf/accounts.yml)
+
+  p6_return_str "$logarchive_account_name"
 }
 
 ######################################################################

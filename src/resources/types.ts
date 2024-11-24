@@ -11,4 +11,5 @@ export interface MyOrganizationalUnit extends OrganizationalUnit {
 export interface ExtendedAccount extends Account {
   OrganizationalUnitName?: string
   Id?: string
+  SraType?: string
 }
