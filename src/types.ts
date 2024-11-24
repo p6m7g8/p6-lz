@@ -1,7 +1,8 @@
 import type * as cdk from 'aws-cdk-lib'
+import type { IIpAddresses, IPeer } from 'aws-cdk-lib/aws-ec2'
 import type * as s3 from 'aws-cdk-lib/aws-s3'
 
-export interface AccountIds {
+export interface IAccountIds {
   auditAccountId: string
   devAccountId: string
   logarchiveAccountId: string
@@ -13,18 +14,23 @@ export interface AccountIds {
   sharedAccountId: string
 }
 
-export interface AccountAlias {
+export interface IAccountAlias {
   accountAlias: string
 }
 
-export interface ShareWithOrg {
+export interface IShareWithOrg {
   principals: string[]
 }
 
-export interface LogarchiveBucket {
+export interface ILogarchiveBucket {
   centralBucket: s3.IBucket
 }
 
-export interface LogarchiveBucketArn {
+export interface ILogarchiveBucketArn {
   centralBucketArn: cdk.Arn
+}
+
+export interface IVpc {
+  cidr: IIpAddresses
+  myIp: IPeer
 }

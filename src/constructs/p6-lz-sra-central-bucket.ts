@@ -1,6 +1,6 @@
 import type { IPrincipal } from 'aws-cdk-lib/aws-iam'
 import type { Construct } from 'constructs'
-import type { ShareWithOrg } from '../types'
+import type { IShareWithOrg } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
@@ -29,7 +29,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3'
  *
  */
 
-export interface IP6LzSraCentralBucketProps extends ShareWithOrg {}
+export interface IP6LzSraCentralBucketProps extends IShareWithOrg {}
 
 export class P6LzSraCentralBucket extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6LzSraCentralBucketProps) {

@@ -1,12 +1,12 @@
 import type * as logs from 'aws-cdk-lib/aws-logs'
 import type { Construct } from 'constructs'
-import type { LogarchiveBucket } from '../types'
+import type { ILogarchiveBucket } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as cloudtrail from 'aws-cdk-lib/aws-cloudtrail'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 
-export interface IP6LzSraOrgTrailProps extends LogarchiveBucket {
+export interface IP6LzSraOrgTrailProps extends ILogarchiveBucket {
   logGroup: logs.ILogGroup
   logRole: iam.IRole
 }

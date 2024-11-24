@@ -2,6 +2,7 @@
 
 import process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
+import * as ec2 from 'aws-cdk-lib/aws-ec2'
 import { AuditAccountStack1 } from './stacks/audit-1'
 import { AuditAccountStack2 } from './stacks/audit-2'
 import { AuditAccountStack3 } from './stacks/audit-3'
@@ -36,6 +37,7 @@ const prodAccountId = accounts.find(account => account.Name === 'prod')?.Account
 const qaAccountId = accounts.find(account => account.Name === 'qa')?.AccountId ?? '012345678912'
 const sharedAccountId = accounts.find(account => account.Name === 'shared')?.AccountId ?? '012345678912'
 const sandboxAccountId = accounts.find(account => account.Name === 'sandbox')?.AccountId ?? '012345678912'
+const myIp = app.node.tryGetContext('my-ip') ?? '0.0.0.1/32'
 
 const principals: string[] = [
   auditAccountId,
@@ -158,6 +160,8 @@ new SandboxAccountStack(app, 'p6-lz-sandbox', {
     region: env.region,
   },
   accountAlias: 'p6m7g8-sandbox',
+  cidr: ec2.IpAddresses.cidr('10.252.0.0/16'),
+  myIp: ec2.Peer.ipv4(myIp),
 })
 
 // Dev Account
@@ -167,6 +171,8 @@ new DevAccountStack(app, 'p6-lz-dev', {
     region: env.region,
   },
   accountAlias: 'p6m7g8-dev',
+  cidr: ec2.IpAddresses.cidr('10.253.0.0/16'),
+  myIp: ec2.Peer.ipv4(myIp),
 })
 
 // QA
@@ -176,6 +182,8 @@ new QaAccountStack(app, 'p6-lz-qa', {
     region: env.region,
   },
   accountAlias: 'p6m7g8-qa',
+  cidr: ec2.IpAddresses.cidr('10.254.0.0/16'),
+  myIp: ec2.Peer.ipv4(myIp),
 })
 
 // Prod
@@ -185,6 +193,8 @@ new ProdAccountStack(app, 'p6-lz-prod', {
     region: env.region,
   },
   accountAlias: 'p6m7g8-prod',
+  cidr: ec2.IpAddresses.cidr('10.255.0.0/16'),
+  myIp: ec2.Peer.ipv4(myIp),
 })
 
 app.synth()

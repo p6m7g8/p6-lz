@@ -719,6 +719,14 @@ p6_lz_run_phase_4_sandbox_account() {
   local action="$1"
 
   p6_h2 "Phase 4: Sandbox"
+
+  p6_h3 "Phase 4: Sandbox: My IP"
+  local my_ip=$(p6_network_ip_public)
+  local cidr_ip="$my_ip/32"
+  jq --arg ip "$cidr_ip" '.["my-ip"] = $ip' cdk.context.json >tmp.$$.json
+  p6_file_move tmp.$$.json cdk.context.json
+
+  p6_h3 "Phase 4: Sandbox: CDK"
   p6_awscdk_cli_execute $action p6-lz-sandbox
 
   p6_return_void
