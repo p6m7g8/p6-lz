@@ -289,9 +289,7 @@ p6_lz_destroy_audit() {
   true # CDK actually works
 
   p6_h4 "Audit: CloudTrail"
-  p6_aws_svc_cloudtrail_delete
-  true # CDK actually works
-
+  p6_cirrus_cloudtrail_trail_delete
   p6_h4 "Audit: CW Logs"
   p6_lz_util_logs_delete
 
