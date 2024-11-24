@@ -35,6 +35,9 @@ export class P6LzVpc extends cdk.Resource {
         },
       ],
     })
+    vpc.addFlowLog('p6-lz-flow-log', {
+      destination: ec2.FlowLogDestination.toCloudWatchLogs(),
+    })
 
     const eiceSg = new ec2.SecurityGroup(this, 'p6-lz-sg-eice', {
       vpc,
