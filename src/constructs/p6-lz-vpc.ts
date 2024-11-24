@@ -11,7 +11,7 @@ export class P6LzVpc extends cdk.Resource {
 
     const vpc = new ec2.Vpc(this, 'VPC', {
       ipAddresses: props.cidr,
-      maxAzs: 4,
+      maxAzs: 1,
       subnetConfiguration: [
         {
           cidrMask: 20,
@@ -36,19 +36,26 @@ export class P6LzVpc extends cdk.Resource {
       ],
     })
 
-    const bastion = new ec2.BastionHostLinux(this, 'p6-lz-bastion', {
-      instanceName: 'p6-lz-bastion',
-      vpc,
-      subnetSelection: { subnetType: ec2.SubnetType.PUBLIC },
-      instanceType: new ec2.InstanceType('t4g.nano'),
-    })
-    bastion.allowSshAccessFrom(props.myIp)
-
-    const sg = new ec2.SecurityGroup(this, 'p6-lz-sg-default', {
+    const eiceSg = new ec2.SecurityGroup(this, 'p6-lz-sg-eice', {
       vpc,
       allowAllOutbound: true,
     })
-    sg.addIngressRule(bastion.connections.securityGroups[0]!, ec2.Port.SSH, 'Allow SSH from Bastion Host')
+    eiceSg.addIngressRule(props.myIp, ec2.Port.HTTPS, 'Allow HTTPS traffic from my IP')
+    eiceSg.addIngressRule(props.myIp, ec2.Port.SSH, 'Allow SSH traffic from my IP')
+
+    const privateSubnets = vpc.selectSubnets({ subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS })
+    const privateSubnet = privateSubnets.subnets.at(0)
+    new ec2.CfnInstanceConnectEndpoint(this, 'p6-lz-instance-connect-endpoint', {
+      subnetId: privateSubnet!.subnetId,
+      securityGroupIds: [eiceSg.securityGroupId],
+    })
+
+    const sg = new ec2.SecurityGroup(this, 'p6-lz-sg-default', {
+      securityGroupName: 'p6-lz-sg-default',
+      vpc,
+      allowAllOutbound: true,
+    })
     cdk.Tags.of(sg).add('Name', 'p6-lz-sg-default')
+    sg.addIngressRule(eiceSg, ec2.Port.SSH, 'Allow SSH traffic from EICE SG')
   }
 }
