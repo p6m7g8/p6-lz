@@ -1,7 +1,7 @@
 import type { DescribeCreateAccountStatusResponse, ListAccountsCommandOutput, ListOrganizationalUnitsForParentCommandOutput, ListParentsCommandOutput, ListRootsCommandOutput, OrganizationsClient } from '@aws-sdk/client-organizations'
 import type { GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
 import type { Readable } from 'node:stream'
-import type { ExtendedAccounts, MyOrganizationalUnits } from './types'
+import type { ExtendedAccounts, IAccountsConfig, MyOrganizationalUnits } from '../types'
 import { DescribeCreateAccountStatusCommand, ListAccountsCommand, ListOrganizationalUnitsForParentCommand, ListParentsCommand, ListRootsCommand } from '@aws-sdk/client-organizations'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
 import * as yaml from 'js-yaml'
@@ -259,7 +259,8 @@ async function parseAccounts(logger: winston.Logger, s3Object: GetObjectCommandO
   let accountData: ExtendedAccounts
   try {
     const bodyString = await streamToString(s3Object.Body as Readable)
-    accountData = yaml.load(bodyString) as ExtendedAccounts
+    const accountsConfig = yaml.load(bodyString) as IAccountsConfig
+    accountData = Object.values(accountsConfig.accounts)
     logger.info(`Parsed ${accountData.length} accounts from the file`)
   }
   catch (error) {

@@ -1,0 +1,67 @@
+accounts:
+  management:
+    SraType: management
+    Name: p6m7g8
+    Email: pgollucci@p6m7g8.com
+    OrganizationalUnitName: Root
+    AccountId: 012345678912
+
+  logarchive:
+    SraType: logarchive
+    Name: p6m7g8-logarchive
+    Email: pgollucci-aws-p6m7g8-logarchive@p6m7g8.com
+    OrganizationalUnitName: Security
+    AccountId: 012345678912
+  audit:
+    SraType: audit
+    Name: p6m7g8-audit
+    Email: pgollucci-aws-p6m7g8-audits@p6m7g8.com
+    OrganizationalUnitName: Security
+    AccountId: 012345678912
+
+  shared:
+    SraType: shared
+    Name: p6m7g8-shared
+    Email: pgollucci-aws-p6m7g8-shared@p6m7g8.com
+    OrganizationalUnitName: Infrastructure
+    AccountId: 012345678912
+  network:
+    SraType: network
+    Name: p6m7g8-network
+    Email: pgollucci-aws-p6m7g8-network@p6m7g8.com
+    OrganizationalUnitName: Infrastructure
+    AccountId: 012345678912
+
+  sandbox:
+    SraType: sandbox
+    Name: p6m7g8-sandbox
+    Email: pgollucci-aws-p6m7g8-sandbox@p6m7g8.com
+    OrganizationalUnitName: Sandbox
+    AccountId: 012345678912
+    Vpc:
+      cidr: 10.252.0.0/16
+
+  dev:
+    SraType: dev
+    Name: p6m7g8-dev
+    Email: pgollucci-aws-p6m7g8-dev@p6m7g8.com
+    OrganizationalUnitName: SDLC
+    AccountId: 012345678912
+    Vpc:
+      cidr: 10.253.0.0/16
+  qa:
+    SraType: qa
+    Name: p6m7g8-qa
+    Email: pgollucci-aws-p6m7g8-qa@p6m7g8.com
+    OrganizationalUnitName: SDLC
+    AccountId: 012345678912
+    Vpc:
+      cidr: 10.254.0.0/16
+  prod:
+    SraType: prod
+    Name: p6m7g8-prod
+    Email: pgollucci-aws-p6m7g8-prod@p6m7g8.com
+    OrganizationalUnitName: Production
+    AccountId: 012345678912
+    Vpc:
+      cidr: 10.255.0.0/16

@@ -7,8 +7,6 @@ import { P6CDKNamer } from 'p6-cdk-namer'
 interface OrganizationStackProps extends cdk.StackProps, IAccountAlias {}
 
 export class OrganizationStack extends cdk.Stack {
-  public readonly centralBucketArn: string
-
   constructor(scope: Construct, id: string, props: OrganizationStackProps) {
     super(scope, id, props)
 
@@ -18,10 +16,5 @@ export class OrganizationStack extends cdk.Stack {
     new P6CDKNamer(this, 'P6LzCdkNamer', {
       accountAlias: props.accountAlias,
     })
-
-    const logarchiveBucketName = this.node.tryGetContext('logarchive-bucket-name') ?? 'p6-lz-dne'
-    const centralBucketArn = `arn:aws:s3:::${logarchiveBucketName}`
-
-    this.centralBucketArn = centralBucketArn
   }
 }
