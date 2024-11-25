@@ -416,6 +416,19 @@ p6_lz_run_bootstrap() {
   local region=$AWS_REGION
 
   p6_h2 "Bootstrapping"
+  p6_h3 "Bootstrapping: conf/"
+  p6_file_copy conf/accounts.yml.in conf/accounts.yml
+  p6_lz_run_phase_2_account_context
+
+  p6_h3 "Stub Central Bucket"
+  yq eval -n ".logarchiveBucketArn = \"arn:aws:s3:::p6-lz-logarchive-1-p6lzsracentralbucket-DNE\"" >conf/central-bucket.yml
+
+  p6_h3 "My IP"
+  local my_ip=$(p6_network_ip_public)
+  local cidr_ip="$my_ip/32"
+  yq eval -n ".myIp = \"$cidr_ip\"" >conf/myip.yml
+
+  p6_h3 "Bootstrapping: CDK"
   p6_awscdk_cli_execute "$action" "" "$account_id" "$region"
 
   p6_return_void
