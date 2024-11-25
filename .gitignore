@@ -3,3 +3,6 @@ cdk.out/
 coverage/
 node_modules/
 cdk.context.json
+conf/accounts.yml
+conf/central-bucket.yml
+conf/myip.yml

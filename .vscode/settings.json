@@ -67,8 +67,10 @@
     "mebibytes",
     "mgmt",
     "mybucketf",
+    "myip",
     "ngfg",
     "presign",
-    "presigner"
+    "presigner",
+    "SDLC"
   ]
 }

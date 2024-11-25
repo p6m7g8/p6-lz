@@ -1,7 +1,7 @@
 import type { CreateAccountCommandOutput } from '@aws-sdk/client-organizations'
 import type { CloudFormationCustomResourceEvent, CloudFormationCustomResourceResponse } from 'aws-lambda'
 import type * as winston from 'winston'
-import type { ExtendedAccount } from './types'
+import type { ExtendedAccount } from '../types'
 import * as process from 'node:process'
 import { CreateAccountCommand, DuplicateAccountException, MoveAccountCommand, OrganizationsClient } from '@aws-sdk/client-organizations'
 import { S3Client } from '@aws-sdk/client-s3'
@@ -40,6 +40,9 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
   const accountData = await getAccounts(logger, s3Client, accountsFileBucket, accountsFileKey)
 
   for (const account of accountData) {
+    if (account.SraType === 'management') {
+      continue
+    }
     await new Promise(f => setTimeout(f, 2000))
 
     if (!account.Name || !account.Email || !account.OrganizationalUnitName) {
@@ -50,7 +53,7 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
     }
 
     // Lookup Target OU ID
-    const tmpOu = ouTree.find(ou => ou.Name === account.OrganizationalUnitName)
+    const tmpOu = ouTree.find((ou: any) => ou.Name === account.OrganizationalUnitName)
     const parentOuName = tmpOu?.Parent ?? ''
     logger.info(`Found OU: ${tmpOu?.Name} with parent: ${parentOuName}`)
 
@@ -58,10 +61,10 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
     const parentOuId = await lookupParentOuId(logger, organizationsClient, parentOuName, rootId)
     const ouId = await lookupOuId(logger, organizationsClient, account.OrganizationalUnitName, parentOuId)
 
-    account.Id = await createAccount(logger, organizationsClient, account)
+    account.AccountId = await createAccount(logger, organizationsClient, account) ?? ''
 
     // Lookup the CURRENT OU ID
-    const currentOuId = await getAccountCurrentOuId(logger, organizationsClient, account.Id!) // source
+    const currentOuId = await getAccountCurrentOuId(logger, organizationsClient, account.AccountId!) // source
 
     moveAccount(logger, organizationsClient, account, currentOuId, ouId)
   }
@@ -115,12 +118,12 @@ async function moveAccount(logger: winston.Logger, client: OrganizationsClient, 
 
   try {
     await client.send(new MoveAccountCommand({
-      AccountId: account.Id,
+      AccountId: account.AccountId,
       SourceParentId: currentAccountOuId,
       DestinationParentId: ouId,
     }))
     logger.info(
-      `Moved account: ${account.Name} (ID: ${account.Id}) under OU ID: ${ouId}`,
+      `Moved account: ${account.Name} (ID: ${account.AccountId}) under OU ID: ${ouId}`,
     )
   }
   catch (error) {
