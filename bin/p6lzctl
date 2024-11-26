@@ -173,7 +173,6 @@ p6_lz_cmd_bootstrap() {
 ######################################################################
 p6_lz_cmd_deploy() {
 
-  p6_lz_run_build
   p6_lz_run "deploy"
 
   p6_return_void
@@ -212,8 +211,6 @@ p6_lz_cmd_destroy() {
   local logarchive_account_name=$(p6_lz_util_logarchive_account_name)
   p6_aws_svc_organizations_sts_run_as $logarchive_account_name p6_lz_destroy_logarchive
 
-  p6_lz_destroy_management
-
   p6_h3 "Cleaning CDK"
   p6_awscdk_cli_execute destroy
 
@@ -242,38 +239,6 @@ p6_lz_destroy_logarchive() {
 ######################################################################
 #<
 #
-# Function: p6_lz_destroy_management()
-#
-#  Environment:	 AWS_REGION
-#>
-######################################################################
-p6_lz_destroy_management() {
-
-  p6_h4 "Management"
-  local audit_account_id=$(p6_lz_util_audit_account_id_get)
-
-  # Piece of Shit -- do not use
-  # p6_h5 "Management: Inspector"
-  # p6_cirrus_inspector_from_management_off $audit_account_id
-
-  p6_h5 "Management: Security Hub"
-  # p6_cirrus_securityhub_from_management_off $audit_account_id
-
-  p6_h5 "Management: Config"
-  p6_cirrus_configservice_from_management_off $audit_account_id $AWS_REGION
-
-  p6_h5 "Management: CloudTrail"
-  p6_cirrus_cloudtrail_from_management_off $audit_account_id
-
-  p6_h5 "Management: CW Logs"
-  p6_cirrus_logs_groups_prefix_delete "p6-lz-"
-
-  p6_return_void
-}
-
-######################################################################
-#<
-#
 # Function: p6_lz_destroy_audit()
 #
 #  Environment:	 CDK
@@ -284,12 +249,6 @@ p6_lz_destroy_audit() {
   # Piece of Shit -- do not use
   # p6_h4 "Audit: Inspector"
   # p6_cirrus_inspector_from_delegated_off
-
-  p6_h4 "Audit: Security Hub"
-  # p6_cirrus_securityhub_from_delegated_off
-
-  p6_h4 "Audit: Config"
-  true # CDK actually works
 
   p6_h4 "Audit: CloudTrail"
   p6_cirrus_cloudtrail_trail_delete "p6-lz-"
@@ -450,7 +409,7 @@ p6_lz_run_phase_1() {
   local action="$1"
 
   p6_h2 "Phase 1"
-  # p6_awscdk_cli_execute $action p6-lz-management-1-organization
+  p6_awscdk_cli_execute $action p6-lz-management-1-organization
   p6_awscdk_cli_execute $action p6-lz-management-1-avm
 
   p6_return_void
@@ -540,20 +499,10 @@ p6_lz_run_phase_3_management_account() {
   local action="$1"
 
   p6_h2 "Phase 3: Management"
-  local audit_account_id=$(p6_lz_util_audit_account_id_get)
-
-  p6_h3 "Phase 3: Management: Delegating CloudTrail"
-  p6_cirrus_cloudtrail_from_management_on $audit_account_id
-
-  p6_h3 "Phase 3: Management: Delegating Config"
-  p6_cirrus_configservice_from_management_on $audit_account_id $AWS_REGION
-
-  p6_h3 "Phase 3: Management: Delegating SecurityHub"
-  p6_cirrus_securityhub_from_management_on $audit_account_id
-
-  # Piece of Shit -- do not use
-  # p6_h3 "Phase 3: Management: Delegate Inspector"
-  # p6_cirrus_inspector_from_management_on $audit_account_id
+  p6_awscdk_cli_execute $action p6-lz-management-2-cloudtrail
+  p6_awscdk_cli_execute $action p6-lz-management-2-config
+  p6_awscdk_cli_execute $action p6-lz-management-2-securityhub
+  p6_awscdk_cli_execute $action p6-lz-management-2-inspector
 
   p6_return_void
 }
