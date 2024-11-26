@@ -217,11 +217,9 @@ p6_lz_cmd_destroy() {
   p6_h3 "Cleaning CDK"
   p6_awscdk_cli_execute destroy
 
-  p6_h3 "Reset Context"
+  p6_h3 "Remove Generated Files and Reset cdk.context.json"
   p6_file_rmf cdk.context.json
   p6_file_rmf conf/accounts.yml
-  p6_file_rmf conf/myip.yml
-  p6_file_rmf conf/central-bucket.yml
 
   p6_return_void
 }
@@ -320,6 +318,29 @@ p6_lz_run_install() {
 ######################################################################
 #<
 #
+# Function: p6_lz_run_generate()
+#
+#  Environment:	 DNE
+#>
+######################################################################
+p6_lz_run_generate() {
+
+  p6_h3 "conf/accounts.yml"
+  p6_file_copy conf/accounts.yml.in conf/accounts.yml
+  local management_account_name=$(p6_aws_svc_organizations_management_account_name_get)
+  local pair
+  for pair in $(p6_aws_svc_organizations_accounts_list_active_ids_and_names); do
+    local name=$(p6_echo "$pair" | cut -d= -f1 | cut -d- -f 2 | sed -e 's,p6m7g8,management,')
+    local account_id=$(p6_echo "$pair" | cut -d= -f2)
+    yq eval -i ".accounts.\"$name\".AccountId = \"$account_id\"" conf/accounts.yml
+  done
+
+  p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_lz_run_build()
 #
 #>
@@ -328,17 +349,8 @@ p6_lz_run_build() {
 
   p6_h1 "Building"
 
-  p6_h2 "Stub Accounts"
-  p6_file_copy conf/accounts.yml.in conf/accounts.yml
-  p6_lz_run_phase_2_account_context
-
-  p6_h2 "Stub Central Bucket"
-  yq eval -n ".logarchiveBucketArn = \"arn:aws:s3:::p6-lz-logarchive-1-p6lzsracentralbucket-DNE\"" >conf/central-bucket.yml
-
-  p6_h2 "My IP"
-  local my_ip=$(p6_network_ip_public)
-  local cidr_ip="$my_ip/32"
-  yq eval -n ".myIp = \"$cidr_ip\"" >conf/myip.yml
+  p6_h2 "Generating Files"
+  p6_lz_run_generate
 
   p6_h2 "Linting"
   pnpm eslint .
@@ -406,7 +418,7 @@ p6_lz_run() {
 #  Args:
 #	action -
 #
-#  Environment:	 AWS_REGION
+#  Environment:	 AWS_REGION CDK
 #>
 ######################################################################
 p6_lz_run_bootstrap() {
@@ -416,17 +428,7 @@ p6_lz_run_bootstrap() {
   local region=$AWS_REGION
 
   p6_h2 "Bootstrapping"
-  p6_h3 "Bootstrapping: conf/"
-  p6_file_copy conf/accounts.yml.in conf/accounts.yml
-  p6_lz_run_phase_2_account_context
-
-  p6_h3 "Stub Central Bucket"
-  yq eval -n ".logarchiveBucketArn = \"arn:aws:s3:::p6-lz-logarchive-1-p6lzsracentralbucket-DNE\"" >conf/central-bucket.yml
-
-  p6_h3 "My IP"
-  local my_ip=$(p6_network_ip_public)
-  local cidr_ip="$my_ip/32"
-  yq eval -n ".myIp = \"$cidr_ip\"" >conf/myip.yml
+  p6_lz_run_generate
 
   p6_h3 "Bootstrapping: CDK"
   p6_awscdk_cli_execute "$action" "" "$account_id" "$region"
@@ -469,31 +471,7 @@ p6_lz_run_phase_2() {
   local action="$1"
 
   p6_h2 "Phase 2"
-  p6_lz_run_phase_2_account_context
   p6_lz_run_phase_2_bootstrap_trust "$action"
-
-  p6_return_void
-}
-
-######################################################################
-#<
-#
-# Function: p6_lz_run_phase_2_account_context()
-#
-#  Environment:	 _2_
-#>
-######################################################################
-p6_lz_run_phase_2_account_context() {
-
-  p6_h3 "Phase 2: Account Context"
-  p6_file_copy conf/accounts.yml.in conf/accounts.yml
-  local management_account_name=$(p6_aws_svc_organizations_management_account_name_get)
-  local pair
-  for pair in $(p6_aws_svc_organizations_accounts_list_active_ids_and_names); do
-    local name=$(p6_echo "$pair" | cut -d= -f1 | cut -d- -f 2 | sed -e 's,p6m7g8,management,')
-    local account_id=$(p6_echo "$pair" | cut -d= -f2)
-    yq eval -i ".accounts.\"$name\".AccountId = \"$account_id\"" conf/accounts.yml
-  done
 
   p6_return_void
 }
@@ -596,11 +574,6 @@ p6_lz_run_phase_3_logarchive_account() {
 
   p6_h2 "Phase 3: Logarchive Stack"
   p6_awscdk_cli_execute $action p6-lz-logarchive-1
-
-  p6_h3 "Phase 3: Logarchive Add Logarchive Bucket Name to Context"
-  local logarchive_account_name=$(p6_lz_util_logarchive_account_name)
-  p6_aws_svc_organizations_sts_run_as $logarchive_account_name p6_lz_util_set_logarchive_bucket $action
-
   p6_awscdk_cli_execute $action p6-lz-logarchive-2
 
   p6_return_void
@@ -729,7 +702,7 @@ p6_lz_run_phase_4() {
 #  Args:
 #	action -
 #
-#  Environment:	 _4_
+#  Environment:	 CDK _4_
 #>
 ######################################################################
 p6_lz_run_phase_4_sandbox_account() {
@@ -803,30 +776,6 @@ p6_lz_run_phase_4_prod_account() {
   p6_return_void
 }
 
-######################################################################
-#<
-#
-# Function: p6_lz_util_cdk_context_add_logarchive_bucket(action)
-#
-#  Args:
-#	action -
-#
-#>
-######################################################################
-p6_lz_util_set_logarchive_bucket() {
-  local action="$1"
-
-  if p6_string_eq "$action" "deploy"; then
-    local logarchive_bucket_name=$(p6_aws_svc_s3_bucket_find_prefix "p6-lz-logarchive-1-p6lzsracentralbucket")
-    yq eval -n ".logarchiveBucketArn = \"arn:aws:s3:::$logarchive_bucket_name\"" >conf/central-bucket.yml
-  elif p6_string_eq "$action" "diff"; then
-    local logarchive_bucket_name="p6-lz-logarchive-1-p6lzsracentralbucket-DNE"
-    yq eval -n ".logarchiveBucketArn = \"arn:aws:s3:::$logarchive_bucket_name\"" >conf/central-bucket.yml
-  fi
-
-  p6_return_void
-}
-
 # ######################################################################
 # #<
 # #
@@ -873,7 +822,10 @@ p6_lz_util_logs_delete() {
 ######################################################################
 #<
 #
-# Function: p6_lz_util_audit_account_id_get()
+# Function: str audit_account_id = p6_lz_util_audit_account_id_get()
+#
+#  Returns:
+#	str - audit_account_id
 #
 #>
 ######################################################################
