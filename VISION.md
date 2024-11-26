@@ -1,4 +1,5 @@
 # References
+
 https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture/welcome.html
 https://github.com/aws-samples/aws-security-reference-architecture-examples
 
@@ -28,149 +29,96 @@ Root
 
 ## Break Glass
 
-- [x] Management Account:
-  - [x] Stack 1: p6-lz-organization
-    - [x] Set IAM Account Alias
-    - [x] Make Org
-  - [x] Stack 2: p6-lz-avm
-    - [x] Make OU
-    - [x] Make accounts
-  - [x] CLI:
-    - [x] Set CDK Context for accountIds
-    - [x] Enable Services
-    - [x] Delegate Administrators
-
-- [ ] Logarchive Account:
-  - [x] Stack 1: p6-lz-logarchive-1
-    - [x] Set IAM Account Alias
-    - [x] Central Bucket
-    - [ ] Security Lake
-  - [ ] Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
-    - [ ] Access Logs
-    - [ ] DNS Logs
-    - [ ] Flow Logs
-
-  - [ ] Audit Account
-    - [x] Stack 1
-      - [x] Set IAM Account Alias
-      - [x] CloudWatch Logs for CloudTrail
-      - [x] Org CloudTrail
-    - [x] CLI:
-      - [x] Start Logging
-    - [ ] Stack 2: Source of Truth
-      - [x] Config for Aggregator
-      - [x] Config Aggregator
-      - [x] Security Hub
-      - [x] Inspector
-      - [n] Artifact
-      - [ ] Audit Manager
-      - [ ] Event Bridge
-      - [ ] Firewall Manager
-      - [ ] Lambda (response)
-      - [ ] Detective
-      - [ ] Private CA
-    - [ ] Stack 3: Local
-      - [ ] Security Hub
-      - [ ] GuardDuty
-      - [ ] Macie
-      - [x] Config
-      - [ ] Access Analyzer
-
-  - [ ] Network Account
-    - [ ] Stack 1:
-      - [x] Set IAM Account Alias
-      - [ ] Route53
-      - [ ] CloudFront
-      - [ ] Verified Access
-      - [ ] Shield
-      - [ ] WAF
-      - [ ] VPC Lattice [not transit gw]
-      - [ ] Cert Manager
-      - [ ] RAM
-      - [ ] Resolver DNS
-      - [ ] Network Access Analyzer
-    - [ ] Stack 2: Local
-      - [ ] Security Hub
-      - [ ] GuardDuty
-      - [ ] Macie
-      - [x] Config
-      - [ ] Access Analyzer
-
-  - [ ] Shared Account
-    - [ ] Stack 1:
-      - [x] Set IAM Account Alias
-      - [ ] Identity Center
-      - [ ] Systems Manager
-    - [ ] Stack 2: Local
-      - [ ] Security Hub
-      - [ ] GuardDuty
-      - [ ] Macie
-      - [x] Config
-      - [ ] Access Analyzer
-
-  - [ ] Forensics Account
-    - [ ] Stack 1:
-      - [x] Set IAM Account Alias
-      - [ ] Step Functions -> Lambda -> Instance -> S3
-    - [ ] Stack 2: Local
-      - [ ] Security Hub
-      - [ ] GuardDuty
-      - [ ] Macie
-      - [ ] Config
-      - [ ] Access Analyzer
-
-  - [ ] Management Account:
-    - [ ] Stack 3: Local
-      - [ ] Security Hub
-      - [ ] GuardDuty
-      - [ ] Macie
-      - [x] Config
-      - [ ] Access Analyzer
-
-### Setup PIPELINE
-
-- [ ] Sandbox
-  - [ ] Stack 1:
-    - [x] Set IAM Account Alias
-  - [ ] Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
-
-- [ ] Dev
-  - [ ] Stack 1:
-    - [x] Set IAM Account Alias
-  - [ ] Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
- [ ] QA
-  - [ ] Stack 1:
-    - [x] Set IAM Account Alias
-  - [ ] Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
-- [ ] Prod
-  - [ ] Stack 1:
-    - [x] Set IAM Account Alias
-  - [ ] Stack 2: Local
-    - [ ] Security Hub
-    - [ ] GuardDuty
-    - [ ] Macie
-    - [x] Config
-    - [ ] Access Analyzer
+- p6-lz-management-1-organization
+  - [x] Set IAM Account Alias
+  - [x] Make Org
+- p6-lz-management-1-avm
+  - [x] Make OU
+  - [x] Make accounts
+- p6-lz-logarchive-1
+  - [x] Set IAM Account Alias
+  - [x] Central Bucket
+  - [ ] Security Lake
+- p6-lz-management-2-cloudtrail
+  - [x] Enable CloudTrail for Org
+  - [x] Delegate CloudTrail to Audit
+- p6-lz-management-2-config
+  - [x] Enable Config for Org
+  - [x] Delegate Config to Audit
+- p6-lz-management-2-securityhub
+  - [x] Enable SecurityHub for Org
+  - [x] Delegate SecurityHub to Audit
+- p6-lz-management-2-inspector
+  - [x] Enable Inspector for Org
+  - [x] Delegate Inspector to Audit
+- p6-lz-logarchive-2
+  - [x] Setup Config to go to Central Bucket
+- p6-lz-audit-1
+  - [x] Set IAM Account Alias
+  - [x] CloudWatch Logs for CloudTrail
+  - [x] Org CloudTrail
+- CLI:
+  - Start CloudTrail Logging [cdk bug]
+- p6-lz-audit-2
+  - [x] Config for Aggregator
+  - [x] Config Aggregator
+  - [x] Security Hub
+  - [x] Inspector
+  - [n] Artifact
+  - [ ] Audit Manager
+  - [ ] Event Bridge
+  - [ ] Firewall Manager
+  - [ ] Lambda (response)
+  - [ ] Detective
+  - [ ] Private CA
+- p6-lz-audit-3
+  - [ ] Security Hub
+  - [ ] GuardDuty
+  - [ ] Macie
+  - [x] Config
+  - [ ] Access Analyzer
+- p6-lz-network-1
+  - [x] Set IAM Account Alias
+  - [ ] Route53
+  - [ ] CloudFront
+  - [ ] Verified Access
+  - [ ] Shield
+  - [ ] WAF
+  - [ ] VPC Lattice [not transit gw]
+  - [ ] Cert Manager
+  - [ ] RAM
+  - [ ] Resolver DNS
+  - [ ] Network Access Analyzer
+- p6-lz-network-2
+  - [ ] Security Hub
+  - [ ] GuardDuty
+  - [ ] Macie
+  - [x] Config
+  - [ ] Access Analyzer
+- p6-lz-shared-1
+  - [x] Set IAM Account Alias
+  - [ ] Identity Center
+  - [ ] Systems Manager
+- p6-lz-shared-2
+  - [ ] Security Hub
+  - [ ] GuardDuty
+  - [ ] Macie
+  - [x] Config
+  - [ ] Access Analyzer
+- p6-lz-management-3
+  - [ ] Security Hub
+  - [ ] GuardDuty
+  - [ ] Macie
+  - [x] Config
+  - [ ] Access Analyzer
+- p6-lz-sandbox
+  - [x] VPC
+- p6-lz-dev
+  - [x] VPC
+- p6-lz-qa
+  - [x] VPC
+- p6-lz-prod
+  - [x] VPC
 
 ### Setup SCP
 
