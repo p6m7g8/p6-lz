@@ -5,6 +5,7 @@ import * as cdk from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
 import * as s3 from 'aws-cdk-lib/aws-s3'
+import { getCentralBucketName } from '../util'
 
 /**
  * XXX: Danger! CloudFormation CloudTrail support is a literal piece of shit.
@@ -42,6 +43,7 @@ export class P6LzSraCentralBucket extends cdk.Resource {
     })
 
     const bucket = new s3.Bucket(this, 'Bucket', {
+      bucketName: getCentralBucketName(this),
       autoDeleteObjects: true,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryption: s3.BucketEncryption.KMS,

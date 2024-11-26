@@ -1,5 +1,4 @@
 import type { OrganizationalUnit } from '@aws-sdk/client-organizations'
-import type * as cdk from 'aws-cdk-lib'
 import type { IIpAddresses, IPeer } from 'aws-cdk-lib/aws-ec2'
 import type * as s3 from 'aws-cdk-lib/aws-s3'
 
@@ -25,10 +24,6 @@ export interface IShareWithOrg {
 
 export interface ILogarchiveBucket {
   centralBucket: s3.IBucket
-}
-
-export interface ILogarchiveBucketArn {
-  centralBucketArn: cdk.Arn
 }
 
 export interface IVpc {
