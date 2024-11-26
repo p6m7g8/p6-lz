@@ -246,10 +246,6 @@ p6_lz_destroy_logarchive() {
 ######################################################################
 p6_lz_destroy_audit() {
 
-  # Piece of Shit -- do not use
-  # p6_h4 "Audit: Inspector"
-  # p6_cirrus_inspector_from_delegated_off
-
   p6_h4 "Audit: CloudTrail"
   p6_cirrus_cloudtrail_trail_delete "p6-lz-"
 
@@ -552,10 +548,6 @@ p6_lz_run_phase_3_audit_account() {
   p6_h3 "Phase 3: Audit-2"
   p6_awscdk_cli_execute $action p6-lz-audit-2
 
-  # Piece of Shit -- do not use
-  # # Inspector
-  # p6_cirrus_organizations_sts_run_as $audit_account_name p6_lz_util_inspector_setup
-
   p6_return_void
 }
 
@@ -724,21 +716,6 @@ p6_lz_run_phase_4_prod_account() {
 
   p6_return_void
 }
-
-# ######################################################################
-# #<
-# #
-# # Function: p6_lz_util_inspector_setup()
-# #
-# #>
-# ######################################################################
-# p6_lz_util_inspector_setup() {
-
-#   p6_cirrus_inspector_role_service_linked_create
-#   p6_cirrus_inspector_organization_members_enable
-
-#   p6_return_void
-# }
 
 ######################################################################
 #<

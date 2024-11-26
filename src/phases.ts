@@ -99,6 +99,7 @@ export function phase3(app: cdk.App, config: any) {
       account: config.accounts.audit.AccountId,
       region: config.env.region,
     },
+    auditAccountId: config.accounts.audit.AccountId,
     principals: config.principals,
   })
 
