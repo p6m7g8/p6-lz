@@ -3,15 +3,15 @@ import type { IIpAddresses, IPeer } from 'aws-cdk-lib/aws-ec2'
 import type * as s3 from 'aws-cdk-lib/aws-s3'
 
 export interface IAccountIds {
-  auditAccountId: string
-  devAccountId: string
-  logarchiveAccountId: string
-  managementAccountId: string
-  networkAccountId: string
-  prodAccountId: string
-  qaAccountId: string
-  sandboxAccountId: string
-  sharedAccountId: string
+  auditAccountId?: string
+  devAccountId?: string
+  logarchiveAccountId?: string
+  managementAccountId?: string
+  networkAccountId?: string
+  prodAccountId?: string
+  qaAccountId?: string
+  sandboxAccountId?: string
+  sharedAccountId?: string
 }
 
 export interface IAccountAlias {
@@ -42,15 +42,15 @@ export interface MyOrganizationalUnit extends OrganizationalUnit {
 }
 
 export type AccountType =
-  | 'management'
-  | 'logarchive'
   | 'audit'
-  | 'shared'
-  | 'network'
-  | 'sandbox'
   | 'dev'
-  | 'qa'
+  | 'logarchive'
+  | 'management'
+  | 'network'
   | 'prod'
+  | 'qa'
+  | 'sandbox'
+  | 'shared'
 
 export interface IAccount {
   SraType: string

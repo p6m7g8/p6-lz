@@ -8,6 +8,10 @@ import { LogarchiveAccountStack1 } from './stacks/logarchive-1'
 import { LogarchiveAccountStack2 } from './stacks/logarchive-2'
 import { AvmStack } from './stacks/management-1-avm'
 import { OrganizationStack } from './stacks/management-1-organization'
+import { ManagementAccountCloudTrailStack2 } from './stacks/management-2-cloudtrail'
+import { ManagementAccountConfigStack2 } from './stacks/management-2-config'
+import { ManagementAccountInspectorStack2 } from './stacks/management-2-inspector'
+import { ManagementAccountSecurityHubStack2 } from './stacks/management-2-securityhub'
 import { ManagementAccountStack3 } from './stacks/management-3'
 import { NetworkAccountStack1 } from './stacks/network-1'
 import { NetworkAccountStack2 } from './stacks/network-2'
@@ -18,7 +22,7 @@ import { SharedAccountStack1 } from './stacks/shared-1'
 import { SharedAccountStack2 } from './stacks/shared-2'
 
 export function phase1(app: cdk.App, config: any) {
-  // Mgmt Account
+  // Management Account
   new OrganizationStack(app, 'p6-lz-management-1-organization', {
     env: config.env,
     accountAlias: config.accounts.management.Name,
@@ -41,6 +45,36 @@ export function phase2(app: cdk.App, config: any) {
 }
 
 export function phase3(app: cdk.App, config: any) {
+  // Management Account
+  new ManagementAccountCloudTrailStack2(app, 'p6-lz-management-2-cloudtrail', {
+    env: {
+      account: config.accounts.management.AccountId,
+      region: config.env.region,
+    },
+    auditAccountId: config.accounts.audit.AccountId,
+  })
+  new ManagementAccountConfigStack2(app, 'p6-lz-management-2-config', {
+    env: {
+      account: config.accounts.management.AccountId,
+      region: config.env.region,
+    },
+    auditAccountId: config.accounts.audit.AccountId,
+  })
+  new ManagementAccountSecurityHubStack2(app, 'p6-lz-management-2-securityhub', {
+    env: {
+      account: config.accounts.management.AccountId,
+      region: config.env.region,
+    },
+    auditAccountId: config.accounts.audit.AccountId,
+  })
+  new ManagementAccountInspectorStack2(app, 'p6-lz-management-2-inspector', {
+    env: {
+      account: config.accounts.management.AccountId,
+      region: config.env.region,
+    },
+    auditAccountId: config.accounts.audit.AccountId,
+  })
+
   // Logarchive Account
   new LogarchiveAccountStack2(app, 'p6-lz-logarchive-2', {
     env: {
