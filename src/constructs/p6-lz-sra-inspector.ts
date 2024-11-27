@@ -1,9 +1,9 @@
 import type { Construct } from 'constructs'
-import type { IAccountIds, IShareWithOrg } from '../types'
+import type { IP6LzAccountIds, IP6LzShareWithOrg } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from 'aws-cdk-lib/custom-resources'
 
-export interface IP6LzSraInspectorProps extends cdk.StackProps, IAccountIds, IShareWithOrg {}
+export interface IP6LzSraInspectorProps extends cdk.StackProps, IP6LzAccountIds, IP6LzShareWithOrg {}
 
 export class P6LzSraInspector extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6LzSraInspectorProps) {

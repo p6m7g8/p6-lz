@@ -1,5 +1,5 @@
 import type { Construct } from 'constructs'
-import type { IAccountsConfig } from './types'
+import type { IP6LzAccountsConfig, IP6LzConfig, P6LzAwsEnv, P6LzMyIP } from './types'
 import * as fs from 'node:fs'
 import * as process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
@@ -20,7 +20,7 @@ export function getCentralBucket(scope: Construct): s3.IBucket {
   return bucket
 }
 
-export async function getPublicIpAsEc2Peer(): Promise<ec2.Peer> {
+export async function getPublicIp(): Promise<P6LzMyIP> {
   try {
     const response = await axios.get('https://checkip.amazonaws.com', { timeout: 5000 })
     const publicIp = response.data.trim()
@@ -32,14 +32,14 @@ export async function getPublicIpAsEc2Peer(): Promise<ec2.Peer> {
   }
 }
 
-export async function loadConfig(): Promise<any> {
-  const env = {
+export async function loadConfig(): Promise<IP6LzConfig> {
+  const env: P6LzAwsEnv = {
     account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION,
   }
 
-  const config: IAccountsConfig = yaml.load(fs.readFileSync('conf/accounts.yml', 'utf8')) as IAccountsConfig
-  const myIp: ec2.Peer = await getPublicIpAsEc2Peer()
+  const config: IP6LzAccountsConfig = yaml.load(fs.readFileSync('conf/accounts.yml', 'utf8')) as IP6LzAccountsConfig
+  const myIp: P6LzMyIP = await getPublicIp()
 
   return {
     env,

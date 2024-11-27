@@ -1,7 +1,7 @@
 import type { DescribeCreateAccountStatusResponse, ListAccountsCommandOutput, ListOrganizationalUnitsForParentCommandOutput, ListParentsCommandOutput, ListRootsCommandOutput, OrganizationsClient } from '@aws-sdk/client-organizations'
 import type { GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
 import type { Readable } from 'node:stream'
-import type { ExtendedAccounts, IAccountsConfig, MyOrganizationalUnits } from '../types'
+import type { IP6LzAccounts, IP6LzAccountsConfig, MyOrganizationalUnits } from '../types'
 import { DescribeCreateAccountStatusCommand, ListAccountsCommand, ListOrganizationalUnitsForParentCommand, ListParentsCommand, ListRootsCommand } from '@aws-sdk/client-organizations'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
 import * as yaml from 'js-yaml'
@@ -13,7 +13,7 @@ export async function getOuTree(logger: winston.Logger, client: S3Client, ouFile
   return ouData
 }
 
-export async function getAccounts(logger: winston.Logger, client: S3Client, accountsFileBucket: string, accountsFileKey: string): Promise<ExtendedAccounts> {
+export async function getAccounts(logger: winston.Logger, client: S3Client, accountsFileBucket: string, accountsFileKey: string): Promise<IP6LzAccounts> {
   const s3Object = await getAccountsFile(logger, client, accountsFileBucket, accountsFileKey)
   const accountsData = await parseAccounts(logger, s3Object)
   return accountsData
@@ -255,11 +255,11 @@ async function getAccountsFile(logger: winston.Logger, client: S3Client, account
   return s3Object
 }
 
-async function parseAccounts(logger: winston.Logger, s3Object: GetObjectCommandOutput): Promise<ExtendedAccounts> {
-  let accountData: ExtendedAccounts
+async function parseAccounts(logger: winston.Logger, s3Object: GetObjectCommandOutput): Promise<IP6LzAccounts> {
+  let accountData: IP6LzAccounts
   try {
     const bodyString = await streamToString(s3Object.Body as Readable)
-    const accountsConfig = yaml.load(bodyString) as IAccountsConfig
+    const accountsConfig = yaml.load(bodyString) as IP6LzAccountsConfig
     accountData = Object.values(accountsConfig.accounts)
     logger.info(`Parsed ${accountData.length} accounts from the file`)
   }
