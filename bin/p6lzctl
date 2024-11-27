@@ -344,6 +344,8 @@ p6_lz_run_build() {
 p6_lz_run_list() {
 
   p6_h1 "Listing"
+
+  p6_lz_run_generate
   pnpm cdk ls
 
   p6_return_void
