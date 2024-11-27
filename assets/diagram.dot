@@ -1,0 +1,2125 @@
+digraph "Diagram" {
+  splines = "ortho";
+  pad = "1.0";
+  nodesep = "0.60";
+  ranksep = "0.75";
+  fontname = "Sans-Serif";
+  fontsize = "15";
+  dpi = "200";
+  rankdir = "BT";
+  compound = "true";
+  fontcolor = "#222222";
+  edge [
+    color = "#D5871488",
+    penwidth = 2,
+    arrowhead = "dot",
+    arrowtail = "dot",
+  ];
+  node [
+    shape = "box",
+    style = "rounded",
+    fixedsize = true,
+    width = 1.7,
+    height = 1.7,
+    labelloc = "c",
+    imagescale = true,
+    fontname = "Sans-Serif",
+    fontsize = 8,
+    margin = 8,
+  ];
+  subgraph "App" {
+    subgraph "cluster-SubGraph.App" {
+      graph [
+        label = "App",
+        labelloc = "b",
+        labeljust = "l",
+        margin = "10",
+        fontsize = "16",
+        penwidth = "2",
+        pencolor = "#888888",
+        style = "filled,rounded",
+        fillcolor = "#f3f3f3",
+      ];
+      "p6-lz-audit-3" [
+        label = " p6-lz-audit-3",
+        fontsize = 12,
+      ];
+      "p6-lz-management-3" [
+        label = " p6-lz-management-3",
+        fontsize = 12,
+      ];
+      subgraph "cluster-SubGraph.p6-lz-management-1-organization" {
+        graph [
+          label = "p6-lz-management-1-organization",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6LzCdkNamer" {
+          graph [
+            label = "P6LzCdkNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-1-organization/P6LzCdkNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-management-1-organization/P6LzCdkNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-management-1-organization/P6LzCdkNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-management-1-avm" {
+        graph [
+          label = "p6-lz-management-1-avm",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6LzSraOus" {
+          graph [
+            label = "P6LzSraOus",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-1-avm/P6LzSraOus/OUMaker" [
+            label = " OUMaker",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-management-1-avm/P6LzSraOus/OUCustomResource" [
+            label = " CloudFormation\nCustomResource\nOUCustomResource",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-management-1-avm/P6LzSraOus/OUProvider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraAcc" {
+          graph [
+            label = "P6LzSraAcc",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-1-avm/P6LzSraAcc/AccountsMaker" [
+            label = " AccountsMaker",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-management-1-avm/P6LzSraAcc/AccountsCustomResource" [
+            label = " CloudFormation\nCustomResource",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+          "p6-lz-management-1-avm/P6LzSraAcc/AccountsProvider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-logarchive-1" {
+        graph [
+          label = "p6-lz-logarchive-1",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6LzCdkNamer" {
+          graph [
+            label = "P6LzCdkNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-logarchive-1/P6LzCdkNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-logarchive-1/P6LzCdkNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-logarchive-1/P6LzCdkNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraCentralBucket" {
+          graph [
+            label = "P6LzSraCentralBucket",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-logarchive-1/P6LzSraCentralBucket/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-logarchive-1/P6LzSraCentralBucket/Bucket" [
+            label = " Bucket",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Storage/64/Arch_Amazon-S3-Standard_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-management-2-cloudtrail" {
+        graph [
+          label = "p6-lz-management-2-cloudtrail",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "p6-lz-management-2-cloudtrail/AWS679f53fac002430cb0da5b7982bd2287" [
+          label = "\nAWS679f53fac002430cb0",
+          fontsize = 12,
+          image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        subgraph "cluster-SubGraph.CloudTrailDelegatedAdmin" {
+          graph [
+            label = "CloudTrailDelegatedAdmin",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-2-cloudtrail/CloudTrailDelegatedAdmin/EnableServiceAccess" [
+            label = " EnableServiceAccess",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-management-2-cloudtrail/CloudTrailDelegatedAdmin/RegisterDelegatedAdmin" [
+            label = "\nRegisterDelegatedAdmi",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-management-2-config" {
+        graph [
+          label = "p6-lz-management-2-config",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "p6-lz-management-2-config/AWS679f53fac002430cb0da5b7982bd2287" [
+          label = "\nAWS679f53fac002430cb0",
+          fontsize = 12,
+          image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        subgraph "cluster-SubGraph.ConfigDelegatedAdmin" {
+          graph [
+            label = "ConfigDelegatedAdmin",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-2-config/ConfigDelegatedAdmin/EnableServiceAccess" [
+            label = " EnableServiceAccess",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-management-2-config/ConfigDelegatedAdmin/RegisterDelegatedAdmin" [
+            label = "\nRegisterDelegatedAdmi",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-management-2-securityhub" {
+        graph [
+          label = "p6-lz-management-2-securityhub",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "p6-lz-management-2-securityhub/AWS679f53fac002430cb0da5b7982bd2287" [
+          label = "\nAWS679f53fac002430cb0",
+          fontsize = 12,
+          image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        subgraph "cluster-SubGraph.SecurityHubDelegatedAdmin" {
+          graph [
+            label = "SecurityHubDelegatedAdmin",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-2-securityhub/SecurityHubDelegatedAdmin/EnableServiceAccess" [
+            label = " EnableServiceAccess",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-management-2-securityhub/SecurityHubDelegatedAdmin/RegisterDelegatedAdmin" [
+            label = "\nRegisterDelegatedAdmi",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-management-2-inspector" {
+        graph [
+          label = "p6-lz-management-2-inspector",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "p6-lz-management-2-inspector/AWS679f53fac002430cb0da5b7982bd2287" [
+          label = "\nAWS679f53fac002430cb0",
+          fontsize = 12,
+          image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        subgraph "cluster-SubGraph.InspectorDelegatedAdmin" {
+          graph [
+            label = "InspectorDelegatedAdmin",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-management-2-inspector/InspectorDelegatedAdmin/EnableServiceAccess" [
+            label = " EnableServiceAccess",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-management-2-inspector/InspectorDelegatedAdmin/RegisterDelegatedAdmin" [
+            label = "\nRegisterDelegatedAdmi",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-logarchive-2" {
+        graph [
+          label = "p6-lz-logarchive-2",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6LzSraConfig" {
+          graph [
+            label = "P6LzSraConfig",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-logarchive-2/P6LzSraConfig/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-logarchive-2/P6LzSraConfig/RoleAwsConfig" [
+            label = " RoleAwsConfig",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-logarchive-2/P6LzSraConfig/DeliveryChannel" [
+            label = " Config\nDeliveryChannel\nDeliveryChannel",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-logarchive-2/P6LzSraConfig/Recorder" [
+            label = " Config\nConfigurationRecorder\nRecorder",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.6979999999999995,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-audit-1" {
+        graph [
+          label = "p6-lz-audit-1",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-1/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-audit-1/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-audit-1/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraCloudWatch" {
+          graph [
+            label = "P6LzSraCloudWatch",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-1/P6LzSraCloudWatch/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-audit-1/P6LzSraCloudWatch/LogGroup" [
+            label = " LogGroup",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Management-Governance/Res_48_Dark/Res_Amazon-Cloudwatch_Logs_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-audit-1/P6LzSraCloudWatch/CloudTrailLogRole" [
+            label = " CloudTrailLogRole",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraOrgTrail" {
+          graph [
+            label = "P6LzSraOrgTrail",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-1/P6LzSraOrgTrail/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-audit-1/P6LzSraOrgTrail/Trail" [
+            label = " CLOUDTRAIL TRAIL\nTrail",
+            fontsize = 12,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-audit-2" {
+        graph [
+          label = "p6-lz-audit-2",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        "p6-lz-audit-2/AWS679f53fac002430cb0da5b7982bd2287" [
+          label = "\nAWS679f53fac002430cb0",
+          fontsize = 12,
+          image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+          imagescale = "true",
+          imagepos = "tc",
+          penwidth = "0",
+          shape = "node",
+          fixedsize = "true",
+          labelloc = "b",
+          width = 2,
+          height = 2.4819999999999998,
+        ];
+        subgraph "cluster-SubGraph.P6LzSraConfig" {
+          graph [
+            label = "P6LzSraConfig",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/RoleAwsConfig" [
+            label = " RoleAwsConfig",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/DeliveryChannel" [
+            label = " Config\nDeliveryChannel\nDeliveryChannel",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/Recorder" [
+            label = " Config\nConfigurationRecorder\nRecorder",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.6979999999999995,
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/ConfigAggregatorRole" [
+            label = " ConfigAggregatorRole",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/ConfigAggregatorPolicy" [
+            label = "\nConfigAggregatorPolic",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+          "p6-lz-audit-2/P6LzSraConfig/ConfigAggregator" [
+            label = " Config\nConfigAggregator",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraChatBot" {
+          graph [
+            label = "P6LzSraChatBot",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-2/P6LzSraChatBot/Topic" [
+            label = " Topic",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_App-Integration/Arch_64/Arch_AWS-Simple-Notification-Service_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-audit-2/P6LzSraChatBot/SlackChannel" [
+            label = " SlackChannel",
+            fontsize = 12,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraSecurityHub" {
+          graph [
+            label = "P6LzSraSecurityHub",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-2/P6LzSraSecurityHub/FindingAggregator" [
+            label = " SECURITYHUB\nFINDINGAGGREGATOR\nFindingAggregator",
+            fontsize = 12,
+          ];
+          "p6-lz-audit-2/P6LzSraSecurityHub/OrganizationConfiguration" [
+            label = " SECURITYHUB",
+            fontsize = 12,
+          ];
+          "p6-lz-audit-2/P6LzSraSecurityHub/EnableCISStandard140" [
+            label = " SECURITYHUB STANDARD\nEnableCISStandard140",
+            fontsize = 12,
+          ];
+          "p6-lz-audit-2/P6LzSraSecurityHub/EnableCISStandard300" [
+            label = " SECURITYHUB STANDARD\nEnableCISStandard300",
+            fontsize = 12,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzSraInspector" {
+          graph [
+            label = "P6LzSraInspector",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-audit-2/P6LzSraInspector/EnableInspector2DelegatedAdmin" [
+            label = "\nEnableInspector2Deleg",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+          "p6-lz-audit-2/P6LzSraInspector/UpdateInspector2OrgConfig" [
+            label = "\nUpdateInspector2OrgCo",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.682,
+          ];
+          "p6-lz-audit-2/P6LzSraInspector/EnableInspector2" [
+            label = " EnableInspector2",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-network-1" {
+        graph [
+          label = "p6-lz-network-1",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-network-1/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-network-1/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-network-1/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-network-2" {
+        graph [
+          label = "p6-lz-network-2",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6LzSraConfig" {
+          graph [
+            label = "P6LzSraConfig",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-network-2/P6LzSraConfig/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-network-2/P6LzSraConfig/RoleAwsConfig" [
+            label = " RoleAwsConfig",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-network-2/P6LzSraConfig/DeliveryChannel" [
+            label = " Config\nDeliveryChannel\nDeliveryChannel",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-network-2/P6LzSraConfig/Recorder" [
+            label = " Config\nConfigurationRecorder\nRecorder",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.6979999999999995,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-shared-1" {
+        graph [
+          label = "p6-lz-shared-1",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-shared-1/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-shared-1/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-shared-1/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-shared-2" {
+        graph [
+          label = "p6-lz-shared-2",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6LzSraConfig" {
+          graph [
+            label = "P6LzSraConfig",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-shared-2/P6LzSraConfig/Key" [
+            label = " Key",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Key-Management-Services_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-shared-2/P6LzSraConfig/RoleAwsConfig" [
+            label = " RoleAwsConfig",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "p6-lz-shared-2/P6LzSraConfig/DeliveryChannel" [
+            label = " Config\nDeliveryChannel\nDeliveryChannel",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-shared-2/P6LzSraConfig/Recorder" [
+            label = " Config\nConfigurationRecorder\nRecorder",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-Config_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.6979999999999995,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-sandbox" {
+        graph [
+          label = "p6-lz-sandbox",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-sandbox/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-sandbox/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-sandbox/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzVpc" {
+          graph [
+            label = "P6LzVpc",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-sandbox/P6LzVpc/VPC" [
+            label = " VPC",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-sandbox/P6LzVpc/p6-lz-sg-eice" [
+            label = " p6-lz-sg-eice",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-sandbox/P6LzVpc/p6-lz-instance-connect-endpoint" [
+            label = " EC2",
+            fontsize = 12,
+          ];
+          "p6-lz-sandbox/P6LzVpc/p6-lz-sg-default" [
+            label = " p6-lz-sg-default",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-sandbox/P6LzVpc/Gateway-S3" [
+            label = " Gateway-S3",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-sandbox/P6LzVpc/Interface-SSM" [
+            label = " Interface-SSM",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-dev" {
+        graph [
+          label = "p6-lz-dev",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-dev/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-dev/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-dev/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzVpc" {
+          graph [
+            label = "P6LzVpc",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-dev/P6LzVpc/VPC" [
+            label = " VPC",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-dev/P6LzVpc/p6-lz-sg-eice" [
+            label = " p6-lz-sg-eice",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-dev/P6LzVpc/p6-lz-instance-connect-endpoint" [
+            label = " EC2",
+            fontsize = 12,
+          ];
+          "p6-lz-dev/P6LzVpc/p6-lz-sg-default" [
+            label = " p6-lz-sg-default",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-dev/P6LzVpc/Gateway-S3" [
+            label = " Gateway-S3",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-dev/P6LzVpc/Interface-SSM" [
+            label = " Interface-SSM",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-qa" {
+        graph [
+          label = "p6-lz-qa",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-qa/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-qa/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-qa/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzVpc" {
+          graph [
+            label = "P6LzVpc",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-qa/P6LzVpc/VPC" [
+            label = " VPC",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-qa/P6LzVpc/p6-lz-sg-eice" [
+            label = " p6-lz-sg-eice",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-qa/P6LzVpc/p6-lz-instance-connect-endpoint" [
+            label = " EC2",
+            fontsize = 12,
+          ];
+          "p6-lz-qa/P6LzVpc/p6-lz-sg-default" [
+            label = " p6-lz-sg-default",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-qa/P6LzVpc/Gateway-S3" [
+            label = " Gateway-S3",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-qa/P6LzVpc/Interface-SSM" [
+            label = " Interface-SSM",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+      subgraph "cluster-SubGraph.p6-lz-prod" {
+        graph [
+          label = "p6-lz-prod",
+          labelloc = "b",
+          labeljust = "l",
+          margin = "10",
+          fontsize = "16",
+          penwidth = "2",
+          pencolor = "#888888",
+          style = "filled,rounded",
+          fillcolor = "#e4e4e4",
+        ];
+        subgraph "cluster-SubGraph.P6CDKNamer" {
+          graph [
+            label = "P6CDKNamer",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-prod/P6CDKNamer/p6cdknamer" [
+            label = " p6cdknamer",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-prod/P6CDKNamer/P6CDKNamer--CR" [
+            label = " CloudFormation\nCustomResource\nP6CDKNamer--CR",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Management-Governance/64/Arch_AWS-CloudFormation_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.898,
+          ];
+          "p6-lz-prod/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" [
+            label = " framework-onEvent",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Compute/64/Arch_AWS-Lambda_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+        subgraph "cluster-SubGraph.P6LzVpc" {
+          graph [
+            label = "P6LzVpc",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#d6d6d6",
+          ];
+          "p6-lz-prod/P6LzVpc/VPC" [
+            label = " VPC",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Service/Arch_Networking-Content/64/Arch_Amazon-Virtual-Private-Cloud_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-prod/P6LzVpc/p6-lz-sg-eice" [
+            label = " p6-lz-sg-eice",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-prod/P6LzVpc/p6-lz-instance-connect-endpoint" [
+            label = " EC2",
+            fontsize = 12,
+          ];
+          "p6-lz-prod/P6LzVpc/p6-lz-sg-default" [
+            label = " p6-lz-sg-default",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/security_group.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-prod/P6LzVpc/Gateway-S3" [
+            label = " Gateway-S3",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+          "p6-lz-prod/P6LzVpc/Interface-SSM" [
+            label = " Interface-SSM",
+            fontsize = 12,
+            image = "/Users/philip/.p6/p6m7g8/p6-lz/node_modules/.pnpm/cdk-dia@0.11.0_@aws-cdk+cloud-assembly-schema@38.0.1_@aws-cdk+cx-api@1.204.0_@aws-cdk+cloud-a_jfuice6m4mq3crypw5nsefyri4/node_modules/cdk-dia/icons/aws/Resource/Res_Networking-and-Content-Delivery/Res_48_Dark/Res_Amazon-VPC_Endpoints_48_Dark_gen.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 2,
+            height = 2.266,
+          ];
+        }
+      }
+    }
+  }
+  "p6-lz-management-1-organization/P6LzCdkNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-management-1-organization/P6LzCdkNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-management-1-avm/P6LzSraOus/OUProvider/framework-onEvent" -> "p6-lz-management-1-avm/P6LzSraOus/OUMaker" [
+    dir = "both",
+  ];
+  "p6-lz-management-1-avm/P6LzSraAcc/AccountsProvider/framework-onEvent" -> "p6-lz-management-1-avm/P6LzSraAcc/AccountsMaker" [
+    dir = "both",
+  ];
+  "p6-lz-logarchive-1/P6LzCdkNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-logarchive-1/P6LzCdkNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-logarchive-1/P6LzSraCentralBucket/Bucket" -> "p6-lz-logarchive-1/P6LzSraCentralBucket/Key" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-cloudtrail/CloudTrailDelegatedAdmin/EnableServiceAccess" -> "p6-lz-management-2-cloudtrail/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-cloudtrail/CloudTrailDelegatedAdmin/RegisterDelegatedAdmin" -> "p6-lz-management-2-cloudtrail/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-config/ConfigDelegatedAdmin/EnableServiceAccess" -> "p6-lz-management-2-config/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-config/ConfigDelegatedAdmin/RegisterDelegatedAdmin" -> "p6-lz-management-2-config/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-securityhub/SecurityHubDelegatedAdmin/EnableServiceAccess" -> "p6-lz-management-2-securityhub/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-securityhub/SecurityHubDelegatedAdmin/RegisterDelegatedAdmin" -> "p6-lz-management-2-securityhub/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-inspector/InspectorDelegatedAdmin/EnableServiceAccess" -> "p6-lz-management-2-inspector/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-management-2-inspector/InspectorDelegatedAdmin/RegisterDelegatedAdmin" -> "p6-lz-management-2-inspector/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-logarchive-2/P6LzSraConfig/Recorder" -> "p6-lz-logarchive-2/P6LzSraConfig/RoleAwsConfig" [
+    dir = "both",
+  ];
+  "p6-lz-audit-1/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-audit-1/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-audit-1/P6LzSraCloudWatch/LogGroup" -> "p6-lz-audit-1/P6LzSraCloudWatch/Key" [
+    dir = "both",
+  ];
+  "p6-lz-audit-1/P6LzSraOrgTrail/Trail" -> "p6-lz-audit-1/P6LzSraCloudWatch/LogGroup" [
+    dir = "both",
+  ];
+  "p6-lz-audit-1/P6LzSraOrgTrail/Trail" -> "p6-lz-audit-1/P6LzSraCloudWatch/CloudTrailLogRole" [
+    dir = "both",
+  ];
+  "p6-lz-audit-1/P6LzSraOrgTrail/Trail" -> "p6-lz-audit-1/P6LzSraOrgTrail/Key" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraConfig/Recorder" -> "p6-lz-audit-2/P6LzSraConfig/RoleAwsConfig" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraConfig/ConfigAggregatorPolicy" -> "p6-lz-audit-2/P6LzSraConfig/ConfigAggregatorRole" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraConfig/ConfigAggregator" -> "p6-lz-audit-2/P6LzSraConfig/ConfigAggregatorRole" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraChatBot/SlackChannel" -> "p6-lz-audit-2/P6LzSraChatBot/Topic" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraInspector/EnableInspector2DelegatedAdmin" -> "p6-lz-audit-2/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraInspector/UpdateInspector2OrgConfig" -> "p6-lz-audit-2/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-audit-2/P6LzSraInspector/EnableInspector2" -> "p6-lz-audit-2/AWS679f53fac002430cb0da5b7982bd2287" [
+    dir = "both",
+  ];
+  "p6-lz-network-1/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-network-1/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-network-2/P6LzSraConfig/Recorder" -> "p6-lz-network-2/P6LzSraConfig/RoleAwsConfig" [
+    dir = "both",
+  ];
+  "p6-lz-shared-1/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-shared-1/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-shared-2/P6LzSraConfig/Recorder" -> "p6-lz-shared-2/P6LzSraConfig/RoleAwsConfig" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-sandbox/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/p6-lz-sg-eice" -> "p6-lz-sandbox/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-sandbox/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-sandbox/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/p6-lz-sg-default" -> "p6-lz-sandbox/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/p6-lz-sg-default" -> "p6-lz-sandbox/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/Gateway-S3" -> "p6-lz-sandbox/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-sandbox/P6LzVpc/Interface-SSM" -> "p6-lz-sandbox/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-dev/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/p6-lz-sg-eice" -> "p6-lz-dev/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-dev/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-dev/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/p6-lz-sg-default" -> "p6-lz-dev/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/p6-lz-sg-default" -> "p6-lz-dev/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/Gateway-S3" -> "p6-lz-dev/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-dev/P6LzVpc/Interface-SSM" -> "p6-lz-dev/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-qa/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/p6-lz-sg-eice" -> "p6-lz-qa/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-qa/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-qa/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/p6-lz-sg-default" -> "p6-lz-qa/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/p6-lz-sg-default" -> "p6-lz-qa/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/Gateway-S3" -> "p6-lz-qa/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-qa/P6LzVpc/Interface-SSM" -> "p6-lz-qa/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6CDKNamer/P6CDKNamer--Provider/framework-onEvent" -> "p6-lz-prod/P6CDKNamer/p6cdknamer" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/p6-lz-sg-eice" -> "p6-lz-prod/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-prod/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/p6-lz-instance-connect-endpoint" -> "p6-lz-prod/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/p6-lz-sg-default" -> "p6-lz-prod/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/p6-lz-sg-default" -> "p6-lz-prod/P6LzVpc/p6-lz-sg-eice" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/Gateway-S3" -> "p6-lz-prod/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+  "p6-lz-prod/P6LzVpc/Interface-SSM" -> "p6-lz-prod/P6LzVpc/VPC" [
+    dir = "both",
+  ];
+}
