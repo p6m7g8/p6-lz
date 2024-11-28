@@ -1,5 +1,5 @@
 import type { Construct } from 'constructs'
-import type { IP6LzAccountsConfig, IP6LzConfig, P6LzAwsEnv, P6LzMyIP } from './types'
+import type { IP6LzAccountsConfig, IP6LzAwsEnv, IP6LzConfig, P6LzMyIP } from './types'
 import * as fs from 'node:fs'
 import * as process from 'node:process'
 import * as cdk from 'aws-cdk-lib'
@@ -33,7 +33,7 @@ export async function getPublicIp(): Promise<P6LzMyIP> {
 }
 
 export async function loadConfig(): Promise<IP6LzConfig> {
-  const env: P6LzAwsEnv = {
+  const env: IP6LzAwsEnv = {
     account: process.env.CDK_DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEPLOY_REGION || process.env.CDK_DEFAULT_REGION,
   }

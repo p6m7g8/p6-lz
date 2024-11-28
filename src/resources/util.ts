@@ -1,13 +1,13 @@
 import type { DescribeCreateAccountStatusResponse, ListAccountsCommandOutput, ListOrganizationalUnitsForParentCommandOutput, ListParentsCommandOutput, ListRootsCommandOutput, OrganizationsClient } from '@aws-sdk/client-organizations'
 import type { GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
 import type { Readable } from 'node:stream'
-import type { IP6LzAccountsConfig, MyOrganizationalUnits, P6LzAccounts } from '../types'
+import type { IP6LzAccountsConfig, P6LzAccounts, P6LzMyOrganizationalUnits } from '../types'
 import { DescribeCreateAccountStatusCommand, ListAccountsCommand, ListOrganizationalUnitsForParentCommand, ListParentsCommand, ListRootsCommand } from '@aws-sdk/client-organizations'
 import { GetObjectCommand } from '@aws-sdk/client-s3'
 import * as yaml from 'js-yaml'
 import * as winston from 'winston'
 
-export async function getOuTree(logger: winston.Logger, client: S3Client, ouFileBucket: string, ouFileKey: string): Promise<MyOrganizationalUnits> {
+export async function getOuTree(logger: winston.Logger, client: S3Client, ouFileBucket: string, ouFileKey: string): Promise<P6LzMyOrganizationalUnits> {
   const s3Object = await getOuFile(logger, client, ouFileBucket, ouFileKey)
   const ouData = await parseOu(logger, s3Object)
   return ouData
@@ -220,11 +220,11 @@ async function getOuFile(logger: winston.Logger, client: S3Client, ouFileBucket:
   return s3Object
 }
 
-async function parseOu(logger: winston.Logger, s3Object: GetObjectCommandOutput): Promise<MyOrganizationalUnits> {
-  let ouData: MyOrganizationalUnits
+async function parseOu(logger: winston.Logger, s3Object: GetObjectCommandOutput): Promise<P6LzMyOrganizationalUnits> {
+  let ouData: P6LzMyOrganizationalUnits
   try {
     const bodyString = await streamToString(s3Object.Body as Readable)
-    ouData = yaml.load(bodyString) as MyOrganizationalUnits
+    ouData = yaml.load(bodyString) as P6LzMyOrganizationalUnits
     logger.info(`Parsed ${ouData.length} OUs from the file`)
   }
   catch (error) {
