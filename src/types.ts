@@ -12,8 +12,8 @@ export type P6LzAccountType =
   | 'qa'
   | 'sandbox'
   | 'shared'
-export type MyOrganizationalUnits = IP6LzOrganizationalUnit[]
-export type OrganizationalUnits = OrganizationalUnit[]
+export type P6LzMyOrganizationalUnits = IP6LzOrganizationalUnit[]
+export type P6LzOrganizationalUnits = OrganizationalUnit[]
 export type P6LzAccount = string
 export type P6LzAccountAlias = string
 export type P6LzCidr = ec2.IIpAddresses
@@ -23,7 +23,7 @@ export type P6LzPrincipal = string
 export type P6LzPrincipals = P6LzPrincipal[]
 export type P6LzRegion = string
 
-export interface P6LzAwsEnv {
+export interface IP6LzAwsEnv {
   account?: P6LzAccount
   region?: P6LzRegion
 }
@@ -79,7 +79,7 @@ export interface IP6LzAccountsConfig {
 }
 
 export interface IP6LzConfig extends IP6LzAccountsConfig {
-  env: P6LzAwsEnv
+  env: IP6LzAwsEnv
   myIp: P6LzMyIP
   principals: P6LzPrincipals
 }

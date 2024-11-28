@@ -1,7 +1,7 @@
 import type { CreateAccountCommandOutput } from '@aws-sdk/client-organizations'
 import type { CloudFormationCustomResourceEvent, CloudFormationCustomResourceResponse } from 'aws-lambda'
 import type * as winston from 'winston'
-import type { ExtendedAccount } from '../types'
+import type { IP6LzAccount } from '../types'
 import * as process from 'node:process'
 import { CreateAccountCommand, DuplicateAccountException, MoveAccountCommand, OrganizationsClient } from '@aws-sdk/client-organizations'
 import { S3Client } from '@aws-sdk/client-s3'
@@ -78,7 +78,7 @@ export async function handler(event: CloudFormationCustomResourceEvent): Promise
   }
 }
 
-async function createAccount(logger: winston.Logger, client: OrganizationsClient, account: ExtendedAccount): Promise<string | undefined> {
+async function createAccount(logger: winston.Logger, client: OrganizationsClient, account: IP6LzAccount): Promise<string | undefined> {
   const emailExists = await isAccountEmailTaken(logger, client, account.Email!)
 
   if (emailExists) {
@@ -110,7 +110,7 @@ async function createAccount(logger: winston.Logger, client: OrganizationsClient
   return accountId
 }
 
-async function moveAccount(logger: winston.Logger, client: OrganizationsClient, account: ExtendedAccount, currentAccountOuId: string, ouId: string): Promise<void> {
+async function moveAccount(logger: winston.Logger, client: OrganizationsClient, account: IP6LzAccount, currentAccountOuId: string, ouId: string): Promise<void> {
   if (currentAccountOuId === ouId) {
     logger.info(`Account ${account.Name} is already in ${ouId}. Skipping move.`)
     return
