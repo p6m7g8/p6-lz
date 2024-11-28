@@ -1,5 +1,5 @@
 import type { Construct } from 'constructs'
-import type { IP6LzLogarchiveBucket, IP6LzShareWithOrg } from '../types'
+import type { IP6LzLogarchiveBucket, IP6LzShareWithOrg, P6LzPrincipal } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as config from 'aws-cdk-lib/aws-config'
 import * as iam from 'aws-cdk-lib/aws-iam'
@@ -22,7 +22,7 @@ export class P6LzSraConfig extends cdk.Resource {
   }
 
   private config(props: IP6LzSraConfigProps) {
-    const principals = props.principals.map(principal => new iam.AccountPrincipal(principal))
+    const principals = props.principals.map((principal: P6LzPrincipal) => new iam.AccountPrincipal(principal))
     const key = new kms.Key(this, 'Key', {
       alias: 'p6/lz/sra/config-Key',
       enableKeyRotation: true,

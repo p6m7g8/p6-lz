@@ -45,7 +45,7 @@ export interface IP6LzAccountAlias {
 }
 
 export interface IP6LzShareWithOrg {
-  principals: P6LzPrincipal
+  principals: P6LzPrincipals
 }
 
 export interface IP6LzLogarchiveBucket {
