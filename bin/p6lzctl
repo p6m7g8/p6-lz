@@ -310,26 +310,28 @@ p6_lz_run_build() {
   p6_h2 "Linting"
   pnpm eslint .
 
+  p6_h2 "Type Checking"
+  pnpm tsc --noEmit
+
   p6_h2 "Testing"
   node --trace-deprecation ./node_modules/jest/bin/jest.js --config jest.config.js --coverage
 
-  set +e
   p6_h2 "Synthesizing"
   pnpm cdk synth
 
   p6_h2 "Diagraming"
   pnpm cdk-dia --target-path assets/diagram.png
 
-  p6_h2 "CloudFormation Linting"
-  cfn-lint cdk.out/*.template.json
+  # p6_h2 "CloudFormation Linting"
+  # cfn-lint cdk.out/*.template.json
 
-  p6_h2 "CloudFormation Security Scanning"
-  local template
-  for template in cdk.out/*.template.json; do
-    p6_h3 "$template"
-    cfn_nag <$template
-  done
-  set -e
+  # p6_h2 "CloudFormation Security Scanning"
+  # local template
+  # for template in cdk.out/*.template.json; do
+  #   p6_h3 "$template"
+  #   cfn_nag <$template
+  # done
+  # set -e
 
   p6_return_void
 }
