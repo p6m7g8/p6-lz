@@ -1,9 +1,9 @@
 import type { Construct } from 'constructs'
-import type { IAccountIds } from '../types'
+import type { IP6LzAccountIds } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import { ConfigDelegatedAdmin } from '../constructs/p6-lz-delegators'
 
-interface ManagementAccountConfigStack2Props extends cdk.StackProps, IAccountIds {}
+interface ManagementAccountConfigStack2Props extends cdk.StackProps, IP6LzAccountIds {}
 
 export class ManagementAccountConfigStack2 extends cdk.Stack {
   constructor(scope: Construct, id: string, props: ManagementAccountConfigStack2Props) {

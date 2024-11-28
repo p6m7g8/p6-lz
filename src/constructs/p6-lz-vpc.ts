@@ -1,9 +1,9 @@
 import type { Construct } from 'constructs'
-import type { IVpc } from '../types'
+import type { IP6LzVpc } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as ec2 from 'aws-cdk-lib/aws-ec2'
 
-export interface IP6LzVpcProps extends cdk.StackProps, IVpc {}
+export interface IP6LzVpcProps extends cdk.StackProps, IP6LzVpc {}
 
 export class P6LzVpc extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6LzVpcProps) {

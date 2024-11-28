@@ -1,6 +1,6 @@
 import type { IPrincipal } from 'aws-cdk-lib/aws-iam'
 import type { Construct } from 'constructs'
-import type { IShareWithOrg } from '../types'
+import type { IP6LzShareWithOrg, P6LzPrincipal } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import * as iam from 'aws-cdk-lib/aws-iam'
 import * as kms from 'aws-cdk-lib/aws-kms'
@@ -30,7 +30,7 @@ import { getCentralBucketName } from '../util'
  *
  */
 
-export interface IP6LzSraCentralBucketProps extends IShareWithOrg {}
+export interface IP6LzSraCentralBucketProps extends IP6LzShareWithOrg {}
 
 export class P6LzSraCentralBucket extends cdk.Resource {
   constructor(scope: Construct, id: string, props: IP6LzSraCentralBucketProps) {
@@ -68,7 +68,7 @@ export class P6LzSraCentralBucket extends cdk.Resource {
       actions: ['s3:GetBucketAcl'],
       principals: [cloudTrailPrinciple, configPrinciple],
     }))
-    const principals: IPrincipal[] = props.principals.map(principal => new iam.AccountPrincipal(principal))
+    const principals: IPrincipal[] = props.principals.map((principal: P6LzPrincipal) => new iam.AccountPrincipal(principal))
     bucket.addToResourcePolicy(new iam.PolicyStatement({
       resources: [bucket.bucketArn],
       actions: ['s3:GetBucketAcl'],

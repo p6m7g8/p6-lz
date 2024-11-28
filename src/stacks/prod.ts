@@ -1,10 +1,10 @@
 import type { Construct } from 'constructs'
-import type { IAccountAlias, IVpc } from '../types'
+import type { IP6LzAccountAlias, IP6LzVpc } from '../types'
 import * as cdk from 'aws-cdk-lib'
 import { P6CDKNamer } from 'p6-cdk-namer'
 import { P6LzVpc } from '../constructs/p6-lz-vpc'
 
-interface ProdAccountStack2Props extends cdk.StackProps, IAccountAlias, IVpc {}
+interface ProdAccountStack2Props extends cdk.StackProps, IP6LzAccountAlias, IP6LzVpc {}
 
 export class ProdAccountStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: ProdAccountStack2Props) {
