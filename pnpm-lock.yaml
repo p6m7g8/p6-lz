@@ -27,8 +27,8 @@ importers:
         specifier: ^1.7.9
         version: 1.7.9
       cdk-iam-floyd:
-        specifier: ^0.658.0
-        version: 0.658.0(aws-cdk-lib@2.174.0(constructs@10.4.2))(constructs@10.4.2)
+        specifier: ^0.659.0
+        version: 0.659.0(aws-cdk-lib@2.174.0(constructs@10.4.2))(constructs@10.4.2)
       constructs:
         specifier: ^10.4.2
         version: 10.4.2
@@ -1576,8 +1576,8 @@ packages:
     resolution: {integrity: sha512-2MPYAEChrceQiA5aKlcIreZSCk7OwTmbMkxqm32xpLf/BKdnPnkrJ4jtOg6g0K0d6Pg4nophZ326SSDOdCR5Tg==}
     hasBin: true
 
-  cdk-iam-floyd@0.658.0:
-    resolution: {integrity: sha512-9raj5hSdvTEXJVBBiqctHd3m/AR1isQ/jmH88ozzAwu1PAeE6HqDSP0DxR/57jFcyPy3drkkiDWtx7qNp8YgxQ==}
+  cdk-iam-floyd@0.659.0:
+    resolution: {integrity: sha512-0q9MgZaFDNhNfWZLrRiCecXc5I0ea4JQvf8FBMvL1z7DJrrW7I1yqhcUJDzyH5OrgEsVWGiYVeuoDEAnAVJWdQ==}
     peerDependencies:
       aws-cdk-lib: ^2.0.0
       constructs: ^10.0.0
@@ -2113,8 +2113,8 @@ packages:
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
-  fast-glob@3.3.2:
-    resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
+  fast-glob@3.3.3:
+    resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
 
   fast-json-stable-stringify@2.1.0:
@@ -5531,7 +5531,7 @@ snapshots:
       '@typescript-eslint/types': 8.19.0
       '@typescript-eslint/visitor-keys': 8.19.0
       debug: 4.4.0
-      fast-glob: 3.3.2
+      fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.6.3
@@ -5886,7 +5886,7 @@ snapshots:
       - '@aws-cdk/region-info'
       - constructs
 
-  cdk-iam-floyd@0.658.0(aws-cdk-lib@2.174.0(constructs@10.4.2))(constructs@10.4.2):
+  cdk-iam-floyd@0.659.0(aws-cdk-lib@2.174.0(constructs@10.4.2))(constructs@10.4.2):
     dependencies:
       '@udondan/common-substrings': 3.0.2
       aws-cdk-lib: 2.174.0(constructs@10.4.2)
@@ -6578,7 +6578,7 @@ snapshots:
 
   fast-deep-equal@3.1.3: {}
 
-  fast-glob@3.3.2:
+  fast-glob@3.3.3:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
       '@nodelib/fs.walk': 1.2.8
