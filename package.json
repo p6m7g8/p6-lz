@@ -7,6 +7,9 @@
     "nuke": "rm -f pnpm-lock.yaml && pnpm run reset",
     "reset": "rm -rf node_modules/ && pnpm run clean"
   },
+  "engines": {
+    "node": ">= 24.9.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.12.1",
     "@types/aws-lambda": "^8.10.147",
