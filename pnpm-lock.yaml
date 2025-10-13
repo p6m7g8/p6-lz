@@ -14,8 +14,11 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.908.0
         version: 3.908.0
+      aws-cdk:
+        specifier: ^2.1030.0
+        version: 2.1030.0
       aws-cdk-lib:
-        specifier: 2.219.0
+        specifier: ^2.219.0
         version: 2.219.0(constructs@10.4.2)
       aws-lambda:
         specifier: ^1.0.7
@@ -63,9 +66,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.46.0
         version: 8.46.0(eslint@9.37.0)(typescript@5.9.3)
-      aws-cdk:
-        specifier: ^2.1030.0
-        version: 2.1030.0
       cdk-dia:
         specifier: ^0.12.1
         version: 0.12.1
