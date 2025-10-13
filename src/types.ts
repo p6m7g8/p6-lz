@@ -2,8 +2,8 @@ import type { OrganizationalUnit } from '@aws-sdk/client-organizations'
 import type * as ec2 from 'aws-cdk-lib/aws-ec2'
 import type * as s3 from 'aws-cdk-lib/aws-s3'
 
-export type P6LzAccountType =
-  | 'audit'
+// eslint-disable-next-line operator-linebreak
+export type P6LzAccountType = | 'audit'
   | 'dev'
   | 'logarchive'
   | 'management'
