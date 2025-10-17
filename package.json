@@ -19,7 +19,7 @@
     "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",
     "cdk-dia": "^0.12.1",
-    "cdk-nag": "^2.37.54",
+    "cdk-nag": "^2.37.55",
     "esbuild": "^0.25.11",
     "eslint": "^9.37.0",
     "eslint-plugin-import": "^2.32.0",
