@@ -20,7 +20,7 @@
     "@typescript-eslint/parser": "^8.46.3",
     "cdk-dia": "^0.12.1",
     "cdk-nag": "^2.37.55",
-    "esbuild": "^0.26.0",
+    "esbuild": "^0.27.0",
     "eslint": "^9.39.1",
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.2.0",
