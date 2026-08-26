@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@aws-sdk/client-organizations':
-        specifier: ^3.1117.0
-        version: 3.1117.0
+        specifier: ^3.1118.0
+        version: 3.1118.0
       '@aws-sdk/client-s3':
-        specifier: ^3.1117.0
-        version: 3.1117.0
+        specifier: ^3.1118.0
+        version: 3.1118.0
       aws-cdk:
         specifier: ^2.1138.0
         version: 2.1138.0
@@ -27,11 +27,11 @@ importers:
         specifier: ^2.1693.0
         version: 2.1693.0
       axios:
-        specifier: ^1.19.0
-        version: 1.19.0
+        specifier: ^1.20.0
+        version: 1.20.0
       cdk-iam-floyd:
-        specifier: ^0.823.0
-        version: 0.823.0(aws-cdk-lib@2.266.0(constructs@10.8.1))(constructs@10.8.1)
+        specifier: ^0.824.0
+        version: 0.824.0(aws-cdk-lib@2.266.0(constructs@10.8.1))(constructs@10.8.1)
       constructs:
         specifier: ^10.8.1
         version: 10.8.1
@@ -180,12 +180,12 @@ packages:
     resolution: {integrity: sha512-Dtu0gr4dnATZAPwEYbpCsG+MpLM7OAliy2gTepEFQwl1vZ6DL3QMH2FveMa3HLvPsOdhJsPRB3KtxVhph9T75A==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-organizations@3.1117.0':
-    resolution: {integrity: sha512-4Cf8RpqI6xHYdQpGc16U73fOosnkhIUTeVGezmC1VjS8rkrp9KlLOVOcokKwLYuirbc/oFgFUKRnkXpQlANtgg==}
+  '@aws-sdk/client-organizations@3.1118.0':
+    resolution: {integrity: sha512-OmFaFR9qZXJYssSrspqsvn6RkWeCzvdhI3PeBg5wlJNENdxhVJLzk1GV9zIvtwrrz2iFokXqhhT4ONwErX1V2w==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-s3@3.1117.0':
-    resolution: {integrity: sha512-M/zyjg0u0Sxm73sInvyDb9+/YUuAOz8/xxmcmj0quJ7NXllZqXPxzjti3oVDz/lQ5mDf7iuxBLc0Y3deJI2hRw==}
+  '@aws-sdk/client-s3@3.1118.0':
+    resolution: {integrity: sha512-nh46pLKeRNFvTOZAJMfYR7kZ/KzhSqzhXVIJSwl4jJ/b2D+KOXL2jeOCryOvGgwpUQo9YNWFUg63cm2qr5MX9g==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.977.9':
@@ -1050,8 +1050,8 @@ packages:
   '@udondan/common-substrings@3.0.2':
     resolution: {integrity: sha512-Sc8lNnubj2NtH6zj13K8ADohTnwvXBSp6NWV0LDvia/xfIGHvOhKOHjL7AM9+5lVL3LcIHl85mwpn9LYYhyxuw==}
 
-  '@ungap/structured-clone@1.3.3':
-    resolution: {integrity: sha512-60YRaenCQcVjYEKOcG824+DRGGIQ3VKErcBoAEDJZz5bKIs2ZG+X/H9Nk+Q6EVkwJk5QNApxbrc5QtBSwtrXAg==}
+  '@ungap/structured-clone@1.3.4':
+    resolution: {integrity: sha512-JL+CF0GeLHyPWI0rXu7UnxgiuOm9UQWzadi0OYOJNhNO2q6EZElpwlgXkNkfU1PzANDHq3YcwKVZprdvS+BrbQ==}
 
   '@unrs/resolver-binding-android-arm-eabi@1.12.2':
     resolution: {integrity: sha512-g5T90pqg1bo/7mytQx6F4iBNC0Wsh9cu+z9veDbFjc7HjpesJFWD7QMS0NGStXM075+7dJPPVvBbpZlnrdpi/w==}
@@ -1331,8 +1331,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     deprecated: The AWS SDK for JavaScript (v2) has reached end-of-support, and no longer receives updates. Please migrate your code to use AWS SDK for JavaScript (v3). More info https://a.co/cUPnyil
 
-  axios@1.19.0:
-    resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
+  axios@1.20.0:
+    resolution: {integrity: sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg==}
 
   babel-jest@30.4.1:
     resolution: {integrity: sha512-fATAbM8piYxkiXQp3RBXmZHxZVNJZAVXXfyeyCN2Tida3+qJ8ea9UxhiJ2y4fLO90ZImKt6k9FlcH2+rLkJGhw==}
@@ -1450,8 +1450,8 @@ packages:
     resolution: {integrity: sha512-Xb3cAAaylYFoVDGscXyW/4Ph3N9n534qkL6oKkQehavfQ1ghrep6hiwUE2yD3w02OMFhGU7PTp3gAk9f0Wpnyg==}
     hasBin: true
 
-  cdk-iam-floyd@0.823.0:
-    resolution: {integrity: sha512-NymIoV5TEM8cXP1MG5l8F6LYaLtOgjIefvXaO1NwN5rbvrn3BRMXCkaj0Dmwtcik9+rIAhLYb8XiAWBAU2tMFQ==}
+  cdk-iam-floyd@0.824.0:
+    resolution: {integrity: sha512-UIh1UD/QvAE3kVzAItIemMy0TOv3k3ShhkJWLD7hpvwhP4vZ5xXpuiWOXcA1sdxg4QawNdef9mr8+AlziYmwwg==}
     peerDependencies:
       aws-cdk-lib: ^2.0.0
       constructs: ^10.0.0
@@ -1669,8 +1669,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.414:
-    resolution: {integrity: sha512-aYlviXiaXBbzvKgyALpcMmqa3Np3sDr0XnZbEG62n2UpZFbEcjQ4EEMOLGzVPhwVnwTz0lvKY+GcARbunuHekw==}
+  electron-to-chromium@1.5.415:
+    resolution: {integrity: sha512-958V+Kbhtgz+SxXeEVKBjrlKRBIDAYvUJfwhjxMZ5S6ut9jAl7l9ZKBkBrvjyjZE36PabLUo2L8kEeV5O4vgJg==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -3813,7 +3813,7 @@ snapshots:
       '@smithy/types': 4.17.2
       tslib: 2.8.1
 
-  '@aws-sdk/client-organizations@3.1117.0':
+  '@aws-sdk/client-organizations@3.1118.0':
     dependencies:
       '@aws-sdk/core': 3.977.9
       '@aws-sdk/credential-provider-node': 3.972.81
@@ -3824,7 +3824,7 @@ snapshots:
       '@smithy/types': 4.17.2
       tslib: 2.8.1
 
-  '@aws-sdk/client-s3@3.1117.0':
+  '@aws-sdk/client-s3@3.1118.0':
     dependencies:
       '@aws-sdk/checksums': 3.1000.29
       '@aws-sdk/core': 3.977.9
@@ -4895,7 +4895,7 @@ snapshots:
 
   '@udondan/common-substrings@3.0.2': {}
 
-  '@ungap/structured-clone@1.3.3': {}
+  '@ungap/structured-clone@1.3.4': {}
 
   '@unrs/resolver-binding-android-arm-eabi@1.12.2':
     optional: true
@@ -5155,7 +5155,7 @@ snapshots:
       uuid: 8.0.0
       xml2js: 0.6.2
 
-  axios@1.19.0:
+  axios@1.20.0:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
@@ -5246,7 +5246,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.11.19
       caniuse-lite: 1.0.30001810
-      electron-to-chromium: 1.5.414
+      electron-to-chromium: 1.5.415
       node-releases: 2.0.53
       update-browserslist-db: 1.3.1(browserslist@4.28.8)
 
@@ -5313,7 +5313,7 @@ snapshots:
       word-wrap: 1.2.5
       yargs: 17.7.3
 
-  cdk-iam-floyd@0.823.0(aws-cdk-lib@2.266.0(constructs@10.8.1))(constructs@10.8.1):
+  cdk-iam-floyd@0.824.0(aws-cdk-lib@2.266.0(constructs@10.8.1))(constructs@10.8.1):
     dependencies:
       '@udondan/common-substrings': 3.0.2
       aws-cdk-lib: 2.266.0(constructs@10.8.1)
@@ -5487,7 +5487,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.414: {}
+  electron-to-chromium@1.5.415: {}
 
   emittery@0.13.1: {}
 
@@ -6726,7 +6726,7 @@ snapshots:
   jest-worker@30.4.1:
     dependencies:
       '@types/node': 26.3.0
-      '@ungap/structured-clone': 1.3.3
+      '@ungap/structured-clone': 1.3.4
       jest-util: 30.4.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
