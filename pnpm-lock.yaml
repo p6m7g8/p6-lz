@@ -30,8 +30,8 @@ importers:
         specifier: ^1.20.0
         version: 1.20.0
       cdk-iam-floyd:
-        specifier: ^0.825.0
-        version: 0.825.0(aws-cdk-lib@2.267.0(constructs@10.8.1))(constructs@10.8.1)
+        specifier: ^0.826.0
+        version: 0.826.0(aws-cdk-lib@2.267.0(constructs@10.8.1))(constructs@10.8.1)
       constructs:
         specifier: ^10.8.1
         version: 10.8.1
@@ -1526,8 +1526,8 @@ packages:
     resolution: {integrity: sha512-Xb3cAAaylYFoVDGscXyW/4Ph3N9n534qkL6oKkQehavfQ1ghrep6hiwUE2yD3w02OMFhGU7PTp3gAk9f0Wpnyg==}
     hasBin: true
 
-  cdk-iam-floyd@0.825.0:
-    resolution: {integrity: sha512-4w16aVjc6TvH/oT0FmWMJhMttR9Mq1Dki4ccxPiP0o2WyzmuCyI7CXPAJPgPYEumEOJ3GW3QBm7qflq8ML8IyQ==}
+  cdk-iam-floyd@0.826.0:
+    resolution: {integrity: sha512-7WLZxXivbB7lOsbue552Z8E8+apjJFuViOaDMJ4kaC5Aa4f00l4xbNelGndG80gUgwd/oGBHG9oGfgd1eKcgvw==}
     peerDependencies:
       aws-cdk-lib: ^2.0.0
       constructs: ^10.0.0
@@ -5421,7 +5421,7 @@ snapshots:
       word-wrap: 1.2.5
       yargs: 17.7.3
 
-  cdk-iam-floyd@0.825.0(aws-cdk-lib@2.267.0(constructs@10.8.1))(constructs@10.8.1):
+  cdk-iam-floyd@0.826.0(aws-cdk-lib@2.267.0(constructs@10.8.1))(constructs@10.8.1):
     dependencies:
       '@udondan/common-substrings': 3.0.2
       aws-cdk-lib: 2.267.0(constructs@10.8.1)
