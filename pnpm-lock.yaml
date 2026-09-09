@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@aws-sdk/client-organizations':
-        specifier: ^3.1127.0
-        version: 3.1127.0
+        specifier: ^3.1128.0
+        version: 3.1128.0
       '@aws-sdk/client-s3':
-        specifier: ^3.1127.0
-        version: 3.1127.0
+        specifier: ^3.1128.0
+        version: 3.1128.0
       aws-cdk:
-        specifier: ^2.1140.0
-        version: 2.1140.0
+        specifier: ^2.1141.0
+        version: 2.1141.0
       aws-cdk-lib:
         specifier: ^2.268.0
         version: 2.268.0(constructs@10.8.1)
@@ -175,8 +175,8 @@ packages:
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.3':
     resolution: {integrity: sha512-98We1QWfin9vtuuQtNFhIIAEWb8CreyYTAP0Vn8HqSBoNiFJM9nZgifJeQawT9Wq0NX1HCNFlxCyTccIrK1PSA==}
 
-  '@aws-cdk/cloud-assembly-schema@54.22.0':
-    resolution: {integrity: sha512-vsOuFw4+UC5+m2YZLhCecxt6wibIOmXCszA4uXaBcde2tZWx06vp1z5ByHnJeLS83A11XpAkW/TiIBGCL6jxuQ==}
+  '@aws-cdk/cloud-assembly-schema@54.23.0':
+    resolution: {integrity: sha512-6ymdxl2MT34iES1Qot7cWAOzJCoRMrNr/E82/eYAx1inEJXG6iqJOsoa+nTa5Q+Mk+b7Z9xLP3pc2LgNnkFJJw==}
     engines: {node: '>= 18.0.0'}
     bundledDependencies:
       - jsonschema
@@ -186,12 +186,12 @@ packages:
     resolution: {integrity: sha512-Dtu0gr4dnATZAPwEYbpCsG+MpLM7OAliy2gTepEFQwl1vZ6DL3QMH2FveMa3HLvPsOdhJsPRB3KtxVhph9T75A==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-organizations@3.1127.0':
-    resolution: {integrity: sha512-uBpE5Uy816LhoxMDNikBFfimKjKsoHLzs8KDyBeG/4iSmKMPimV107LDpu6NfL85Cg0d7KTpgy7vtp+rmiIs+A==}
+  '@aws-sdk/client-organizations@3.1128.0':
+    resolution: {integrity: sha512-8AVeZcml31sGdnRYUMCIwRlYCksVYbQnI9+vzP8pPBhrRfHZf12XYeNR5ODxyr+VaXRsIpOgSYsUqPzWt8ojIw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-s3@3.1127.0':
-    resolution: {integrity: sha512-0ZSAgmEda33xPqVPt+bx2KzrXV1cUCKRRVPGliLu+V7DzHPa04CqPSi1maGEM4O0LDP0iI6HRSW5ULloNwayNw==}
+  '@aws-sdk/client-s3@3.1128.0':
+    resolution: {integrity: sha512-tYEB4058LdhTiSS7sCVVSpqSAdjIc1jTaf1dDPoIRJbR/XI5A2ZOuCiV1Aebo/pria/pUJBOT0WjdZVIwaZtDA==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.977.9':
@@ -1418,8 +1418,8 @@ packages:
       - yaml
       - mime-types
 
-  aws-cdk@2.1140.0:
-    resolution: {integrity: sha512-myrqWFEby3w+athNRM5EcnKXpby8shR7WwhxtAE853qDPmCggvIZe0wwkUzyuWJdFVD3zP5rzRuATxnnapeXig==}
+  aws-cdk@2.1141.0:
+    resolution: {integrity: sha512-RIKueAoFNYUot/VmlUzPUbecxNCtLzJFqpy/O+vTpjrvDn4k2Uiu9Y/QlVlQzaSJw0qqNNY6ldusJVdkX8aBNA==}
     engines: {node: '>= 18.0.0'}
     hasBin: true
 
@@ -1645,6 +1645,10 @@ packages:
     resolution: {integrity: sha512-rKZTGo4fzKYna8UcL0isTg5wkBNla7bxTypLwZQXjIdi++IdP1OJ41rI5Mti3/jltkPujbu4i9LIARYA+zpotQ==}
     engines: {node: '>= 12.0.0'}
 
+  comment-parser@1.4.9:
+    resolution: {integrity: sha512-+2AvZKjJaNq9GQljm3tr0utwrig5BL+jgJGvz5rDpGKNIp+ojcRXWUwBbh/sGIi1QCprR6PsKFakub+w1v+4hQ==}
+    engines: {node: '>= 12.0.0'}
+
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -1777,8 +1781,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.423:
-    resolution: {integrity: sha512-rRZfTSY8ptHYMQxa+uIycJMFKmY1T0GIApNMXJYGehguTZa56TEEl19pKPCoBqk5Gpf7QizZn/jt7xur+DYxag==}
+  electron-to-chromium@1.5.425:
+    resolution: {integrity: sha512-QvPtl41EUOnuT1HBvMKgxXRIaHNcagBPs50u7VULzhZXaGfqTbZyE16LQsctZ/RQHlGu+FOWeDTR4mY6YbeF1g==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -1957,8 +1961,8 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
-  eslint-plugin-jsdoc@64.3.6:
-    resolution: {integrity: sha512-lo7IXmgUUNy88SxW7KnJmmD2iPQBIRMomfCFPHidW1M3zNNVuzxlB2uoNrNyE1g4v2/L+RtYmiROPwQhSNzL8Q==}
+  eslint-plugin-jsdoc@64.3.8:
+    resolution: {integrity: sha512-JXLYE2BVfmbqLrrslb9/vg3URg8okW5pMnppM+3EYwvPCbuOiSXGOJWaNK208wDx6xXawkIFGtRYgFgrW23dsg==}
     engines: {node: ^22.22.2 || >=24.15.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
@@ -3013,8 +3017,8 @@ packages:
   node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
 
-  node-releases@2.0.54:
-    resolution: {integrity: sha512-YHs7BmmcsdAI5Ozuf8JZo6PT0mv2GIWC9vMfvUC3dp65M8hn7Ux8CPL+2oBI7juNuj9d0ndhTcznq2ODBps9cQ==}
+  node-releases@2.0.55:
+    resolution: {integrity: sha512-mIrE/Cw9y+9Au6dS5vDKDhQza9YvG6w+ZrS6X+ZzA7yFW/soAeaups4Qzn1bL6g5FVy8WtP79+0j82oPIbqRjQ==}
     engines: {node: '>=18'}
 
   normalize-path@3.0.0:
@@ -3249,8 +3253,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-is@19.2.8:
-    resolution: {integrity: sha512-s5un28nYxKJw5gvUHyW5PCC28CvBqLu9r3cWgzHT4Vo/5fqqkFcdRYsGcKf50WMPpjjFZS5d76fn3YCo2njKwQ==}
+  react-is@19.3.0:
+    resolution: {integrity: sha512-UpMYezM4v5/18F28aC66AEsjXIgE02kyEMH6yLdgLXu/UTfa1Ntwck/nNLrbqJsEXW7gPb0coNO9FQse9WTovA==}
 
   readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -3852,7 +3856,7 @@ snapshots:
       eslint-plugin-antfu: 3.2.3(eslint@10.10.0)
       eslint-plugin-command: 4.0.0(@typescript-eslint/typescript-estree@8.70.0(typescript@5.9.3))(@typescript-eslint/utils@8.70.0(eslint@10.10.0)(typescript@5.9.3))(eslint@10.10.0)
       eslint-plugin-import-lite: 0.6.0(eslint@10.10.0)
-      eslint-plugin-jsdoc: 64.3.6(eslint@10.10.0)(typescript@5.9.3)
+      eslint-plugin-jsdoc: 64.3.8(eslint@10.10.0)(typescript@5.9.3)
       eslint-plugin-jsonc: 3.4.2(eslint@10.10.0)
       eslint-plugin-n: 18.3.0(eslint@10.10.0)(ts-declaration-location@1.0.7(typescript@5.9.3))(typescript@5.9.3)
       eslint-plugin-no-only-tests: 3.4.0
@@ -3891,7 +3895,7 @@ snapshots:
 
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.3': {}
 
-  '@aws-cdk/cloud-assembly-schema@54.22.0': {}
+  '@aws-cdk/cloud-assembly-schema@54.23.0': {}
 
   '@aws-sdk/checksums@3.1000.29':
     dependencies:
@@ -3901,7 +3905,7 @@ snapshots:
       '@smithy/types': 4.18.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-organizations@3.1127.0':
+  '@aws-sdk/client-organizations@3.1128.0':
     dependencies:
       '@aws-sdk/core': 3.977.9
       '@aws-sdk/credential-provider-node': 3.972.82
@@ -3912,7 +3916,7 @@ snapshots:
       '@smithy/types': 4.18.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-s3@3.1127.0':
+  '@aws-sdk/client-s3@3.1128.0':
     dependencies:
       '@aws-sdk/checksums': 3.1000.29
       '@aws-sdk/core': 3.977.9
@@ -5297,10 +5301,10 @@ snapshots:
     dependencies:
       '@aws-cdk/asset-awscli-v1': 2.2.292
       '@aws-cdk/asset-node-proxy-agent-v6': 2.1.3
-      '@aws-cdk/cloud-assembly-schema': 54.22.0
+      '@aws-cdk/cloud-assembly-schema': 54.23.0
       constructs: 10.8.1
 
-  aws-cdk@2.1140.0: {}
+  aws-cdk@2.1141.0: {}
 
   aws-lambda@1.0.7:
     dependencies:
@@ -5413,8 +5417,8 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.11.21
       caniuse-lite: 1.0.30001810
-      electron-to-chromium: 1.5.423
-      node-releases: 2.0.54
+      electron-to-chromium: 1.5.425
+      node-releases: 2.0.55
       update-browserslist-db: 1.3.2(browserslist@4.28.9)
 
   bs-logger@0.2.6:
@@ -5560,6 +5564,8 @@ snapshots:
 
   comment-parser@1.4.8: {}
 
+  comment-parser@1.4.9: {}
+
   concat-map@0.0.1: {}
 
   confbox@0.1.8: {}
@@ -5664,7 +5670,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.423: {}
+  electron-to-chromium@1.5.425: {}
 
   emittery@0.13.1: {}
 
@@ -5914,7 +5920,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-jsdoc@64.3.6(eslint@10.10.0)(typescript@5.9.3):
+  eslint-plugin-jsdoc@64.3.8(eslint@10.10.0)(typescript@5.9.3):
     dependencies:
       '@es-joy/jsdoccomment': 0.97.0
       '@es-joy/resolve.exports': 1.2.0
@@ -5995,7 +6001,7 @@ snapshots:
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.10.0)
       '@eslint-community/regexpp': 4.12.2
-      comment-parser: 1.4.8
+      comment-parser: 1.4.9
       eslint: 10.10.0
       jsdoc-type-pratt-parser: 9.2.1
       refa: 0.12.1
@@ -7437,7 +7443,7 @@ snapshots:
 
   node-int64@0.4.0: {}
 
-  node-releases@2.0.54: {}
+  node-releases@2.0.55: {}
 
   normalize-path@3.0.0: {}
 
@@ -7639,7 +7645,7 @@ snapshots:
   pretty-format@30.5.1:
     dependencies:
       '@jest/react-is-18': react-is@18.3.1
-      '@jest/react-is-19': react-is@19.2.8
+      '@jest/react-is-19': react-is@19.3.0
       '@jest/schemas': 30.5.0
       ansi-styles: 5.2.0
 
@@ -7665,7 +7671,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-is@19.2.8: {}
+  react-is@19.3.0: {}
 
   readable-stream@3.6.2:
     dependencies:
