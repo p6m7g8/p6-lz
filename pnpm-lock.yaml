@@ -2001,8 +2001,8 @@ packages:
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
-  eslint-plugin-regexp@3.3.0:
-    resolution: {integrity: sha512-TT0JTQbW7CRKohntpGAsMdQ1K3MsmJK4gdAhKJtIwlJ0JvuYxauymFgJdvqxIY4lqNj0EuRZWVrymQtEdJYEFg==}
+  eslint-plugin-regexp@3.3.1:
+    resolution: {integrity: sha512-58bGUci/AaWAo1ETj6Lsnmy6QXwnSyVONRA805828nnqp7vrTwdaQMc02vtowmYB3A5OB3SLr3r5HgmfxX4dLg==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=9.38.0'
@@ -3866,7 +3866,7 @@ snapshots:
       eslint-plugin-no-only-tests: 3.4.0
       eslint-plugin-perfectionist: 5.11.1(eslint@10.11.0)(typescript@5.9.3)
       eslint-plugin-pnpm: 1.9.1(eslint@10.11.0)
-      eslint-plugin-regexp: 3.3.0(eslint@10.11.0)
+      eslint-plugin-regexp: 3.3.1(eslint@10.11.0)
       eslint-plugin-toml: 1.5.0(eslint@10.11.0)
       eslint-plugin-unicorn: 74.0.0(eslint@10.11.0)
       eslint-plugin-unused-imports: 4.4.1(@typescript-eslint/eslint-plugin@8.70.0(@typescript-eslint/parser@8.70.0(eslint@10.11.0)(typescript@5.9.3))(eslint@10.11.0)(typescript@5.9.3))(eslint@10.11.0)
@@ -6000,7 +6000,7 @@ snapshots:
     transitivePeerDependencies:
       - '@eslint/json'
 
-  eslint-plugin-regexp@3.3.0(eslint@10.11.0):
+  eslint-plugin-regexp@3.3.1(eslint@10.11.0):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.11.0)
       '@eslint-community/regexpp': 4.12.2
