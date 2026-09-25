@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@aws-sdk/client-organizations':
-        specifier: ^3.1139.0
-        version: 3.1139.0
+        specifier: ^3.1140.0
+        version: 3.1140.0
       '@aws-sdk/client-s3':
-        specifier: ^3.1139.0
-        version: 3.1139.0
+        specifier: ^3.1140.0
+        version: 3.1140.0
       aws-cdk:
         specifier: ^2.1143.0
         version: 2.1143.0
@@ -30,8 +30,8 @@ importers:
         specifier: ^1.20.0
         version: 1.20.0
       cdk-iam-floyd:
-        specifier: ^0.839.0
-        version: 0.839.0(aws-cdk-lib@2.270.0(constructs@10.8.1))(constructs@10.8.1)
+        specifier: ^0.840.0
+        version: 0.840.0(aws-cdk-lib@2.270.0(constructs@10.8.1))(constructs@10.8.1)
       constructs:
         specifier: ^10.8.1
         version: 10.8.1
@@ -85,8 +85,8 @@ importers:
         specifier: ^30.5.2
         version: 30.5.2(@types/node@26.6.2)(ts-node@10.9.2(@types/node@26.6.2)(typescript@5.9.3))
       ts-jest:
-        specifier: ^29.4.13
-        version: 29.4.13(@babel/core@7.29.7)(@jest/transform@30.5.2)(@jest/types@30.5.1)(babel-jest@30.5.2(@babel/core@7.29.7))(esbuild@0.28.2)(jest-util@30.5.1)(jest@30.5.2(@types/node@26.6.2)(ts-node@10.9.2(@types/node@26.6.2)(typescript@5.9.3)))(typescript@5.9.3)
+        specifier: ^29.4.14
+        version: 29.4.14(@babel/core@7.29.7)(@jest/transform@30.5.2)(@jest/types@30.5.1)(babel-jest@30.5.2(@babel/core@7.29.7))(esbuild@0.28.2)(jest-util@30.5.1)(jest@30.5.2(@types/node@26.6.2)(ts-node@10.9.2(@types/node@26.6.2)(typescript@5.9.3)))(typescript@5.9.3)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@26.6.2)(typescript@5.9.3)
@@ -186,12 +186,12 @@ packages:
     resolution: {integrity: sha512-x12Q17KYlJAd3nKf8LV5LV0vt8sh8/6YfQLGPtrGnQf/tW4jqxPGq5GPpuVitpQYM3eUR4XB7CbxZf751NMbLw==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-organizations@3.1139.0':
-    resolution: {integrity: sha512-eX7Q+QlF5MPZVnPt7UBmoLbzJwExM9b6LvqEh7a0dnEgvPFKqf3PlaRpmEUw+Mm3j6bI+Jp7y+JQKeic9aWHAw==}
+  '@aws-sdk/client-organizations@3.1140.0':
+    resolution: {integrity: sha512-L6f6qgiTCO29BB13xB24F+NVOrpRXtzq7lgczZN0fauw9fDp0exJYvQ7CIGmzR9TuhB8ChUv36c37Nd6wJ7s9g==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-s3@3.1139.0':
-    resolution: {integrity: sha512-HwMHlXgJSsQmZhpFLJaovAIBoC2eVBep4wjTaPCV+qySFd4giXCFuDZC/8Btz1KCr4JzEO5AhXPb5FMflqoQig==}
+  '@aws-sdk/client-s3@3.1140.0':
+    resolution: {integrity: sha512-7cf3xOyX6L5fyWZgPkVIrbsf/7cmKccKdRa3mkF467qchzgIiqAl/meG/SYdMdoY8JZYWGh0RobzoXiyKuGneA==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.978.1':
@@ -1470,8 +1470,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.11.25:
-    resolution: {integrity: sha512-gMmEShwwq7FJqMwvfRwvCl00v4kN+KOfJqXn+f4nrufak5gNHJOksd/60Dvjuz7sI8Y5WiSFBa8FEYr+zoyqCw==}
+  baseline-browser-mapping@2.11.26:
+    resolution: {integrity: sha512-GLQdD3y6UF8iVuMJl5fHgE4jdn/ua7n+toKfLgNlg3BqQtOZjpy68T8Tup8/wGWZCDlm7KMg7tPb4MPn7oN0TQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -1554,8 +1554,8 @@ packages:
     resolution: {integrity: sha512-Xb3cAAaylYFoVDGscXyW/4Ph3N9n534qkL6oKkQehavfQ1ghrep6hiwUE2yD3w02OMFhGU7PTp3gAk9f0Wpnyg==}
     hasBin: true
 
-  cdk-iam-floyd@0.839.0:
-    resolution: {integrity: sha512-rCg3KXqkNa613enPLv9UVUnCG2uSsxk16Rno8k4bm6iYNrh1Etx9/n/3iXartn1qMVxXgmtwuBi9tnAmwuoCuQ==}
+  cdk-iam-floyd@0.840.0:
+    resolution: {integrity: sha512-Xuehb53mnY8F5Evdyo3QHVGYJRWaIOcZBns0UEpnSwxl0ngV5CR3pt18pugA21rFJQrx4cukSl676Mg7OStasQ==}
     peerDependencies:
       aws-cdk-lib: ^2.0.0
       constructs: ^10.0.0
@@ -1777,8 +1777,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.438:
-    resolution: {integrity: sha512-AN9xMU1hJiT65LkCUPL1DZm5TCbOPb2Qsm5pYwFLEXp6/qj9SdT4yMiqs7Qqstwvkn1zF7l36SRGt+s6XcJ0FA==}
+  electron-to-chromium@1.5.439:
+    resolution: {integrity: sha512-qu6QIPXhsb+CRcAiTMNjR4A1y/7tCYKkKjr5CZXRVih6qkDf79peZ2BpEU3qoDBNCRrcy3Mra3X9nG5oruuA7Q==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -3568,8 +3568,8 @@ packages:
     resolution: {integrity: sha512-XyLVuhBVvdJTJr2FJJV2L1pc4MwSjMhcunRVgDE9k4wbb2ee7ORYnPewxMWUav12vxyfUM686MSGsqnVRIInuw==}
     engines: {node: '>=18'}
 
-  ts-jest@29.4.13:
-    resolution: {integrity: sha512-rUQG+Ar95cNQf//KvsSjvabLpCTbwk+vKGWkAgiKFugqVwmOpGR7n7xa3S68/AB21Wn0KNhIAVxmxrUsz0L1AQ==}
+  ts-jest@29.4.14:
+    resolution: {integrity: sha512-+943G6wCX5E3VpzTQhBGBFntCmdT+QAkTvUlp03edTONFBvqskuXPhpyX16xdUotO4P5HQKyppldSWjocoltLQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -3912,7 +3912,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-organizations@3.1139.0':
+  '@aws-sdk/client-organizations@3.1140.0':
     dependencies:
       '@aws-sdk/core': 3.978.1
       '@aws-sdk/credential-provider-node': 3.972.84
@@ -3923,7 +3923,7 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-s3@3.1139.0':
+  '@aws-sdk/client-s3@3.1140.0':
     dependencies:
       '@aws-sdk/checksums': 3.1001.1
       '@aws-sdk/core': 3.978.1
@@ -5401,7 +5401,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.11.25: {}
+  baseline-browser-mapping@2.11.26: {}
 
   boolbase@1.0.0: {}
 
@@ -5422,9 +5422,9 @@ snapshots:
 
   browserslist@4.29.1:
     dependencies:
-      baseline-browser-mapping: 2.11.25
+      baseline-browser-mapping: 2.11.26
       caniuse-lite: 1.0.30001812
-      electron-to-chromium: 1.5.438
+      electron-to-chromium: 1.5.439
       node-releases: 2.0.57
       update-browserslist-db: 1.3.3(browserslist@4.29.1)
 
@@ -5499,7 +5499,7 @@ snapshots:
       word-wrap: 1.2.5
       yargs: 17.7.3
 
-  cdk-iam-floyd@0.839.0(aws-cdk-lib@2.270.0(constructs@10.8.1))(constructs@10.8.1):
+  cdk-iam-floyd@0.840.0(aws-cdk-lib@2.270.0(constructs@10.8.1))(constructs@10.8.1):
     dependencies:
       '@udondan/common-substrings': 3.0.2
       aws-cdk-lib: 2.270.0(constructs@10.8.1)
@@ -5675,7 +5675,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.438: {}
+  electron-to-chromium@1.5.439: {}
 
   emittery@0.13.1: {}
 
@@ -8024,7 +8024,7 @@ snapshots:
       '@ts-graphviz/common': 2.1.5
       '@ts-graphviz/core': 2.0.7
 
-  ts-jest@29.4.13(@babel/core@7.29.7)(@jest/transform@30.5.2)(@jest/types@30.5.1)(babel-jest@30.5.2(@babel/core@7.29.7))(esbuild@0.28.2)(jest-util@30.5.1)(jest@30.5.2(@types/node@26.6.2)(ts-node@10.9.2(@types/node@26.6.2)(typescript@5.9.3)))(typescript@5.9.3):
+  ts-jest@29.4.14(@babel/core@7.29.7)(@jest/transform@30.5.2)(@jest/types@30.5.1)(babel-jest@30.5.2(@babel/core@7.29.7))(esbuild@0.28.2)(jest-util@30.5.1)(jest@30.5.2(@types/node@26.6.2)(ts-node@10.9.2(@types/node@26.6.2)(typescript@5.9.3)))(typescript@5.9.3):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
