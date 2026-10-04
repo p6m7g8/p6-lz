@@ -30,8 +30,8 @@ importers:
         specifier: ^1.20.0
         version: 1.20.0
       cdk-iam-floyd:
-        specifier: ^0.847.0
-        version: 0.847.0(aws-cdk-lib@2.272.0(constructs@10.8.1))(constructs@10.8.1)
+        specifier: ^0.848.0
+        version: 0.848.0(aws-cdk-lib@2.272.0(constructs@10.8.1))(constructs@10.8.1)
       constructs:
         specifier: ^10.8.1
         version: 10.8.1
@@ -1558,14 +1558,11 @@ packages:
     resolution: {integrity: sha512-EUUDUL6o6GuGCaaSVXkswvomwBqlAehSoJu2xwVOig/RVaisuWvsvC3FGNj6iNnQF1g4Ii97JdV4UtkgkbF3Cw==}
     hasBin: true
 
-  cdk-iam-floyd@0.847.0:
-    resolution: {integrity: sha512-fwfHOa9xwHYvxseBjFTti9ianqkwtdOv6hZhy/5jB+Voq/aQS3VDIjKxwCYhfxLRSTQaX2NrFV9IRcVbzEvQ+Q==}
+  cdk-iam-floyd@0.848.0:
+    resolution: {integrity: sha512-4n6sq1s6gbsHCMPyXBtWpcOqzK1oiD7799R33jYFsT06uUZxaxnKxCQjQqPu1XNGhpt4wTD7B/J2hiyGQCqGhw==}
     peerDependencies:
       aws-cdk-lib: ^2.0.0
       constructs: ^10.0.0
-    bundledDependencies:
-      - '@udondan/common-substrings'
-      - regex-parser
 
   cdk-nag@3.0.2:
     resolution: {integrity: sha512-mmrspXnYRK5RmBTfEu5EQZmTwGxaVCESJ5GXbQq62eOkVFd4vc4MuIfSbav74K4J7irXQVJaY3d5js0kVQMWdA==}
@@ -2847,8 +2844,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  mdast-util-find-and-replace@3.0.2:
-    resolution: {integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==}
+  mdast-util-find-and-replace@3.0.3:
+    resolution: {integrity: sha512-xPgpDNl0/OXHsI7TlaIs22lWnH3KlpvZdXG1ET/m/YT2Hhdkx8lJV4kLphE6l9simyM4KPDFBwas08BgEob6Jw==}
 
   mdast-util-from-markdown@2.1.0:
     resolution: {integrity: sha512-KRLgmPaP2H1ul2bpoJkOS+9pAcDAAj9Nu1mqLnh8NLeJG5tlvj42TH80PIGBpROWlRXLk0lDrWNuZCFy/tsB4A==}
@@ -5561,7 +5558,7 @@ snapshots:
       word-wrap: 1.2.5
       yargs: 18.2.0
 
-  cdk-iam-floyd@0.847.0(aws-cdk-lib@2.272.0(constructs@10.8.1))(constructs@10.8.1):
+  cdk-iam-floyd@0.848.0(aws-cdk-lib@2.272.0(constructs@10.8.1))(constructs@10.8.1):
     dependencies:
       aws-cdk-lib: 2.272.0(constructs@10.8.1)
       constructs: 10.8.1
@@ -7135,7 +7132,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  mdast-util-find-and-replace@3.0.2:
+  mdast-util-find-and-replace@3.0.3:
     dependencies:
       '@types/mdast': 4.0.4
       escape-string-regexp: 5.0.0
@@ -7175,7 +7172,7 @@ snapshots:
       '@types/mdast': 4.0.4
       ccount: 2.0.1
       devlop: 1.1.0
-      mdast-util-find-and-replace: 3.0.2
+      mdast-util-find-and-replace: 3.0.3
       micromark-util-character: 2.1.1
 
   mdast-util-gfm-footnote@2.1.0:
