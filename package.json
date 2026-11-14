@@ -21,7 +21,7 @@
     "cdk-dia": "^0.12.4",
     "cdk-nag": "^3.0.2",
     "esbuild": "^0.28.2",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.5.2",
     "ts-jest": "^29.4.15",
