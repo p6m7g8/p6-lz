@@ -1478,8 +1478,8 @@ packages:
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
 
-  bowser@2.15.0:
-    resolution: {integrity: sha512-xic6KSZglg/I4ymp45fdM4GWfYpBK79Fxd/TOvJktlaPgQqqDxvmGwOPZl2V0dyeS3Lj5c180bLhXF43iyAjZQ==}
+  bowser@2.15.1:
+    resolution: {integrity: sha512-ma47ABeUiTsmG4McKDtGCgQSiTCatM97Mlbn13K42N1kPSFE14oN3WFMjtyL4KubhGvQTqYheKl4Qx2bJtMXLQ==}
 
   brace-expansion@1.1.22:
     resolution: {integrity: sha512-CKLDTuSsN0+r1ThM0WkzzBI7dnPI6xEGfa/JnVYIK9JNBA1N1NyPwXVHor//NKD/y3sDxp764sZdLhFK7pH8XQ==}
@@ -1967,8 +1967,8 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
-  eslint-plugin-jsdoc@65.5.1:
-    resolution: {integrity: sha512-B7nUzgyazhOtiznF1fOQOmYZpTlLEdgaCsVV67V1WgtXuqWSWm0kPS4auekdHoEQBEKahS11weUC+z5nkhIu9g==}
+  eslint-plugin-jsdoc@65.5.2:
+    resolution: {integrity: sha512-zndWp29JWTh2q1cWZgwKHiyB454BCwTti0mpk3qC6V0LF3a3YOJJAHDCqI82WmbGMNUqiZUlbZcGy3kkX5tq/w==}
     engines: {node: ^22.22.2 || >=24.15.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
@@ -3894,7 +3894,7 @@ snapshots:
       eslint-plugin-antfu: 3.3.1(eslint@10.15.0)
       eslint-plugin-command: 4.0.0(@typescript-eslint/typescript-estree@8.73.0(typescript@5.9.3))(@typescript-eslint/utils@8.73.0(eslint@10.15.0)(typescript@5.9.3))(eslint@10.15.0)
       eslint-plugin-import-lite: 0.6.0(eslint@10.15.0)
-      eslint-plugin-jsdoc: 65.5.1(eslint@10.15.0)(typescript@5.9.3)
+      eslint-plugin-jsdoc: 65.5.2(eslint@10.15.0)(typescript@5.9.3)
       eslint-plugin-jsonc: 3.4.2(eslint@10.15.0)
       eslint-plugin-n: 18.5.0(eslint@10.15.0)(ts-declaration-location@1.0.7(typescript@5.9.3))(typescript@5.9.3)
       eslint-plugin-no-only-tests: 3.4.0
@@ -3977,7 +3977,7 @@ snapshots:
       '@smithy/core': 3.41.0
       '@smithy/signature-v4': 5.7.5
       '@smithy/types': 4.20.0
-      bowser: 2.15.0
+      bowser: 2.15.1
       tslib: 2.9.1
 
   '@aws-sdk/credential-provider-env@3.972.85':
@@ -5431,7 +5431,7 @@ snapshots:
 
   boolbase@1.0.0: {}
 
-  bowser@2.15.0: {}
+  bowser@2.15.1: {}
 
   brace-expansion@1.1.22:
     dependencies:
@@ -5959,7 +5959,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-jsdoc@65.5.1(eslint@10.15.0)(typescript@5.9.3):
+  eslint-plugin-jsdoc@65.5.2(eslint@10.15.0)(typescript@5.9.3):
     dependencies:
       '@es-joy/escodegen': 5.0.1
       '@es-joy/jsdoccomment': 1.2.0
